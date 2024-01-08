@@ -7,6 +7,7 @@ import Home from './Home';
 import Footer from './Footer';
 import Pricing from './Pricing';
 import ContactUs from './ContactUS';
+import AboutUs from './AboutUS';
 
 const Index: React.FC = () => {
     return (
@@ -15,7 +16,7 @@ const Index: React.FC = () => {
                 <Header />
                 <Routes>
                     <Route path='/' element={<Home />} />
-                    {/* <Route path='/about-us' exact element={<AboutUs />} /> */}
+                    <Route path='/about-us' element={<AboutUs />} />
                     <Route path='/pricing' element={<Pricing />} />
                     <Route path='/contact-us'  element={<ContactUs />} />
                 </Routes>

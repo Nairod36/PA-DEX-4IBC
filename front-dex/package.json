@@ -13,6 +13,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.2",
     "react-dom": "^18.2.0",
+    "react-modal-video": "^2.0.1",
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@types/react-bootstrap": "^0.32.35",
+    "@types/react-modal-video": "^1.2.3",
     "@types/react-router-dom": "^5.3.3",
     "tsc-watch": "^6.0.4"
   }

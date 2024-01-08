@@ -28,15 +28,15 @@ function ContactUs(){
                                             <ul>
                                                 <li>
                                                     <i className="fa fa-phone"></i>
-                                                    <span>1800-123-4567<br/>+91 987-654-3210</span> 
+                                                    <span>num<br/>+33 num</span> 
                                                 </li>
                                                 <li>
                                                     <i className="fa fa-envelope"></i> 
-                                                    <span>info@example.com <br/>services@gmail.com</span>
+                                                    <span>StarDEX@gmail.com <br/>servicesStarDEX@gmail.com</span>
                                                 </li>
                                                 <li>
                                                     <i className="fas fa-map-marker-alt"></i>
-                                                    <span>Demo Address #8901 Marmora Road <br/>Chi Minh City, Vietnam</span>
+                                                    <span>Address ESGI School <br/>242 Rue du Faubourg Saint-Antoine, 75012 Paris</span>
                                                 </li>
                                             </ul>
                                         </div>
