@@ -1,0 +1,45 @@
+.dz-divider {
+    height: 1px;
+    position: relative;
+    margin: 30px 0;
+	&.divider-2px {
+		height: 2px;
+	}
+	&.divider-3px {
+		height: 2px;
+	}
+	&.divider-4px {
+		height: 2px;
+	}
+	i {
+		position: absolute;
+		width: 30px;
+		height: 30px;
+		text-align: center;
+		line-height: 30px;
+		display: block;
+		border-radius: 100%;
+		-webkit-transform: translateY(-50%);
+		-ms-transform: translateY(-50%);
+		transform: translateY(-50%);
+	}
+	&.icon-left {
+		margin-left: 40px;
+		i {
+			left: -40px;
+		}
+	}
+	&.icon-right {
+		margin-right: 40px;
+		i {
+			right: -40px;
+		}
+	}
+	&.icon-center i {
+		left: 50%;
+		margin-left: -5px;
+	}
+}
+.bg-gray-dark {
+    background-color: #d3d3d3;
+}

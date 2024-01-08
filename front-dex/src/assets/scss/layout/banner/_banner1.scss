@@ -1,0 +1,166 @@
+.bg-shape1{
+	animation: aniRotate 10s infinite linear;
+}
+.bg-shape2{
+	animation: aniRotate 10s infinite linear;
+}
+.bg-shape3{
+	animation: aniRotate 10s infinite linear;
+}
+.bg-shape4{
+	animation: aniRotate 10s infinite linear;
+}
+
+.dz-bnr-inr{
+	position: relative;
+	
+	&.style-1 {
+		position: relative;
+		background-color: $secondary;
+		
+		.bg-shape1,
+		.bg-shape2,
+		.bg-shape3,
+		.bg-shape4{
+			position: absolute;
+			
+			@include respond ('tab-port'){
+				display: none;
+			}
+		}
+		.bg-shape1{
+			top: 20%;
+			left: 6%;
+			animation: aniRotate 10s infinite linear;
+			width: 70px;
+		}
+		.bg-shape2{
+			right: 8%;
+			bottom: 2%;
+			animation: aniRotate 10s infinite linear;
+			width: 70px;
+		}
+		.bg-shape3{
+			bottom: 10%;
+			left: 2%;
+			animation: aniRotate 10s infinite linear;
+		}
+		.bg-shape4{
+			top: 20%;
+			right: 2%;
+			animation: aniRotate 10s infinite linear;
+		}
+		
+		.dz-bnr-inr-entry {
+			.breadcrumb-row {
+				position: absolute!important;
+				bottom: 0;
+				left: 50%;
+				transform: translateX(-50%);
+				padding: 0rem 0rem;
+				background: $primary;
+				border-radius: 0.6rem 0.6rem 0 0;
+				height: 1.25rem;	
+				
+				
+				&:after{
+					content: "";
+					position: absolute;
+					left: -35px;
+					bottom: 0;
+					background-color: var(--primary);
+					width: calc(100% + 70px);
+					height: 20px;
+					border-radius: 12px 12px 0 0;
+					
+					@include respond('phone'){
+						display: none;
+					}
+				}
+				
+				ul{
+					margin-bottom: 0;
+					margin-top: -25px;
+					z-index: 1;
+					box-shadow: 0px 15px 40px rgba(1, 18, 111, 0.15);
+					position: relative;
+				}
+				@include respond ('phone'){
+					width: 100%;
+					background: none!important;
+				}
+			}
+		}
+	}
+	&.style-2{
+		z-index: auto!important;
+		.bg-shape1{
+			position: absolute;
+			top: 20%;
+			left: 6%;
+			animation: aniRotate 10s infinite linear;
+		}
+		
+		.bg-shape2{
+			position: absolute;
+			right: 8%;
+			bottom: 2%;
+			animation: aniRotate 10s infinite linear;
+		}
+		
+		.bg-shape3{
+			position: absolute;
+			bottom: 10%;
+			left: 2%;
+			animation: aniRotate 10s infinite linear;
+		}
+		
+		.bg-shape4{
+			position: absolute;
+			top: 20%;
+			right: 2%;
+			animation: aniRotate 10s infinite linear;
+		}
+
+	
+	
+		.dz-bnr-inr-entry{
+			position: relative;
+			z-index: 2;
+		}
+		.breadcrumb-row{
+			position: absolute;
+			bottom: -2.4rem;
+		}
+	}
+	@include respond ('tab-port'){
+		&.style-2{
+			h1{
+				margin-top: 0;
+				font-size: 3.5rem;
+			}
+		}	
+	}
+	@include respond ('phone-land'){
+		&.style-2{
+			h1{
+				font-size: 3rem;
+			}
+			.dz-bnr-inr-entry{
+				padding-top: 2rem!important;
+			}
+		}
+	}
+	@include respond ('phone'){
+		&.style-2{
+			h1{font-size: 2rem;
+			text-align: center;}
+			
+			.breadcrumb-row{
+				width: 100%;
+				text-align: center;
+			}
+		}
+	}
+}
+

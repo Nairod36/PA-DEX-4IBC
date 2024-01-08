@@ -1,0 +1,147 @@
+.accordion{
+	.accordion-item{
+		border: 1px solid rgba(142, 165, 200, 0.5);
+		border-radius: 10px;
+		overflow: hidden;
+		margin-bottom: 20px;
+		@include respond ('laptop'){
+			margin-bottom: 15px;
+		}
+		&:last-child{
+			margin-bottom: 0;			
+		}	
+		.accordion-header{
+			.accordion-button{
+				padding: 18px 25px;
+				color: var(--title);
+				font-weight: 500;
+				font-size: 18px;
+				border-radius: 10px;
+				border-color: var(--primary);
+				background-color: var(--card-bg);
+				&:not(.collapsed){
+					box-shadow: none;					
+					background-color: var(--primary);
+					color: #fff;
+					border-radius: 0;
+					&:after{
+						color: #fff;
+					}
+				}
+				&:after{
+					background-image: none;
+					content: "\f107";
+					font-family: "Font Awesome 6 free";
+					font-weight: 900;
+					color: var(--primary);
+					width: auto;
+					height: auto;
+				}				
+				@include respond ('laptop'){
+					padding: 12px 20px;	
+				}
+				@include respond ('phone'){
+					font-size: 16px;
+				}
+			}
+		}
+		.accordion-body{
+			background-color: var(--card-bg);
+			color: var(--title);
+			padding: 18px 25px;
+			@include respond ('laptop'){
+				padding: 12px 20px;	
+			}
+		}
+	}
+	&.style-1{
+		.accordion-item{
+			border: 2px solid var(--primary);
+			.accordion-header{
+				.accordion-button{
+					padding: 18px 30px;
+					
+					@include respond ('phone-land'){
+						padding: 8px 10px 10px 15px;
+					}
+					ul{
+						width: 60%;
+						li{
+							span{
+								font-size: 16px;
+								font-weight: 400;
+								color: var(--body-color);
+							}
+							h6{
+								font-weight: 500;
+							}
+						}
+						@include respond ('phone-land'){
+							width: 80%;		
+							li{
+								span{
+									font-size: 12px;
+								}	
+								h6{
+									font-size: 13px;
+								}
+							}
+						}
+					}
+					&:not(.collapsed){
+						color: #fff;
+						ul{
+							li{
+								h6,span{
+									color: #fff;
+								}
+							}
+						}	
+						&:after{
+							color: #fff;
+							transform: unset;
+							content: "\f068";
+							background-color: var(--card-bg);
+							color: var(--primary);
+						}
+					}
+					&:after{
+						content: "\2b";
+						font-family: "Font Awesome 6 free";
+						font-weight: 900;
+						background-color: var(--primary);
+						color: #fff;
+						text-align: center;
+						width: 40px;
+						border-radius: var(--border-radius-base);
+						height: 40px;
+						line-height: 40px;
+						
+						@include respond ('phone-land'){
+							width: 30px;
+							height: 30px;
+							line-height: 30px;
+							font-size: 14px;
+							border-radius: 6px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+.dz-seprator{
+	border-bottom: 1px solid #D9D9D9;
+	margin: 80px 0;
+	@include respond ('tab-land'){		
+		margin: 40px 0px 40px 0;
+	}
+	@include respond ('tab-port'){		
+		margin: 30px 0px 30px 0;
+	}
+	@include respond ('phone'){		
+		margin: 30px 0px 30px 0;
+	}
+}

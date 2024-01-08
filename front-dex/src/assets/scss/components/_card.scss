@@ -1,0 +1,56 @@
+.card {
+    border: 0px solid var(--border-color);
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 40px rgba(21, 50, 93, 0.1);
+    background: var(--card-bg);
+    height: calc(100% - 1.875rem);
+	
+	@include respond ('phone'){		
+		margin-bottom: 20px;
+		height: calc(100% - 1.25rem);
+	}
+	
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--border-color);
+        background: var(--card-bg);
+        padding: 15px 30px;  
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        @include respond ('phone'){
+            padding:  15px 15px;
+        }
+    }
+    &-title {
+        font-size: 24px;
+        margin-bottom: 0px;
+    }
+    
+	.card-body{
+        padding: 25px 30px;
+		@include respond ('phone'){
+			padding: 15px 15px;			
+		}
+    }
+    .card-footer{
+        background-color: transparent;
+        border-color: var(--border-color);
+        padding: 15px 30px;
+		
+		@include respond ('phone'){
+			padding: 15px 15px;
+		}
+		
+        &.has-table{
+            padding: 10px 25px;
+			
+			@include respond ('phone'){
+				padding: 10px 20px;			
+			}
+        }
+    }
+}
+

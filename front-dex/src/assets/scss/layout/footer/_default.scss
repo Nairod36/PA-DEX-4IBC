@@ -1,0 +1,316 @@
+footer {
+	color: #95A3FF;
+	background-color: #001288;
+
+	&.site-footer {
+		position: relative;
+	}
+
+	.footer-logo {
+		margin-bottom: 25px;
+
+		img {
+			max-width: 220px;
+		}
+	}
+
+	.footer-title {
+		margin: 0;
+		font-weight: 600;
+		color: $white;
+		margin-bottom: 20px;
+		position: relative;
+		line-height: 1.2;
+	}
+
+	// Footer Top
+	.footer-top {
+		padding: 50px 0px 0;
+
+		.widget {
+			margin-bottom: 45px;
+			
+			@include respond('tab-port'){
+				margin-bottom: 35px;
+			}
+		}
+
+		& + .footer-bottom{
+			.footer-inner{
+				border-top: 1px solid rgba(255, 255, 255, .1);
+			}
+		}
+	}
+
+	// Footer Top
+	.footer-bottom {
+		font-size: 14px;
+	}
+
+	.footer-inner {
+		border-top: 1px solid rgba(255, 255, 255, .1);
+		padding: 20px 0;
+
+		p {
+			margin-bottom: 0;
+		}
+
+		.copyright-text {
+			a {
+				color: $primary;
+			}
+		}
+	}
+
+	@include respond('tab-port') {
+		.footer-bottom {
+
+			.text-start,
+			.text-end {
+				text-align: center !important;
+			}
+
+			.text-end {
+				margin-top: 15px;
+			}
+		}
+	}
+
+	@include respond('phone') {
+		.footer-top {
+			padding: 45px 0px 0px;
+		}
+
+		.footer-bottom {
+			.text-end {
+				margin-top: 10px;
+			}
+		}
+
+		.widget_services {
+			ul {
+				li {
+					a {
+						display: block;
+						@include transitionMedium;
+					}
+				}
+			}
+		}
+
+		.widget_about {
+			margin-right: 70px;
+		}
+
+		@media only screen and (max-width: 1191px) {
+			margin-right: 0;
+		}
+
+		&.footer-dark {
+			background: var(--secondary);
+			--title: #fff;
+
+			.footer-bottom {
+				border-color: rgba(255, 255, 255, 0.1);
+				color: rgba(255, 255, 255, 0.5);
+			}
+
+			.footer-top {
+				color: rgba(255, 255, 255, 0.6);
+			}
+
+			.footer-category {
+				background: var(--primary);
+				border-color: rgba(255, 255, 255, 0.1);
+
+				.toggle-items ul li a {
+					color: rgba(255, 255, 255, 0.85);
+
+					&:hover {
+						color: var(--secondary);
+
+					}
+				}
+
+				.bg-shape1,
+				.bg-shape2 {
+					position: absolute;
+					-webkit-animation: aniRotate 10s infinite linear;
+					animation: aniRotate 10s infinite linear;
+				}
+
+				.bg-shape1 {
+					left: 8%;
+					bottom: -5%;
+				}
+
+				.bg-shape2 {
+					right: 4%;
+					top: -22%;
+					z-index: 1;
+				}
+			}
+		}
+
+		@include respond('wide-desktop') {
+			.bg-shape1 {
+				left: 3%;
+			}
+
+			.bg-shape2 {
+				right: 0%;
+			}
+		}
+
+		@media only screen and (max-width: 1191px) {
+			.column-reverse {
+				flex-direction: column-reverse;
+			}
+		}
+
+		@include respond('tab-land') {
+
+			.bg-shape1,
+			.bg-shape2 {
+				display: none;
+			}
+		}
+
+		// list column
+		.list-column {
+			ul {
+				display: flex;
+				flex-wrap: wrap;
+
+				li {
+					flex: 0 0 50%;
+					max-width: 50%;
+				}
+			}
+		}
+
+		// fb-link
+		.fb-link {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			li {
+				display:inline-bloc a {
+					color: #fff;
+					position: relative;
+
+					&:after {
+						content: "";
+						background: var(--primary);
+						width: 5px;
+						height: 5px;
+					}
+				}
+			}
+		}
+
+		// footer-link
+		.footer-link {
+			margin: 0 -15px;
+
+			li {
+				display: inline-block;
+				font-family: $font-family-title;
+				position: relative;
+				padding: 0 15px 0 15px;
+
+				a {
+					color: inherit;
+				}
+			}
+
+			@include respond('phone') {
+				margin: 0 -10px;
+
+				li {
+					padding: 0 10px;
+				}
+			}
+		}
+
+		.ft-subscribe {
+			position: relative;
+
+			.form-control {
+				height: 55px;
+			}
+
+			.sub-btn {
+				height: 45px;
+				width: 45px;
+				z-index: 1;
+				border-radius: 10px;
+				background-color: var(--primary);
+				color: $white;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				position: absolute;
+				top: 5px;
+				right: 5px;
+			}
+		}
+
+		.widget_links {
+			ul {
+				margin-left: -15px;
+				margin-right: -15px;
+
+				li {
+					display: inline-block;
+					padding-left: 15px;
+					padding-right: 15px;
+
+					a {
+						color: #95A3FF;
+						font-size: 14px;
+						padding: 5px 0;
+						display: block;
+
+						&:hover {
+							color: $primary;
+						}
+					}
+				}
+			}
+
+		}
+
+		.widget-social ul {
+			margin-left: -9px;
+			margin-right: -9px;
+
+			li {
+				padding-left: 9px;
+				padding-right: 9px;
+				display: inline-block;
+
+				a {
+					color: $white;
+					font-size: 1rem;
+					font-weight: 300;
+					display: block;
+					padding: 6px 0;
+
+					img {
+						margin-right: 12px;
+					}
+
+					@include respond('phone') {
+						font-size: 14px;
+
+						img {
+							width: 16px;
+						}
+					}
+				}
+			}
+		}
+	}
+}

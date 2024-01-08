@@ -1,0 +1,75 @@
+
+.btn-next, 
+.btn-prev{
+	box-shadow: 1px 1.732px 60px 0px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 60px;
+    height: 60px;
+    color: var(--primary);
+    background: #fff;
+    font-size: 15px;
+    letter-spacing: 2px;
+    z-index: 1;
+    text-align: center;
+    line-height: 60px;
+    border-radius: var(--border-radius-base);
+    margin: 0 10px;
+	display: inline-block;
+	@include transitionMedium;
+	@include respond('phone-land'){
+		width: 45px;
+		height: 45px;
+		line-height: 45px;
+	}
+	&:hover{
+		background:var(--primary);
+		color:#fff;
+		box-shadow: 0px 12px 20px 0px var(--rgba-primary-3);
+	}
+	&:after{
+		content:none;	
+	}
+	i{
+		font-size: 28px;
+		line-height: inherit;
+		@include respond('phone-land'){
+			font-size: 24px;
+		}
+	}
+}
+
+.swiper-btn-center-lr{
+	position:relative;
+	.btn-next,
+	.btn-prev{
+		position:absolute;
+		top:50%;
+		transform:translateY(-50%);
+	}
+	.btn-prev{
+		left:-100px;
+	}
+	.btn-next{
+		right:-100px;
+	}
+	&:hover{
+		.btn-prev{
+			left:0px;
+		}
+		.btn-next{
+			right:0px;
+		}
+	}
+	@include custommq ($max : 1400px){
+		.btn-prev{
+			left:0px;
+		}
+		.btn-next{
+			right:0px;
+		}
+	}
+}

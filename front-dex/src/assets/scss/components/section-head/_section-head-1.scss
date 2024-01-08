@@ -1,0 +1,31 @@
+// Section Head
+.section-head{
+	&.style-1{
+		margin-bottom:30px;
+		.sub-title{
+			font-size:22px;
+			color:#5c5c5c;
+			font-weight: 800;
+			position:relative;
+			padding-left: 30px;
+			display: inline-block;
+			&:before{
+				content:"";
+				position:absolute;
+				height:6px;
+				width:6px;
+				border-radius:6px;
+				top:12px;
+				left:0;
+				background:var(--secondary);
+				box-shadow:10px 10px 0px 0px var(--secondary),10px -10px 0px 0px var(--secondary);
+			}
+			&.text-white{
+				&:before{
+					background:var(--primary);
+					box-shadow:10px 10px 0px 0px var(--primary),10px -10px 0px 0px var(--primary);
+				}
+			}
+		}
+	}	
+}

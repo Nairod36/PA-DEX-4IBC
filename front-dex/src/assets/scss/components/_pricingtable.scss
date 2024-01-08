@@ -1,0 +1,133 @@
+.pricingtable-wrapper{
+	&.style-1{
+		background: #fff;
+		overflow: hidden;
+		@include transitionMedium;
+		box-shadow: 0px 20px 40px rgba(1, 18, 111, 0.1);
+		border-radius: var(--border-radius-base) var(--border-radius-base);
+
+		.pricingtable-inner{
+			padding: 40px;
+			position: relative;
+			
+			.tagline{
+				position: absolute;
+				border-radius: 6px;
+				background: #D1FFEE;
+				color: #05A467;
+				top: 20px;
+				right: 20px;
+				padding: 5px 15px;
+				font-size: 14px;
+				font-weight: 500;
+			}
+		}
+		.days-label{
+			text-align: center;
+			color: #fff;
+			border-radius: var(--border-radius-base);
+			padding: 10px;
+			margin-bottom: 45px;
+		}
+		.pricingtable-title{
+			margin-bottom: 5px;
+			@include transitionMedium;
+			
+			svg{
+				margin-right: 5px;
+			}
+		}
+		.pricingtable-price {
+			.pricingtable-bx {
+				font-size: 75px;
+				font-weight: 400;
+				color: $secondary !important;
+				line-height: 1.2;
+				margin-bottom: 15px;
+
+				span{
+					color: $primary;
+					opacity: 0.7;
+					font-weight: 400;
+				}
+				small{
+					font-size: 16px;
+					font-weight: 500;
+				}
+			}
+		}
+		.pricingtable-features{
+			li{
+				display: flex;
+				align-items: center;
+				margin: 15px 0;
+				color: #7462A1;
+				
+				svg{
+					margin-right: 10px;
+				}
+			}
+		}
+		.pricingtable-footer{
+			.btn{
+				@include transitionMedium;
+				width: 100%;
+				display: block;
+				background: $light;
+				color: #362465;
+				font-weight: 400;
+				font-size: 16px;
+				border-radius: 0 0 var(--border-radius-base) var(--border-radius-base);
+				padding: 15px 30px;
+			}
+		}
+		@include respond ('phone'){
+			.pricingtable-inner {
+				padding: 30px 30px 20px;
+			}
+			.pricingtable-price .pricingtable-bx {
+				font-size: 55px;
+			}
+			.days-label{
+				margin-bottom: 35px;
+			}
+		}
+		&:hover,
+		&.active{
+			background: $secondary;
+
+			.pricingtable-price{
+				h6{
+					color: white;
+				}
+			}
+			.pricingtable-title{
+				color: #fff;
+			}
+			.pricingtable-inner{
+				.tagline{
+					background: rgba(255,255,255,0.1);
+					color: #fff;
+				}
+			}
+			.pricingtable-bx{
+				color: $white !important;
+			}
+			.pricingtable-features {
+				span {
+					color: $white;
+				}
+				li{
+					color: white;
+					opacity: 0.8;
+				}
+			}
+			.pricingtable-footer{
+				.btn{
+					color: $white;
+					background: $primary-light;
+				}
+			}
+		}
+	}
+}

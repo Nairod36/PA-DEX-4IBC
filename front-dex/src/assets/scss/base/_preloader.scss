@@ -1,0 +1,314 @@
+.preloader-wrapper-1,
+.preloader-wrapper-2{
+	align-items: center;
+    position: fixed;
+    z-index: 999999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+	@include transitionSlow;
+	
+	.preloader-inner{
+		position: relative;
+	}
+}
+.preloader-wrapper-1{
+	.preloader-inner{
+		height: 100px;
+		width: 150px;
+		padding: 5px;
+		border-radius: 0;
+		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3), 0 0 0 5px var(--primary) inset;
+		perspective: 37.5rem;
+		transform-style: preserve-3d;
+		transform: translate3d(0,0,0);
+		animation: pre_ani_cover_1 7s ease-in-out infinite;
+		
+		.preloader-shade,
+		.preloader-wrap{
+			width: calc(50% - 0.25rem);
+			position: absolute;
+			left: 0.25rem;
+			animation: pre_ani_cover_1 7s ease-in-out infinite;
+		}
+		.preloader-shade{
+			background-image: linear-gradient(-45deg,rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+			height: 3.75rem;
+			filter: blur(0.25rem);
+			transform: scaleY(0);
+			transform-origin: 100% 0%;
+			top: calc(100% - 0.25rem);
+			animation-name: pre_ani_shadow_1;
+		}
+		.preloader-wrap{
+			background-color: #fff;
+			background-image: linear-gradient(90deg,hsla(223,10%,90%,0) 87.5%,hsl(223,10%,90%));
+			height: calc(100% - 0.5rem);
+			transform-origin: 100% 50%;
+			animation-name: pre_ani_wrap_1;
+		}
+		.wrap2,
+		.wrap3,
+		.wrap4{
+			background-image:repeating-linear-gradient(hsl(223,10%,10%) 0 0.125rem, hsla(223,10%,10%,0) 0.125rem 0.5rem), linear-gradient(90deg,hsla(223,10%,90%,0) 87.5%,hsl(223,10%,90%));
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 2.5rem 4.125rem, 100% 100%;
+		}
+		.wrap2{
+			animation-name: pre_ani_wrap_2;
+		}
+		.wrap3{
+			animation-name: pre_ani_wrap_3;
+		}
+		.wrap4{
+			animation-name: pre_ani_wrap_4;
+		}
+		.wrap5{
+			animation-name: pre_ani_wrap_5;
+		}
+	}
+}
+
+// Animations
+@keyframes pre_ani_cover_1{
+    from, 5%, 45%, 55%, 95%, to{
+        background-color: var(--rgba-primary-6);
+        animation-timing-function: ease-out;
+    }
+    10%, 40%, 60%, 90%{
+        background-color: var(--rgba-primary-6);
+        animation-timing-function: ease-in;
+    }
+}
+@keyframes pre_ani_shadow_1{
+    from, 10.01%, 20.01%, 30.01%, 40.01%{
+        transform: translate3d(0,0,1px) scaleY(0) rotateY(0);
+        animation-timing-function: ease-in;
+    }
+    5%, 15%, 25%, 35%, 45%, 55%, 65%, 75%, 85%, 95%{
+        transform: translate3d(0,0,1px) scaleY(0.2) rotateY(90deg);
+        animation-timing-function: ease-out;
+    }
+    10%, 20%, 30%, 40%, 50%, to{
+        transform: translate3d(0,0,1px) scaleY(0) rotateY(180deg);
+        animation-timing-function: ease-out;
+    }
+    50.01%, 60.01%, 70.01%, 80.01%, 90.01%{
+        transform: translate3d(0,0,1px) scaleY(0) rotateY(180deg);
+        animation-timing-function: ease-in;
+    }
+    60%, 70%, 80%, 90%, to{
+        transform: translate3d(0,0,1px) scaleY(0) rotateY(0);
+        animation-timing-function: ease-out;
+    }
+}
+@keyframes pre_ani_wrap_1{
+    from, to{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(0.4deg);
+        animation-timing-function: ease-in-out;
+    }
+    10%, 15%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(180deg);
+        animation-timing-function: ease-out;
+    }
+    20%, 80%{
+        background-color: rgba(0,0,0,0.5);
+        transform: translate3d(0,0,1px) rotateY(180deg);
+        animation-timing-function: ease-in;
+    }
+    85%, 90%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(180deg);
+        animation-timing-function: ease-in-out;
+    }
+}
+@keyframes pre_ani_wrap_2{
+    from, to{
+        background-color: rgba(0,0,0,0.5);
+        transform: translate3d(0,0,1px) rotateY(0.3deg);
+        animation-timing-function: ease-in;
+    }
+    5%, 10%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(0.3deg);
+        animation-timing-function: ease-in-out;
+    }
+    20%, 25%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(179.9deg);
+        animation-timing-function: ease-out;
+    }
+    30%, 70%{
+        background-color: rgba(0,0,0,0.5);
+        transform: translate3d(0,0,1px) rotateY(179.9deg);
+        animation-timing-function: ease-in;
+    }
+    75%, 80%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(179.9deg);
+        animation-timing-function: ease-in-out;
+    }
+    90%, 95%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(0.3deg);
+        animation-timing-function: ease-out;
+    }
+}
+@keyframes pre_ani_wrap_3{
+    from, 10%, 90%, to{
+        background-color: rgba(0,0,0,0.5);
+        transform: translate3d(0,0,1px) rotateY(0.2deg);
+        animation-timing-function: ease-in;
+    }
+    15%, 20%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(0.2deg);
+        animation-timing-function: ease-in-out;
+    }
+    30%, 35%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(179.8deg);
+        animation-timing-function: ease-out;
+    }
+    40%, 60%{
+        background-color: rgba(0,0,0,0.5);
+        transform: translate3d(0,0,1px) rotateY(179.8deg);
+        animation-timing-function: ease-in;
+    }
+    65%, 70%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(179.8deg);
+        animation-timing-function: ease-in-out;
+    }
+    80%, 85%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(0.2deg);
+        animation-timing-function: ease-out;
+    }
+}
+@keyframes pre_ani_wrap_4{
+    from, 20%, 80%, to{
+        background-color: rgba(0,0,0,0.5);
+        transform: translate3d(0,0,1px) rotateY(0.1deg);
+        animation-timing-function: ease-in;
+    }
+    25%, 30%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(0.1deg);
+        animation-timing-function: ease-in-out;
+    }
+    40%, 45%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(179.7deg);
+        animation-timing-function: ease-out;
+    }
+    50%{
+        background-color: rgba(0,0,0,0.5);
+        transform: translate3d(0,0,1px) rotateY(179.7deg);
+        animation-timing-function: ease-in;
+    }
+    55%, 60%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(179.7deg);
+        animation-timing-function: ease-in-out;
+    }
+    70%, 75%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(0.1deg);
+        animation-timing-function: ease-out;
+    }
+}
+@keyframes pre_ani_wrap_5{
+    from, 30%, 70%, to{
+        background-color: rgba(0,0,0,0.5);
+        transform: translate3d(0,0,1px) rotateY(0);
+        animation-timing-function: ease-in;
+    }
+    35%, 40%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(0deg);
+        animation-timing-function: ease-in-out;
+    }
+    50%{
+        background-color:#fff;
+        transform: translate3d(0,0,1px) rotateY(179.6deg);
+        animation-timing-function: ease-in-out;
+    }
+    60%, 65%{
+        background-color: #fff;
+        transform: translate3d(0,0,1px) rotateY(0);
+        animation-timing-function: ease-out;
+    }
+}
+
+
+// preloader-wrapper-2
+.preloader-wrapper-2{
+	.preloader-inner{
+		width: 110px;
+		height: 90px;
+		margin: 50px auto 0;
+		
+		span{
+			background: var(--primary);
+			width: 5px;
+			height: 80px;
+			border-radius: 10px;
+			transform: translateY(-50%) rotate(0);
+			position: absolute;
+			top: 50%;
+			animation: pre_ani_2 0.7s infinite alternate-reverse;
+		
+			&:nth-child(1) {
+				margin-left: 0px;
+			}
+			&:nth-child(2){
+				margin-left: 14px;
+				animation-delay: 0.1s;
+			}
+			&:nth-child(3){
+				margin-left: 28px;
+				animation-delay: 0.2s;
+			}
+			&:nth-child(4){
+				margin-left: 42px;
+				animation-delay: 0.3s;
+			}
+			&:nth-child(5){
+				margin-left: 56px;
+				animation-delay: 0.4s;
+			}
+			&:nth-child(6){
+				margin-left: 70px;
+				animation-delay: 0.5s;
+			}
+			&:nth-child(7){
+				margin-left: 84px;
+				animation-delay: 0.6s;
+			}
+			&:nth-child(8){
+				margin-left: 98px;
+				animation-delay: 0.7s;
+			}
+		}
+	}
+	
+}
+
+@keyframes pre_ani_2{
+	0%{
+		height: 5px;
+		transform: translateY(-50%) rotate(40deg);
+	}
+	100%{
+		height: 90px;
+		transform: translateY(-50%) rotate(0deg);
+	}
+}

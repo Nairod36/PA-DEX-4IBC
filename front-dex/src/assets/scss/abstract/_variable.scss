@@ -1,0 +1,152 @@
+// to ignore cli warning about deprecated mixin
+$enable-deprecation-messages: false;
+$ignore-warning             : true;
+
+// Color
+$primary   : #9467FE;
+$secondary : #362465 !default;
+$success   : #11B011 !default;
+$info      : #00aeff !default;
+$warning   : #FFBB69 !default;
+$danger    : #EB5757 !default;
+$light     : #FFFBF5 !default;
+$dark      : #212529 !default;
+$dark-secondry :#261355;
+
+// Body
+$body-bg   : #F0F5FF;
+$body-color: #7E87BF;
+$card-bg   : #fff;
+$dark-card : #193867;
+$dark-bg   : #1A304F;
+$light-input  : #fff;
+$dark-input  : #122B50;
+$dark-border : rgba(142, 165, 200, 0.3) ;
+
+// Typography
+$font-family-base : 'Poppins', sans-serif;
+$font-family-title : 'Poppins', sans-serif;
+$headings-font-weight   : 600;
+$headings-font-weight2  : 400;
+$headings-font-weight3  : 300;
+// $headings-font-family:        $fm;
+$font-size-base         : 1rem !default;
+$font-weight-base       : 400 !default;
+
+$line-height-base    : 1.6;
+$h1-font-size           : 3rem;
+$h2-font-size           : 2.375rem;	
+$h3-font-size           : 1.875rem;
+$h4-font-size           : 1.5rem;	
+$h5-font-size           : 1.25rem;	
+$h6-font-size           : 1.125rem;
+
+$text-muted : rgba(151, 151, 159, 0.39);
+$colors     : () !default;
+
+$heading-primary-size: 1.8rem;
+$sub-heading-size    : 1.6rem !default;
+$grid-gutter-width   : 30px;
+$dropdown-lik-color  : $body-color;
+$border-color        : #CFDBED;
+$headings-color      :  #1C2E9E !default;
+$grid-breakpoints    : (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 1440);
+$container-max-widths: (sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1200px) !default;
+
+$input-btn-focus-width: 0rem !default;
+$border-radius-base   : 8px !default;
+$shadow-color: rgba(160, 159, 202, 0.15);
+
+// Other Color
+$orange  : #ff8853;	
+$skyblue : #00aeff;
+$maroon  : #9e0168;
+$yellow  : #EFD430;
+$red     : #f22462;
+$green   : #53C258;
+$blue    : #131045;
+$sea	 : #1E33E5;
+$rama	 : #61C3E2;
+$glight	: #E5CCB8;	
+$light : #F0EAFF;
+
+
+// Color Opacity
+$primary-light: rgba($primary,0.1);
+$secondary-light: rgba($secondary,0.1);
+$success-light: rgba($success,0.1);
+$warning-light: rgba($warning,0.1);
+$danger-light: rgba($danger,0.1);
+$info-light: rgba($info,0.1);
+$dark-light: rgba($dark,0.1);
+$white-light: rgba($light,0.1);
+$yellow-light: rgba($yellow,0.1);
+$lightest-primary: #F8F5FF;
+// border radius
+$border-radius: .375rem !default;
+$border-radius-lg: 1rem !default;
+$border-radius-sm: .75rem !default;
+
+// Social Colors
+$facebook: #3b5998;
+$twitter: #1da1f2;
+$youtube: #FF0000;
+$google-plus: #db4439;
+$linkedin: #007bb6;
+$instagram: #c32aa3;
+$pinterest: #bd081c;
+$google: #4285f4;
+$snapchat: #fffc00;
+$whatsapp: #25d366;
+$tumblr: #35465d;
+$reddit: #ff4500;
+$spotify: #1ed760;
+$yahoo: #430297;
+$dribbble: #ea4c89;
+$skype: #00aff0;
+$quora: #aa2200;
+$riverBed: #4C585C;
+$vimeo: #1ab7ea;
+
+//color for coller pallate
+$color_pallate_1: $primary;
+$color_pallate_2: #ff6016;
+$color_pallate_3: #f7ae00;
+
+//Bs custom
+$white: #ffffff;
+:root{
+	--gradient: linear-gradient( to right, rgb(255,64,62) 0%, rgb(255,129,27) 100%);
+	--gradient-sec: linear-gradient( to right, rgb(57,26,166) 0%, rgb(6,163,245) 100%);
+	--primary: #{$primary};
+	--secondary: #{$secondary};
+	--primary-hover: #{darken($primary, 10)};
+	--primary-dark: #{darken($primary, 30)};
+	--rgba-primary-1: #{rgba($primary, 0.1)};
+	--rgba-primary-2: #{rgba($primary, 0.2)};
+	--rgba-primary-3: #{rgba($primary, 0.3)};
+	--rgba-primary-4: #{rgba($primary, 0.4)};
+	--rgba-primary-5: #{rgba($primary, 0.5)};
+	--rgba-primary-6: #{rgba($primary, 0.6)};
+	--rgba-primary-7: #{rgba($primary, 0.7)};
+	--rgba-primary-8: #{rgba($primary, 0.8)};
+	--rgba-primary-9: #{rgba($primary, 0.9)};
+	--body-color    : #{$body-color};
+	--border-color  : #{$border-color};
+	--body-bg       : #{$body-bg};
+	--font-family-base: #{$font-family-base};
+	--grey: #F4F6FA;
+	--bg-image : '';
+	--input-bg : #{$light-input};
+	--card-bg  : #{$card-bg};
+	--border-radius-base: #{$border-radius-base};
+	--font-family-title: #{$font-family-title};
+	--title: #{$headings-color};
+	//--body-img : url(../images/background/bglight.png); 
+	--headings-font-weight:#{$headings-font-weight};
+	--headings-font-weight2:#{$headings-font-weight2};
+	--headings-font-weight3:#{$headings-font-weight3};
+}

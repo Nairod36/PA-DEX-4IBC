@@ -1,0 +1,697 @@
+// Form Label
+.form-label{
+	font-size    : 14px;
+	font-weight  : 400;
+	color        : var(--title);
+	margin-bottom: 6px;
+	background   : transparent;
+	border-color : $border-color;
+}
+
+// Form Control
+.form-control {
+    height    	 : 55px;
+    border       : 1px solid #CECECE;
+    padding      : 10px 20px;
+    font-size    : 15px;
+    font-weight  : 400;
+    color        : var(--title);
+    transition   : all 0.3s ease-in-out;
+    background   : var(--input-bg);
+	border-radius: var(--border-radius-base);
+    
+	.select{
+        padding: 12px 0;
+    }
+    span {
+        margin-top: 0;
+    }
+
+    &.md{
+        height: 48px;
+        border-radius: 10px;
+    }
+
+    &::-webkit-input-placeholder {
+        color: #4D4A85;
+    }
+
+    &:-ms-input-placeholder {
+        color: #4D4A85;
+    }
+	&::placeholder{
+		color: var(--body-color);
+	}
+	&:focus,
+    &:active,
+    &.active {
+        border-color: var(--primary);
+		background: $light;
+	}
+	@include respond ('phone'){
+		height: 50px;
+		font-size: 14px;
+	}
+}
+textarea.form-control{
+    min-height: auto;
+	height:unset;
+}
+
+// Textarea
+textarea{
+	height: 150px;
+	resize: none;
+}
+
+input:-internal-autofill-selected {
+    background      : lighten($body-bg, 2%) !important;
+    background-image: none !important;
+    color           : -internal-light-dark-color(black, white) !important;
+}
+
+.input-group-text {
+    padding         : 5px 15px;
+    background      : $body-bg;
+    margin-bottom   : 0px !important;
+    color           : $body-color;
+}
+
+// Styling Selectbox
+
+// toggle
+.toggle {
+    cursor          : pointer;
+    display         : block;
+}
+.toggle-switch {
+    display       : inline-block;
+    background    : darken($body-bg, 3%);
+    border-radius : 16px;
+    width         : 45px;
+    height        : 20px;
+    position      : relative;
+    vertical-align: middle;
+    transition    : background 0.25s;
+
+    &:before,
+    &:after {
+        content: "";
+    }
+
+    &:before {
+        display      : block;
+        background   : linear-gradient(to bottom, $white 0%, #eee 100%);
+        border-radius: 50%;
+        width        : 17px;
+        height       : 17px;
+        position     : absolute;
+        top          : 1px;
+        left         : 3px;
+        transition   : left 0.25s;
+    }
+
+    .toggle:hover &:before {
+        background   : linear-gradient(to bottom, $white 0%, $white 100%);
+    }
+
+    .toggle-checkbox:checked+& {
+        background: var(--primary);
+
+        &:before {
+            left: 26px;
+        }
+    }
+}
+.toggle-checkbox {
+    position  : absolute;
+    visibility: hidden;
+}
+.toggle-label {
+    margin-left: 15px;
+    position   : relative;
+    top        : 2px;
+    font-size  : 16px;
+    font-weight: 400;
+}
+
+// Upload btn
+.file-upload-wrapper {
+    position     : relative;
+    width        : 100%;
+    height       : calc(1.5em + 1rem + 2px);
+    border       : 1px solid $border-color;
+    border-radius: 5px;
+    color        : $text-muted;
+
+    &:after {
+        content       : attr(data-text);
+        position      : absolute;
+        top           : 0;
+        left          : 0;
+        background    : $body-bg;
+        padding       : 4px 15px;
+        display       : block;
+        width         : calc(100% - 40px);
+        pointer-events: none;
+        z-index       : 20;
+        height        : calc(1.5em + 1rem + 2px);
+        line-height   : 50px - 20px;
+        border-radius : 5px 10px 10px 5px;
+        font-weight   : 400;
+        overflow      : hidden;
+    }
+
+    &:before {
+        content : 'Upload';
+        position: absolute;
+        top     : 0;
+        right   : 0;
+        display : inline-block;
+        height  : calc(1.5em + 1rem + 2px);
+        background    : var(--primary);
+        color         : $white;
+        font-weight   : 400;
+        z-index       : 25;
+        font-size     : 14px;
+        line-height   : 40px;
+        padding       : 0 15px;
+        text-transform: capitalize;
+        pointer-events: none;
+        border-radius : 0 5px 5px 0;
+    }
+
+    &:hover {
+        &:before {
+            background: darken($primary, 10%);
+        }
+    }
+
+    input {
+        opacity : 0;
+        position: absolute;
+        top     : 0;
+        right   : 0;
+        bottom  : 0;
+        left    : 0;
+        z-index : 99;
+        height  : calc(1.5em + 1rem + 2px);
+        margin  : 0;
+        padding : 0;
+        display : block;
+        cursor  : pointer;
+        width   : 100%;
+    }
+}
+
+// Date picker
+#ui-datepicker-div {
+    display      : none;
+    background   : darken($body-bg, 2%);
+    box-shadow   : 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
+    margin-top   : 0.25rem;
+    border-radius: 0.5rem;
+    padding      : 0.5rem;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing : 0;
+}
+
+.ui-datepicker-calendar {
+    thead th {
+        padding    : 0.25rem 0;
+        text-align : center;
+        font-size  : 0.75rem;
+        font-weight: 400;
+        color      : $body-color;
+    }
+
+    tbody td {
+        width     : 2.5rem;
+        text-align: center;
+        padding   : 0;
+
+        a {
+            display        : block;
+            border-radius  : 0.25rem;
+            line-height    : 2rem;
+            transition     : 0.3s all;
+            color          : $body-color;
+            font-size      : 0.875rem;
+            text-decoration: none;
+
+            &:hover {
+                background-color: var(--primary);
+                color           : white;
+            }
+
+            &.ui-state-active {
+                background-color: var(--primary);
+                color           : white;
+            }
+        }
+    }
+}
+
+.ui-datepicker-header a {
+    &.ui-corner-all {
+        cursor       : pointer;
+        position     : absolute;
+        top          : 0;
+        width        : 2rem;
+        height       : 2rem;
+        margin       : 0.5rem;
+        border-radius: 0.25rem;
+        transition   : 0.3s all;
+
+        &:hover {
+            background-color: lighten($primary, 30%);
+            color           : $white;
+        }
+    }
+
+    &.ui-datepicker-prev {
+        left               : 0;
+        background         : url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==");
+        background-repeat  : no-repeat;
+        background-size    : 0.5rem;
+        background-position: 50%;
+        transform          : rotate(180deg);
+    }
+
+    &.ui-datepicker-next {
+        right              : 0;
+        background         : url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==');
+        background-repeat  : no-repeat;
+        background-size    : 10px;
+        background-position: 50%;
+    }
+
+    >span {
+        display: none;
+    }
+}
+
+.ui-datepicker-title {
+    text-align    : center;
+    line-height   : 2rem;
+    margin-bottom : 0.25rem;
+    font-size     : 0.875rem;
+    font-weight  : 500;
+    padding-bottom: 0.25rem;
+}
+
+.ui-datepicker-week-col {
+    color      : $body-color;
+    font-weight: 400;
+    font-size  : 0.75rem;
+}
+
+// Validation Error
+label.error {
+    color        : $danger;
+    position     : absolute;
+    bottom       : 0;
+    margin-bottom: -22px;
+    font-size    : 12px;
+    font-weight  : 400;
+}
+
+// Nice Select
+.nice-select {
+    display                  : flex;
+    align-items              : center;
+    border-top-left-radius   : 3px !important;
+    border-bottom-left-radius: 3px !important;
+
+    ul {
+        width: 100% !important;
+    }
+}
+
+.nice-select .list {
+    background: $dark;
+}
+
+.nice-select .option:hover,
+.nice-select .option.focus,
+.nice-select .option.selected.focus {
+    background-color: $dark;
+    color           : var(--primary);
+}
+
+// Select Opting
+.form-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 100%;
+}
+.label-title{
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+.form-select{
+	height		 : 48px;
+	border       : 1px solid rgba(0, 0, 0, 0.125);
+    padding      : 10px 20px;
+    font-size    : 15px;
+    font-weight  : 400;
+    color        : $headings-color;
+    transition   : all 0.3s ease-in-out;
+    background-color: $light;
+	.dropdown-toggle {
+	
+		border: 0 !important;
+		padding: 0;
+		font-weight: normal;
+		text-transform: unset;
+		outline:none;
+		&:focus {
+			outline: 0 !important;
+			outline-offset: 0;
+		}
+		&:after{
+			content:none;
+		}
+	}
+	&.show {
+		box-shadow: none !important;
+		outline: 0px !important;
+		.dropdown-toggle {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		&.btn-group .dropdown-menu.inner{
+			display:block;
+		}	
+	}
+	.dropdown-menu {
+		border: 0;
+		border-radius: 0;
+		box-shadow: none;
+		margin-top: -1px;
+		padding: 10px 0;
+		box-shadow:0 15px 30px 0 rgba(0,0,0,0.2);
+		font-size:14px;
+		ul li {
+			padding: 0;
+			a {
+				display: block;
+				padding: 8px 20px;
+				clear: both;
+				font-weight: 400;
+				color: #333;
+				white-space: nowrap;
+				
+				img {
+					border-radius: 100%;
+					-webkit-border-radius: 100%;
+					margin-right: 5px;
+				}
+				&:hover {
+					background-color:#f2f2f4;
+				}
+			}
+			&.selected{
+				a{
+					background-color: var(--primary);
+					color: $white;
+				}
+			}
+		}
+	}
+	&:focus,
+    &:active,
+    &.active {
+        border-color: var(--primary);
+    }
+}
+
+.form-select.btn-group{
+	padding: 10px 20px;
+	border-width: 1px;
+	&.show{
+		box-shadow: 0 0px 10px 4px rgba(31, 66, 135, 0.1)!important;
+		border-color: var(--primary);
+	}
+	.form-control{
+		.dropdown-toggle{
+			&.btn-default{
+				padding: 0;
+			}
+		}
+	}
+	.dropdown-toggle{
+		.caret{
+			font-size: 10px;
+			top: 50%;
+			right: 5px;
+			transform: translateY(-50%);
+			&:before{
+				content: "\f078";
+			}
+		}
+	}
+}
+.custom-file-label{
+	box-shadow: 0 0px 10px 4px rgba(31, 66, 135, 0.1);
+	height: 45px;
+	border-radius: 30px!important;
+	padding: 10px 20px;
+	font-size: 15px;
+	border-color: transparent;
+	&:after{
+		content: none!important;
+	}
+}
+
+.dz-form{
+	&.radius-no{
+		.form-control{
+			border-radius:0;
+		}
+	}
+	&.style-1{
+		textarea{
+			height: 185px;
+			padding: 15px ​20px;
+		}
+	}
+}
+.form-check-input{
+    width: 1.125em;
+    height: 1.125em;
+    border: 2px solid var(--primary);
+}
+.form-check-label{
+    font-size: 15px;
+    color: var(--title);
+}
+.input-group {
+    margin-bottom: 20px;
+}
+.wpcf7-form{
+	.row{
+	    --bs-gutter-x: 20px;
+	}
+}
+.checkout-form{
+	margin-bottom: 40px;
+	.form-label{
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--primary);
+	}
+	.form-control{
+		background: none;
+		border: 1px solid transparent;
+		border-bottom: 2px solid #E1E1E1;
+		border-radius: 0;
+		padding: 10px 0;
+		&::placeholder {
+			font-weight: 600;
+			font-size: 16px;
+			color: var(--seconday);
+		}
+	}
+}
+.pay-bottom{
+	padding-bottom: 55px;
+    border-bottom: 2px dashed #AAAAAA;
+	.money-type{
+		position:relative;
+		text-align:center;
+		
+		.form-check{
+			border: 1px solid #F0F0F0;
+			border-radius:var(--border-radius-base);
+			padding-left: 0;
+			.form-check-input{
+			
+				position: absolute;
+				right: 15px;
+				top: 15px;
+				
+				&:checked + .form-check-label {
+					background-color: #FFF0DF;
+					border:1px solid var(--primary);
+					border-radius:var(--border-radius-base);
+					i{
+						color:var(--primary);
+					}
+				}
+			}
+			.form-check-label{
+				width:100%;
+				margin: 0!important;
+				padding:10px 10px;
+			}	
+			.payment-check{
+				i{
+					font-size:68px;
+				}
+			}
+		}
+	}
+}
+.input-group-text{
+	&.checkout-text{
+		background: none;
+		border-color: transparent;
+		position: relative;
+		right: 60px;
+		i{
+			font-size:20px;
+			font-weight:600;
+		}
+	}
+}
+.form-control {
+	&.default-select{
+		.btn{
+			background: transparent;
+			border-width: 0 0 2px;
+			border-radius: 0;
+			padding: 15px 10px!important;
+			border-color: #E1E1E1;
+			padding: 10px 20px;
+			&:focus{
+				outline: 0!important;
+			}
+			//&:after{
+			//	content:"\f107";
+			//	position:absolute;
+			//	font-family:"Font Awesome 5 Free";
+			//	border-style:none;
+			//	right:0;
+			//}
+		}
+		.filter-option-inner-inner {
+			font-weight: 600;
+			font-size: 16px;
+		}
+	}
+}
+
+.shop-form{
+	.form-group{
+		margin-bottom:25px;
+		.bootstrap-select{
+			width:100% !important;
+			.btn{
+				font-weight:300;
+				color: #000;
+				&.btn-light{
+					border:1px solid rgba(0, 0, 0, 0.125);
+					&:hover{
+						background-color:rgb(245, 245, 245);
+						border-color:1px solid rgba(0, 0, 0, 0.125);
+					}
+					&:focus{
+						outline:0 !important;
+					}
+				}
+			}
+		}
+	}
+	@include respond('tab-port'){	
+		margin-top:25px;
+	}
+}
+.login-area{
+	border:1px solid rgba(0,0,0,0.125);
+    padding: 30px;	
+    height: 100%;
+    border-radius: 6px;
+}
+
+.dz-ajax-overlay{
+	position: relative;
+	&:after{
+		content: "Loading...";
+		height: 100%;
+		width: 100%;
+		background-color: #000;
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 99;
+		border-radius: 5px;
+		opacity: 0.8;
+		color: #fff;
+		text-transform: uppercase;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		letter-spacing: 2px;
+		font-weight: 500;
+		font-size: 14px;
+		font-style: italic;
+	}
+}
+
+// Custom Radio
+.custom-radio{
+	min-height: auto;
+	.form-check-label{
+		font-size: 14px;
+		font-weight: 500;
+		color: #000;
+		margin: 0 0 0 3px;
+	}
+	.form-check-input{
+		height: 20px;
+		width: 20px;
+		margin-top: 3px;
+		@include respond ('phone'){
+			margin-top: 1px;
+		}
+	}
+	.form-check-input[type="radio"]{
+		width: 20px;
+		min-width: 20px;
+		height: 20px;
+		position: relative;
+		border-color: var(--primary);
+		border-width: 1px;
+		border-style: solid;
+	}
+	.form-check-input:checked[type="radio"]{
+		background-image: none;
+		background-color: white;
+		border-color: var(--primary);
+		
+		&:after{
+			content: "";
+			height: 12px;
+			width: 12px;
+			background-color: var(--primary);
+			position: absolute;
+			top: 3px;
+			left: 3px;
+			border-radius: 50%;
+		}
+	}
+}

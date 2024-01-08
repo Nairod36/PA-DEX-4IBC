@@ -1,0 +1,176 @@
+.table-responsive-sm {
+    min-width: 48rem;
+}
+
+.table {
+    margin-bottom     : 0px;
+    font-weight       : 400;
+
+    tr {
+
+        td,
+        th {
+            padding: 10px 20px; 
+			@include respond('phone'){
+				padding: 5px;
+			}
+			
+        }
+    }
+}
+
+.table{
+	&.book-overview{
+		tr{
+			th{
+				color: $headings-color;
+				font-size: 16px;
+				font-weight: 500;
+				width: 200px;
+			}
+			
+		}
+	}
+}
+
+.table-striped {
+    thead {
+        tr {
+            th {
+                padding-bottom: 15px!important;
+            }
+        }
+    }
+
+    tbody tr:nth-of-type(#{$table-striped-order}) {
+        background-color: $body-bg;
+    }
+
+    tfoot{
+        border-top: 2px solid $border-color;
+        tr{
+            th{
+                padding-top: 10px;
+            }
+        }
+    }
+}
+.table > :not(:first-child) {
+    border-top: 1px solid #dee2e6;
+}
+
+.check-tbl{
+	width:100%;
+	border:1px solid rgba(0, 0, 0, 0.125);
+	vertical-align:middle;
+	thead{
+		th{
+			font-size: 16px;
+			font-weight: 600;
+			padding: 15px 15px;
+			color: #fff;
+		    background: var(--secondary);
+		}
+	}
+	tbody{
+		td{
+			padding: 15px;
+			font-weight: 500;
+			color: var(--secondary);
+			img{
+				width: 100px;
+				border-radius:6px;
+			}
+		}
+	}
+	.product-item-close{ 
+		text-align: right;
+		a{
+			width: 40px;
+			height: 40px;
+			border-radius: 6px;
+			background: var(--bs-danger);
+			display: inline-block;
+			color: #fff;
+			text-align: center;
+			line-height: 40px;
+		}
+	}
+	.product-item-totle{
+		min-width : 180px;
+	}
+
+}
+ .product-item-img{
+	width:100px;
+	height:100px;
+} 
+
+
+
+.table-style-1{
+	border-collapse: separate;
+	
+	thead th{
+		font-size: 15px;
+		padding: 10px 25px;
+		color: var(--primary);
+		font-weight: 500;
+		white-space: nowrap;
+		border: 0;
+		
+		@include respond ('phone'){
+			padding: 10px 20px;
+		}
+	}
+	tbody{
+		tr{
+			@include transitionMedium;
+			
+			&:hover{
+				background-color: rgba(124,165,200,.1);
+			}
+		}
+		td{
+			padding: 10px 25px;
+			vertical-align: middle;
+			font-size: 13px;
+			color: var(--title);
+			border: 0;
+			
+			@include respond ('phone'){
+				padding: 10px 20px;
+			}
+		}
+	}
+	
+	&.border-table{
+		tbody tr:not(:last-child) td{
+			border-bottom: 1px solid rgba(142, 165, 200, 0.3);
+		}
+	}
+	&.data-end-right{
+		thead th:last-child,
+		tbody td:last-child{
+			text-align: right;
+		}
+	}
+}
+.table-notifications{
+	td.data{
+		width: 250px;
+		@include respond ('phone-land'){
+			width: 180px;
+		}
+	}
+}
+.trade-history-table{
+	.date{
+		width: 180px;
+		min-width: 180px;
+		@include respond ('phone'){
+			width: 150px;
+			min-width: 150px;
+		}
+	}
+}

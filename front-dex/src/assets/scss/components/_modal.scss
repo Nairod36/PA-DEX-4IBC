@@ -1,0 +1,444 @@
+.modal{
+    .close-btn{
+        height: 40px;
+        width: 40px;
+        background-color: #EB5757;
+        color: white;
+        text-align:center;
+        display: block;
+        line-height: 40px;
+        border-radius: 10px;
+        position: fixed;
+        top: 1rem;
+        right: 15px;
+        left: auto;
+        cursor: pointer;
+        font-size: 20px;
+		opacity: 0;
+		transition: opacity .3s ease-in-out .3s;
+    }
+	&.show{
+		.close-btn{
+			opacity: 1;
+		}
+	}
+	.modal-content{
+		border: 0;
+        border-radius: 10px;
+	}
+    .modal-header{
+		padding-bottom: 0;
+        padding-left: 40px;
+        padding-right: 40px;
+        border-bottom: 0;  
+		padding-top: 30px;
+        
+		@include respond ('phone'){
+			padding-left: 25px;
+			padding-right: 25px;
+			padding-top: 20px;
+		}
+		
+        .modal-title{
+            font-size: 18px;
+        }
+    }
+	.modal-header + .modal-body{
+		padding-top: 20px;
+	}
+	.modal-footer{
+        border-top: 0;
+    }
+	.modal-body{
+		padding-left: 40px;   
+        padding-right: 40px;
+		padding-bottom: 30px;
+		padding-top: 30px;
+		
+		@include respond ('phone'){
+			padding-left: 25px;
+			padding-right: 25px;
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+	}
+}
+.modal-backdrop {
+    background-color: #1A2943;
+	
+	&.show{
+		opacity: 0.7;
+	}
+}
+.modal-content{
+	background-color: var(--card-bg);
+}
+.modal-dialog{
+	@media (min-width: 576px){
+		max-width: 412px;
+	}
+	
+    .modal-body{
+        .form-group{
+            margin-bottom: 20px;
+        }
+		.form-select{
+			border-color:var(--border-color);
+			border-radius: var(--border-radius-base);
+			background-color: var(--input-bg);
+			margin-bottom: 20px;
+			box-shadow: 0px 7px 15px 0 rgba(61, 70, 83, 0.1);
+			font-size: 16px;
+			color: var(--title);
+		}
+		.fixed-text{
+			.input-group-text{
+				position: absolute;
+				right: 0;
+				top: 0;
+				height: 100%;
+				border: 0;
+				background-color: transparent;
+				font-size: 14px;
+				color: #000;
+				z-index: 9;
+			}
+			.form-control{
+				border-radius: var(--border-radius-base) !important;
+			}
+		}
+        .form-control{
+            font-size: 16px;
+            font-weight: 400;
+            height: 48px;
+            
+			&::placeholder{
+                color: #8EA5C8;
+            }
+			@include respond ('phone'){
+				font-size: 15px;
+			}
+        }
+		.custom-nouislider{
+			margin-bottom: 60px;
+			margin-top: 30px;
+		}
+        .amount-list{
+            margin-top: 30px;    
+            ul{
+                li{    
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 5px;
+                    
+					span{
+                        font-size: 14px;
+                    }
+                    h5{
+                        font-size: 14px;
+                        font-weight: 500;
+                        color:$black;
+                    }
+					&:last-child{
+						margin-bottom: 0;
+					}
+                }
+            }
+        }
+		
+        // Countdown Modal
+        .count-down{
+            .text-dashed{
+				margin-bottom: 5px;
+				display: block;
+				font-size: 14px;
+				text-decoration: 1px underline dashed;
+				text-underline-offset: 3px;
+            }
+            h5{
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--primary);
+            }
+        }
+        .countdown-radio{
+            display: flex;
+            margin-top: 1rem;
+            
+            .countdown-check{
+                display: flex;
+                justify-content: space-between;
+            }
+            form{
+                width: 70%;
+            }
+        }
+    }
+    
+    .btn{
+        font-size: 18px;
+        font-weight: 600;
+        padding: 9.5px 20px;
+		
+		@include respond ('phone'){
+			font-size: 16px;
+		}
+    }
+
+    //wallet transfer
+    .wallet-transfer{
+		.spot-wallet{
+			border: 1px solid var(--border-color);
+			box-shadow: 0px 7px 15px rgba(61, 70, 83, 0.10);
+			border-radius: var(--border-radius-base);
+			padding: 12px 20px;
+			label{
+				color: var(--primary);
+				font-size: 12px;
+			}
+			.form-control{
+				box-shadow: none;
+				border: 0;
+				font-weight: 500;
+				color: $black;
+				padding: 0;
+				background: transparent;
+				height: 22px;
+			}
+		}
+		.exchange-icon{
+			height: 43px;
+			width: 43px;
+			background-color: var(--primary);
+			border-radius:50%;
+			margin: auto;
+			margin-bottom: 20px;
+			text-align: center;
+			line-height: 43px;
+			position: relative;
+			z-index: 1;
+			&:after{
+				content: "";
+				position: absolute;
+				top: 22px;
+				left: -97px;
+				height: 2px;
+				width: 227px;
+				background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 0%, #18A594 50.08%, rgba(255, 255, 255, 0) 100%);
+				z-index: -1;
+				
+			}
+		}
+		.available{
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			span{
+				color: var(--primary);
+			}
+		}
+	}    
+   
+}  
+
+.deposit-crypto-modal{
+	.modal-svg{
+		margin:28px 0px 40px 0px;
+	}
+	.modal-content{
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 301px;
+		border: 0;
+		.modal-content-title{
+			font-size:24px;
+		}
+	}
+}
+
+.deposit-crypto-scanner {
+	.deposit-crypto-scanner-body {
+		.modal-svg {
+			position:absolute;
+			right:14px;
+			top:11px;
+			margin:0 -7px;
+			svg{
+				margin:0 7px;
+			}
+		}
+	}
+}
+
+.profile{
+	.profile-body{
+		.modal-svg{
+			position:absolute;
+			right:14px;
+			top:11px;
+			margin:0 -7px;
+			svg{
+				margin:0 7px;
+			}
+		}
+	}
+	h4{
+		font-size:28px;
+		font-weight:600;
+	}
+}
+
+// Profile Image Modal
+.profile-image-modal{
+	.profile{
+		position: relative;
+		width: 160px;
+		height: 160px;
+		margin: 0 auto 30px;
+		padding: 0;
+		
+		.profile-progress{
+			width:100%;
+			height:100%;
+		}
+		.profile-blank{
+			background: #DCDCDC;
+			//box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+			width: 135px;
+			height: 135px;
+			border-radius: 100%;
+			display: inline-block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+	.upload-file{
+		border: 2px dashed $border-color;
+		padding: 15px 20px;
+		border-radius: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		color: #8EA5C8;
+		font-size: 15px;
+		height: 60px;
+		margin-bottom: 40px;
+		
+	}
+	.modal-body{
+		padding-bottom: 40px;
+	}
+	@include respond ('phone'){
+		.profile{
+			width: 120px;
+			height: 120px;
+			margin: 0 auto 20px;
+			
+			.profile-blank{
+				width: 100px;
+				height: 100px;
+			}
+		}
+		.upload-file{
+			margin-bottom: 20px;
+		}
+		.modal-body{
+			padding-bottom: 30px;
+		}
+	}
+}
+
+// Mega Modal
+.megamodal{
+	.modal-dialog {
+		@media (min-width: 767px){
+			max-width: 650px;
+		}
+		& > .modal-content{
+			background: transparent;
+		}
+	}
+	.modal-body{
+		padding: 0;
+	}
+	.modal-svg{
+		margin: 0 auto 40px;
+		@include respond ('phone'){
+			margin: 0 auto 25px;
+		}
+	}
+	.modal-content{
+		padding: 0;
+		.modal-content{
+			padding: 40px 20px;
+			@include respond ('phone'){
+				padding: 30px 20px;
+			}
+		}
+	}
+}
+
+//LANGUAGE LIST ======
+.language-modal{
+	.modal-dialog{
+		max-width: 500px;
+	}
+	.modal-body{
+		padding-left: 10px;
+		padding-right: 10px;
+		.modal-title{
+			margin-left: 26px;
+			@include respond ('phone'){
+				margin-left: 20px;
+			}
+		}
+	}
+}
+.language-list{
+	display: flex;
+	flex-wrap: wrap;
+	li{
+		width: calc(50% - 20px);
+		padding: 12px 18px;
+		margin: 0 10px;
+		border-width: 1px;
+		border-color: transparent transparent var(--border-color) transparent;
+		border-style: solid;
+		@include respond ('phone'){
+			padding: 8px 10px;
+		}
+		&:last-child{
+			border-color: transparent transparent transparent transparent;
+		}
+		a{
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			color: var(--title);
+			font-size: 15px;
+			@include respond ('phone'){
+				font-size: 13px;
+				svg{
+					width: 15px;
+					height: 15px;
+				}
+			}
+			svg{
+				path{
+					fill: var(--body-color); 
+				}
+			}
+		}
+		&.active{
+			border-color: var(--primary); 
+			border-radius: 12px;			
+			svg{
+				path{
+					fill: var(--primary); 
+				}
+			}
+		}
+	}
+}

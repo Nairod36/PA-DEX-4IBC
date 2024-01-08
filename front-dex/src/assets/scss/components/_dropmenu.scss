@@ -1,0 +1,232 @@
+.dropdown{
+	cursor: pointer;
+	&.show{
+		.dropdown-toggle{
+			background-color: var(--primary);
+			svg{
+				path{
+					fill: #fff;
+				}
+			}
+		}
+	}
+	&.profile-dropdown{
+		.dropdown-menu{
+			margin-top: 15px;
+			width: 200px;
+		}
+	}
+}
+.dropdown-menu{
+	box-shadow: 0px 10px 40px rgba(21, 50, 93, 0.1);
+	background-color:var(--card-bg);
+	border: 2px solid var(--primary);
+	border-radius: 10px;
+	
+	.dropdown-item{
+	    padding: 8px 25px;
+		font-size: 16px;
+		color: var(--title);
+		
+		@include respond('tab-port'){
+			padding: 8px 20px;
+			font-size: 15px;
+		}
+		a{
+			color: var(--title);
+		}
+		&:hover{
+			background-color: var(--rgba-primary-1);
+			a{
+				color: var(--primary);
+			}
+		}
+		&:active{
+			a{
+				color: var(--primary);
+			}
+			svg{
+				path{
+					color: var(--primary);
+				}
+			}
+		}	
+	}
+	.dropdown-footer{
+		padding: 10px 20px 10px;
+	}
+	.dropdown-header{
+		padding: 10px 20px 10px;
+	}
+}
+
+
+.dropdown-trade{
+	.dropdown-toggle{
+		background-color: transparent!important;
+		font-size: 20px;
+		color: var(--primary)!important;
+		font-weight: 500;
+		border: 0;
+		width: 100%;
+		justify-content: space-between;
+		border-right: 1px solid var(--border-color);
+		border-radius: 0;
+		padding: 10px 15px 10px 5px;
+		
+		@media only screen and (max-width: 1191px){
+			border-right: 0;
+			border-bottom: 1px solid var(--border-color);
+			margin-bottom: 20px;
+		}
+		@include respond('phone'){
+			font-size: 16px;
+			padding: 10px 0 10px 0;
+		}
+		
+		&:hover,&:focus,&:active{
+			background-color: transparent!important;
+			color: var(--primary);
+		}
+		&::after{
+			background-color: transparent;
+			border-top: 0.4em solid var(--body-color);
+			border-right: 0.4em solid transparent;
+			border-bottom: 0;
+			border-left: 0.4em solid transparent;
+		}
+	}
+	.dropdown-menu{
+		width: 590px;
+		padding: 15px;
+		border: 0;
+		margin-top: 18px;
+		left: -30px!important;
+		
+		@media only screen and (max-width: 1191px){
+			margin-top: 0;
+			left: 0 !important;
+		}
+		@include respond('phone-land'){
+			width: 450px;
+		}
+		@include respond('phone'){
+			width: 330px;
+			left: -15px !important;
+		}
+	}
+	.table-style-1{
+		tbody {
+			tr{
+				td{
+					&:first-child{
+						border-top-left-radius: 8px;
+						border-bottom-left-radius: 8px;
+					}
+					&:last-child{
+						border-top-right-radius: 8px;
+						border-bottom-right-radius: 8px;
+					}
+				}
+			}
+			td{
+				padding: 7px 15px;
+				font-size: 14px;
+				
+				@include respond('phone'){
+					padding: 7px 8px;
+					font-size: 12px;
+				}
+			}
+		}
+		thead{
+			th{
+				font-size: 14px;
+				padding: 7px 15px;
+				color: $white;
+				background-color: var(--primary);
+				&:first-child{
+					border-top-left-radius: 8px;
+					border-bottom-left-radius: 8px;
+				}
+				&:last-child{
+					border-top-right-radius: 8px;
+					border-bottom-right-radius: 8px;
+				}
+			}
+		}
+	}
+}
+
+// Notifications Dropdown
+.notifications-dropdown{
+	.notify{
+		width: 50px;
+		min-width: 50px;
+		height: 50px;
+		text-align: center;
+		line-height: 50px;
+		background-color: var(--rgba-primary-1);
+		border-radius: 10px;
+		margin-right: 12px;
+		svg{
+			path{
+				fill: var(--primary);
+			}
+		}
+	}	
+	.dropdown-menu{
+		width: 400px;
+		margin-top: 15px;
+		
+		.dropdown-item{
+			padding: 8px 30px;
+			white-space: unset;				
+			
+			a{
+				word-break: break-all;
+			}
+		}
+		.dropdown-footer{
+			padding: 10px 30px 20px;
+		}
+		.dropdown-header{
+			padding: 20px 30px 10px;
+		}
+	}
+	@include respond('tab-port'){
+		.dropdown-menu{
+			width: 320px;
+			
+			.dropdown-item{
+				padding: 8px 15px;
+			}
+			.dropdown-footer,
+			.dropdown-header{
+				padding: 10px 15px;
+			}
+		}
+	}
+}
+
+.drop-button{
+	.dropdown-toggle{
+		&.btn{
+			background-color: var(--card-bg)!important;
+			color: var(--body-color);
+			border-color: var(--border-color);
+			padding: 12px 10px;
+			box-shadow: 0px 7px 15px 0px rgba(61, 70, 83, 0.1);
+			@include respond ('phone'){
+				padding: 6px 8px;				
+			}
+			i{
+				margin-left: 20px;
+				color: var(--title);
+			}
+			&:after{
+				content: none;				
+			}
+		}
+	}
+}

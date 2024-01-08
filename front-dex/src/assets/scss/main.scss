@@ -1,0 +1,75 @@
+/*
+    
+	=========================
+	Template Name 	 : CryptoZone
+	Author			 : DexignZone
+	Version			 : 1.0
+	Author Portfolio : https://themeforest.net/user/dexignzone/portfolio
+	=========================
+	
+	[Table of Contents] 
+
+	=== SCSS Start ===
+	
+	1. Abstract
+        1.1 _abstract.scss
+        1.2 _mixins.scss
+        1.3 _variable.scss
+
+    2. Bootstrap scss
+    
+	3. Base
+        3.1 _base.scss
+        3.2 _custom-grid.scss
+        3.3 _fonts.scss
+        3.4 _preloader.scss
+        3.5 _reset.scss
+        3.6 _shortcode.scss
+
+    4. Layout
+		4.1 header
+			4.1.1 _default.scss
+			4.1.2 _header.scss
+			
+		4.2 banner
+			4.2.1 _default.scss
+			4.2.2 _banner.scss
+			
+		4.3 footer
+			4.3.1 _default.scss
+			4.3.2 _footer.scss
+	
+    5. Components
+        5.1 section-head    
+        5.1 _components.scss (all scss file include)
+
+    6. Pages
+        6.1 _pages.scss
+        6.2 _index.scss
+        6.3 _blog-details.scss
+		
+	=== SCSS End ===
+	
+*/
+
+// 1. Abstract
+@import "./abstract/abstract";
+
+@import "./preloader";
+
+// 2. Bootstrap scss
+@import "../vendor/bootstrap/scss/bootstrap.scss";
+
+// 3. base
+@import "./base/base";
+
+// 4. Layout
+@import "./layout/layout";
+
+// 5. Components
+@import "./components/components";
+
+// 6. Pages
+@import "./pages/pages";
+
+@import 'node_modules/react-modal-video/scss/modal-video.scss';

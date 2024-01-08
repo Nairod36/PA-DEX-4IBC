@@ -1,0 +1,449 @@
+.dz-card.style-1{
+    &.blog-half{
+        border-radius: 1rem;
+        overflow: hidden;
+        transition: all 0.8s;
+        border: 1px solid transparent;
+        -webkit-transition: all 0.5s;
+        -ms-transition: all 0.5s;
+        transition: all 0.5s;
+        display: flex;
+        position: relative;
+        background: #F8F5FF;
+		
+		@include respond('phone-land'){
+			display: block;
+		}
+
+		.dz-meta{
+			margin-bottom: 10px;
+			
+			ul{
+				li{
+					display: inline-block;
+					position: relative;
+					font-size: 15px;
+					margin-right: 12px;
+					padding-right: 12px;
+
+					a{
+						color: inherit;
+						img{
+							height: 35px;
+							width: 35px;
+							border-radius: 100%;
+							margin-right: 5px;
+						}
+					}
+					
+					&:last-child{
+						padding-right: 0;
+						margin-right: 0;
+					}
+				}
+				.post-author{
+					&::after{
+						content: "";
+						height: 6px;
+						width: 6px;
+						background-color: var(--primary);
+						position: absolute;
+						top: 50%;
+						right: -5px;
+						border-radius: 50%;
+						transform: translateY(-50%);
+					}
+				}
+			}
+		}
+		
+		
+        .dz-media {
+            overflow: hidden;
+            position: relative;
+            border-radius: unset;
+            margin-bottom: 0;
+            max-width: 300px;
+            min-width: 300px;
+
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+
+            .dz-badge-list {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                z-index: 1;
+
+                a {
+                    background-color: $primary;
+                    color: $white;
+                    border-radius: var(--border-radius-base);
+                    font-size: 15px;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    display: block;
+                    padding: 10px 25px;
+                    -webkit-transition: all 0.7s;
+                    -ms-transition: all 0.7s;
+                    transition: all 0.7s;
+                }
+
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                bottom: -100%;
+                left: 0;
+                background-color: var(--primary);
+                opacity: 0.9;
+                -webkit-transition: all 0.7s;
+                -ms-transition: all 0.7s;
+                transition: all 0.7s;
+            }
+			
+			@include respond('phone-land'){
+				max-width: 100%;
+				min-width: 100%;
+			}
+        }
+
+        .dz-info {
+            padding: 30px 25px;
+            @include respond('phone-land'){
+				padding: 20px;
+            }
+            .dz-title {
+                margin-bottom: 10px;
+                word-break: break-word;
+                color: $secondary;
+
+                a {
+                    color: $secondary;
+                }
+            }
+        }
+
+        .dz-media .dz-badge-list {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1;
+        
+        }
+
+        .dz-media .dz-badge {
+            background-color: var(--secondary);
+            color: var(--title);
+            border-radius: var(--border-radius-base);
+            font-size: 15px;
+            font-weight: 500;
+            text-transform: uppercase;
+            display: block;
+            -webkit-transition: all 0.7s;
+            -ms-transition: all 0.7s;
+            transition: all 0.7s;
+        }
+
+        .dz-media .dz-badge:hover {
+            background-color: white;
+            color: $white;
+        }
+
+        .dz-media .btn,
+        .dz-media .wp-block-button__link {
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transition: all 0.7s;
+            -ms-transition: all 0.7s;
+            transition: all 0.7s;
+            z-index: 1;
+        }
+
+
+        &:hover .dz-media:after {
+            bottom: 0;
+        }
+
+
+        &:hover .dz-media:after {
+            bottom: 0;
+        }
+
+        &:hover .btn,
+        &:hover .wp-block-button__link {
+            top: 50%;
+        }
+
+        &:hover .dz-badge {
+            background-color: rgba(255, 255, 255, 0.2) !important;
+            color: #fff;
+        }
+
+    }
+    &.blog-lg{
+        background: white;
+        box-shadow: 0px 20px 40px rgba(1, 18, 111, 0.1);
+        border-radius: var(--border-radius-base);
+        
+        .dz-media{
+			border-radius: var(--border-radius-base) var(--border-radius-base) 0 0;
+			position: relative;
+			overflow: hidden;
+			transition: 1s;
+
+			&::before{
+				content: '';
+				position: absolute;
+				top: 0;
+				left: -100%;
+				z-index: 2;
+				display: block;
+				width: 50%;
+				height: 100%;
+				background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
+				background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
+				@include transitionSlow;
+			}
+			img{
+				border-radius: var(--border-radius-base) var(--border-radius-base) 0 0;
+			}
+		}
+      
+		&:hover{
+			.dz-media::before{
+				left: 100%;
+				right: 0;
+			}
+		}
+
+        .dz-info{
+            padding: 30px;
+
+			@include respond('phone'){
+                padding: 20px;
+            }
+            
+            .dz-meta{
+                margin-bottom: 10px;
+				
+                ul{
+                    li{
+                        display: inline-block;
+                        position: relative;
+                        font-size: 15px;
+                        margin-right: 12px;
+                        padding-right: 12px;
+
+                        a{
+                            color: inherit;
+                            img{
+                                height: 35px;
+                                width: 35px;
+                                border-radius: 100%;
+                                margin-right: 5px;
+                            }
+                        }
+						
+						&:last-child{
+							padding-right: 0;
+							margin-right: 0;
+						}
+                    }
+                    .post-author{
+                        &::after{
+                            content: "";
+                            height: 6px;
+                            width: 6px;
+                            background-color: var(--primary);
+                            position: absolute;
+                            top: 50%;
+                            right: -5px;
+                            border-radius: 50%;
+                            transform: translateY(-50%);
+                        }
+                    }
+                }
+            }
+            .dz-title{
+                margin-bottom: 5px;
+            }
+            p{
+                margin-bottom: 20px;
+            }
+        }
+    }
+}
+
+.dz-card.style-2{
+    position: relative;
+    border-radius: var(--border-radius-base);
+    overflow: hidden;
+    background-color: $secondary;
+    height: 100%;
+    background-blend-mode: luminosity;
+    min-height: 600px;
+    background-size: cover;
+    object-fit: cover;
+    border-radius: 1.5rem;
+	
+	@include respond('phone-land'){
+		min-height: 450px;
+	}
+
+	&:after {
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background: linear-gradient(359.53deg, #362465 0.4%, rgba(54, 36, 101, 0) 55.3%);
+		border-radius: 20
+	}
+	.dz-media{
+		height: 100%;
+		position: relative;
+	}
+	.dz-media img {
+		filter: grayscale(0.1);
+		height: 100%;
+		object-fit: cover;
+		-webkit-transition: all 0.7s;
+		-ms-transition: all 0.7s;
+		transition: all 0.7s;
+	}
+	.dz-info {
+		padding: 40px;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		z-index: 1;
+		
+		.dz-meta {
+			margin-bottom: 0;
+
+			ul {
+				
+				li {
+					position: relative;
+					display: inline-block;
+
+					&.dz-user {
+						color: var(--title);
+						font-weight: 500;
+						color: #fff;
+					}
+					a{
+						color: #fff;
+					}
+				}
+			}
+		}
+		@include respond('phone-land'){
+			padding: 25px;
+		}
+	}
+	
+	.dz-info{
+		.dz-meta ul li{
+			&.dz-user span {
+				color: var(--primary);
+			}
+		}
+		.dz-meta ul li.dz-user i {
+			color: $primary;
+		}
+		.dz-meta ul li.dz-date {
+			color: var(--title);
+			font-weight: 500;
+			color: #fff;
+		}
+		.dz-meta ul li.dz-date i {
+			color: $primary;
+		}
+		.post-author{
+			img{
+				height: 35px;
+				width: 35px;
+				border-radius: 100%;
+				margin-right: 5px;
+			}
+		}		
+		.dz-meta ul li:not(:last-child):after {
+			content: "";
+			height: 6px;
+			width: 6px;
+			position: absolute;
+			right: -15%;
+			top: 50%;
+			border-radius: 50%;
+			background-color: var(--primary);
+			transform: translate(0%, -50%);
+		}
+	}
+	.dz-title {
+		font-size: 35px;
+		
+		@include respond('phone-land'){
+			font-size: 24px;
+		}
+	}
+
+	.dz-category {
+		margin-bottom: 15px;
+		display: inline-flex;
+		
+		.dz-badge-list {
+			position: absolute;
+			top: 40px;
+			left: 40px;
+			z-index: 1;
+			
+			li .dz-badge {
+				background-color: var(--primary);
+				color: $white;
+				font-weight: 500;
+				border-radius: var(--border-radius-base);
+				font-size: 15px;
+				padding: 0.4rem 1rem;
+				text-transform: uppercase;
+				display: block;
+				
+				&:hover {
+					background-color: white;
+					color: var(--primary);
+				}
+			}
+			@include respond('phone-land'){
+				top: 25px;
+				left: 25px;
+			}
+		}
+	}
+
+
+	&.overlay {
+		background-color: #000;
+		opacity: 0.9;
+		z-index: 1;
+		
+		.dz-meta li .post-date {
+			color: rgba(255, 255, 255, 0.8);
+		}
+	}
+	&:hover{
+		.dz-media img {
+			transform: rotate(5deg) scale(1.2);
+		}
+	}
+
+}

@@ -1,0 +1,37 @@
+.badge{
+	padding: 6px;
+    font-weight: var(--headings-font-weight);
+    background-color: var(--primary);
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+    align-self: center;
+    font-family: var(--font-family-title);
+    font-size: 11px;
+    min-width: 22px;
+    height: 22px;
+    text-align: center;
+	&:hover{
+		color:#fff;
+	}
+	&.badge-primary{
+		background-color: var(--primary);
+	}
+	&.badge-secondary{
+		background-color: $secondary;
+	}
+	&.badge-info{
+		background-color: $info;		
+	}
+	&.badge-success{
+		background-color: $success;
+	}
+	&.badge-warning{
+		background-color: $warning;
+	}
+	&.badge-danger{
+		background-color: $danger;		
+	}
+	&.badge-light{
+		background-color: $light;
+	}
+}

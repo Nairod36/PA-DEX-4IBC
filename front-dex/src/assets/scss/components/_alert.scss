@@ -1,0 +1,23 @@
+.alert{
+	&.alert-sm {
+		padding: 5px 15px;
+		font-size: 12px;
+	}
+	&.alert-lg {
+		padding: 25px 15px;
+		font-size: 16px;
+	}
+	&.alert-xl {
+		padding: 35px 15px;
+		font-size: 18px;
+	}
+}
+.alert[class*=alert-]{
+	 i {
+		margin-right: 8px;
+	}
+	ul {
+		padding-left: 25px;
+		margin-top: 10px;
+	}
+}

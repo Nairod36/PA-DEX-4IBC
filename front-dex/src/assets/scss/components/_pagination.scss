@@ -1,0 +1,39 @@
+.pagination{
+	margin: 0 -5px;
+    
+	.page-link{
+		height: 45px;
+		width: 45px;
+		border-radius: var(--border-radius-base) !important;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		background-color: #fff;
+		justify-content: center;
+		color: var(--title);
+		font-weight: 500;
+		border: 0;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		
+		svg path{
+            fill: var(--title);
+        }
+        &:hover,
+		&:focus,
+		&.active{
+            background-color: var(--primary);
+            color: $white;
+            
+			svg path{
+                fill: $white;
+            }
+        }
+    }
+    .page-item{
+        padding: 0 5px;
+    }
+	
+	&.text-center{
+	    justify-content: center;
+	}
+}

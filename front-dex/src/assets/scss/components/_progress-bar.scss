@@ -1,0 +1,29 @@
+// Progress Bar
+.progress-bx{
+	overflow: hidden;
+	
+	// Progress Info
+	.progress-info{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 15px;
+		.title{
+			margin-bottom: 0;
+		}
+		.progress-value{
+			margin-bottom: 0;
+		}
+	}
+	
+	// Progress
+	.progress{
+		overflow: unset;		
+		.progress-bar{
+			position: relative;
+			overflow: unset;
+		}
+	}
+	
+	
+}

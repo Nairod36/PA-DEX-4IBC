@@ -1,0 +1,276 @@
+// button
+button:hover,
+button:active,
+button:focus {
+    outline: 0;
+}
+
+.btn{
+	font-size: 15px;
+    padding: 14px 30px;
+    line-height: 1.2;
+    display: inline-flex;
+	border-radius: var(--border-radius-base);
+    font-weight: 400;
+	position: relative;
+	text-transform: capitalize;
+	font-family: $font-family-base;
+	align-items: center;
+	overflow:hidden;
+	z-index:1;
+	text-align:center;
+	@include transitionFast;
+	justify-content: center; 
+	
+
+	&.btn-lg{
+		font-size: 16px;
+		padding: 18px 30px;
+		line-height: 1.4;
+		
+		@include respond ('tab-port'){
+		    font-size: 14px;
+			padding: 15px 25px;
+		}
+	}
+	
+	// btn sm
+	&.btn-sm{
+		font-size: 13px;
+		padding: 8px 18px;
+	}
+	
+	// btn xs
+	&.btn-xs{
+		font-size: 12px;
+		padding: 11px 25px;
+	}
+	&.btn-primary{
+		color:$white;
+		&:hover{
+			color:$white;
+		}
+	}
+	&.text-lg{
+		font-size: 18px;
+		padding: 10px 20px;
+	}
+	&.space-lg{
+		padding: 20px 50px;
+		@include respond('tab-port'){
+			padding: 18px 30px;
+		}
+	}
+	@include respond ('phone'){
+		padding: 10px 15px;
+	}
+}
+.btn-primary{
+	&.btn-gradient{
+		background: linear-gradient(90deg, #9568FF 0%, #9568FF 99.31%);
+		border: 0;
+		
+		&:hover{
+			background-position: right center;
+		}
+	}
+	&.btn-shadow{
+		box-shadow: 0px 10px 25px rgba(243, 145, 0, 0.15);
+	}
+}
+
+.btn.outline-2{
+	border-width: 2px;
+}
+.btn-success,
+.btn-danger,
+.btn-warning{
+	color:#fff;
+	&:hover{
+		color:#fff;
+	}
+}
+.btn-outline-success,
+.btn-outline-danger,
+.btn-outline-warning{
+	&:hover{
+		color: #fff;
+	}
+}
+
+.btn-success,
+.btn-info,
+.btn-danger,
+.btn-warning{
+	&.effect{
+		&:after{
+			background:var(--secondary);
+		}
+	}
+}
+
+.btn-primary.btn-shadow,
+.btn-outline-primary.btn-shadow{
+	box-shadow: 0px 4px 10px var(--rgba-primary-2);
+}
+.btn-secondary.btn-shadow{
+	box-shadow: 0px 4px 10px lighten($secondary, 75);
+}
+
+.btn-danger{
+	&.btn-shadow{
+		box-shadow: 0px 4px 10px lighten($danger, 28);	
+	}
+	&.light{
+		background-color: rgba(235, 87, 87, 0.1);
+		color:$danger;
+		border-color: transparent;
+		
+		&:hover{
+			background-color: $danger;
+			color: $white;
+			box-shadow: 0px 4px 10px lighten($danger, 28);
+		}
+	}
+}
+
+.btn-rounded{
+	border-radius:30px!important;
+}
+.btn-link{
+	text-transform:uppercase;
+	font-family:var(--font-family-base);
+	position:relative;
+	z-index:1;
+	display:inline-block;
+	@include transitionFast;
+	padding: 5px 0 5px 0;
+	
+}
+
+.shadow-primary{
+	box-shadow: 0px 19px 29px rgba(220, 181, 145, 0.34);
+}
+.btn-info{
+	color:#fff;
+	&:hover{
+		color:#fff;
+	}
+}
+.btn-white{
+	background-color:#fff;
+	color:var(--primary);
+	&:hover{
+		color:var(--primary);
+	}
+}
+.btn-secondary{
+	background-color: var(--secondary);
+    border-color: var(--secondary);
+	
+	&:after{
+		background-color:var(--primary);
+	}
+}
+.btn-primary{
+	border-color:var(--primary);	
+	background-color:var(--primary);
+	&.disabled,
+	&:disabled,
+	&:not(:disabled):not(.disabled).active, 
+	&:not(:disabled):not(.disabled):active, 
+	&:active,
+	&:focus,
+	&:hover{
+		border-color:var(--primary-hover);	
+		background-color:var(--primary-hover);	
+	}
+	&:after{
+		background-color:var(--secondary);
+	}
+	&.light{
+		background-color: var(--rgba-primary-1);
+		color: var(--primary);
+		border-color: var(--rgba-primary-1);
+		&:hover{
+			background-color: var(--primary);
+			color: $white;
+			svg path{
+				fill : $white;
+			}
+		}
+	}
+}
+.btn-link{
+	color:var(--primary);
+	text-decoration: none;
+	text-transform: capitalize;
+    font-weight: 500;
+
+	&:hover{
+		color:var(--primary-hover);	
+	}
+}
+.btn-outline-primary {
+	color:var(--primary);	
+	border-color:var(--primary);
+	
+	&.disabled,
+	&:disabled,
+	&:not(:disabled):not(.disabled).active, 
+	&:not(:disabled):not(.disabled):active, 
+	&:active,
+	&:focus,
+	&:hover{
+		border-color:var(--primary);
+		background-color:var(--primary);
+		color:$white;
+	}
+	&.text-primary:hover{
+		color: #fff !important;
+	}
+}
+.btn-light{
+	background-color: #8EA5C8;
+	color: $white;
+}
+.show.dropdown{
+	.dropdown-btn{
+		&.btn-primary{
+			svg{
+				rect,
+				path{
+					fill: #fff;
+				}
+			}
+		}
+	}
+}
+.action-dropdown{
+	.dropdown-menu .dropdown-item {
+		font-size: 15px;
+	}
+}
+.dropdown-btn{
+	width: 36px;
+    height: 36px;
+    padding: 0;
+	border: 0;
+	
+	&.btn-primary{
+		svg{
+			rect,
+			path{
+				fill: var(--primary);
+			}
+		}
+		&:hover{
+			svg{
+				rect,
+				path{
+					fill: #fff;
+				}
+			}
+		}
+	}
+}
