@@ -19,7 +19,7 @@ function Pricing(){
                 <img className="bg-shape5" src={Shap3} alt="" />
                 <div className="container">
                     <div className="section-head text-center">
-                        <h2 className="title">Awesome Pricing Plan for Cryptocurrency Business</h2>
+                        <h2 className="title">Awesome Swaping prices Cryptocurrency</h2>
                     </div>
                     <div className="row justify-content-center">
                     </div>

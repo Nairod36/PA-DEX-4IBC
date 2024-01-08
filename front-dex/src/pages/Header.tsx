@@ -37,8 +37,8 @@ function Header(){
                             </button>                            
                             <div className="extra-nav">
                                 <div className="extra-cell">
-                                    <a className="btn btn-outline-primary text-white" target="_blank" rel="noreferrer" href="https://cryptozone.dexignzone.com/react/demo/login">Login</a>
-                                    <a className="btn btn-primary btn-gradient btn-shadow" target="_blank" rel="noreferrer" href="https://cryptozone.dexignzone.com/react/demo/page-register">Register</a>
+                                    <a className="btn btn-outline-primary text-white" target="_blank" rel="noreferrer" href="">Login</a>
+                                    <a className="btn btn-primary btn-gradient btn-shadow" target="_blank" rel="noreferrer" href="">Register</a>
                                 </div>
                             </div>                           
                                 
@@ -49,7 +49,7 @@ function Header(){
                                 <ul className="nav navbar-nav navbar">
                                     <li><NavLink to={"/"}>Home</NavLink></li>
                                     <li><NavLink to={"/about-us"}>About Us</NavLink></li>
-                                    <li><NavLink to={"/pricing"}>Pricing</NavLink></li>
+                                    <li><NavLink to={"/swapping"}>Swapping</NavLink></li>
                                     <li className={`sub-menu-down ${showMenu ? "open" : ""}`} id="menushow"
                                        onClick={()=>setShowMenu(!showMenu)}
                                       

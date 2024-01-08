@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './Header';
 import Home from './Home'; 
 import Footer from './Footer';
-import Pricing from './Pricing';
+import Swapping from './Swapping';
 import ContactUs from './ContactUS';
 import AboutUs from './AboutUS';
 
@@ -17,7 +17,7 @@ const Index: React.FC = () => {
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/about-us' element={<AboutUs />} />
-                    <Route path='/pricing' element={<Pricing />} />
+                    <Route path='/swapping' element={<Swapping />} />
                     <Route path='/contact-us'  element={<ContactUs />} />
                 </Routes>
                 <Footer />
