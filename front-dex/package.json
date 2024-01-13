@@ -11,6 +11,7 @@
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
     "@types/web3": "^1.2.2",
+    "axios": "^1.6.5",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.2",
     "react-dom": "^18.2.0",
@@ -21,7 +22,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start":"npm-run-all --parallel react-compile watch-css",
+    "react-compile": "react-scripts start",
+    "css-compile": "sass --source-map src/assets/scss/main.scss src/assets/css/style.css",
+    "watch-css":"nodemon -e scss -x \"npm run css-compile\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -48,6 +52,9 @@
     "@types/react-bootstrap": "^0.32.35",
     "@types/react-modal-video": "^1.2.3",
     "@types/react-router-dom": "^5.3.3",
+    "nodemon": "^3.0.2",
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.69.7",
     "tsc-watch": "^6.0.4"
   }
 }
