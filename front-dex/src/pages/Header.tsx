@@ -52,6 +52,7 @@ function Header(){
                                     <li><NavLink to={"/"}>Home</NavLink></li>
                                     <li><NavLink to={"/about-us"}>About Us</NavLink></li>
                                     <li><NavLink to={"/swapping"}>Swapping</NavLink></li>
+                                    <li><NavLink to={"/tokens"}>Tokens</NavLink></li>
                                     <li className={`sub-menu-down ${showMenu ? "open" : ""}`} id="menushow"
                                        onClick={()=>setShowMenu(!showMenu)}
                                       

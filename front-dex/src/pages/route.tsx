@@ -8,6 +8,7 @@ import Footer from './Footer';
 import Swapping from './Swapping';
 import ContactUs from './ContactUS';
 import AboutUs from './AboutUS';
+import { TokenItem, TokenList } from '../components/TokenList';
 
 const Index: React.FC = () => {
     return (
@@ -18,6 +19,7 @@ const Index: React.FC = () => {
                     <Route path='/' element={<Home />} />
                     <Route path='/about-us' element={<AboutUs />} />
                     <Route path='/swapping' element={<Swapping />} />
+                    <Route path='/tokens' element={<TokenList />} />
                     <Route path='/contact-us'  element={<ContactUs />} />
                 </Routes>
                 <Footer />
