@@ -1,0 +1,49 @@
+.trigram{
+    color:rgb(158, 158, 158);
+    font-weight: 500;
+}
+
+.change-col{
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    align-items: baseline;
+    font-weight: 500;
+
+    &.positive{
+        color:rgb(20, 218, 93);
+
+        .change::before{
+            border-bottom: 9px solid rgb(20, 218, 93);
+            transform: translate(-50%, -65%);
+        }
+    }
+
+    &.negative{
+        color:rgb(197, 50, 27);
+
+        .change::before{
+            border-top: 9px solid rgb(199, 40, 16);
+            transform: translate(-50%, -35%);
+        }
+    }
+
+    .change{
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        overflow: hidden;
+        &::before{
+            content: "";
+            display: block;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            width: 0;
+            height: 0;
+            border-right:6px solid transparent;
+            border-left: 6px solid transparent;
+        }
+    }
+}
