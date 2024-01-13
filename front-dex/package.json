@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.2.18",
     "@types/web3": "^1.2.2",
     "axios": "^1.6.5",
+    "chart.js": "^4.4.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.2",
     "react-dom": "^18.2.0",
@@ -22,10 +23,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start":"npm-run-all --parallel react-compile watch-css",
+    "start": "npm-run-all --parallel react-compile watch-css",
     "react-compile": "react-scripts start",
     "css-compile": "sass --source-map src/assets/scss/main.scss src/assets/css/style.css",
-    "watch-css":"nodemon -e scss -x \"npm run css-compile\"",
+    "watch-css": "nodemon -e scss -x \"npm run css-compile\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

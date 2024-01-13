@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { CoinService } from "../../services"
 import { ETime, ICoin } from "../../dto"
 import axios from "axios"
+import { Linechart } from "./LineChart"
 
 interface ITokenProps{
     id:number
@@ -333,6 +334,9 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                 <td>{name} <span className="trigram">{trigram}</span></td>
                 <td>{`${coin.Data.Data[24].close}$`}</td>
                 <td><div className="change-col negative"><span className="change negative"></span>{`${Math.floor(10000*(coin.Data.Data[24].close - coin.Data.Data[0].close)/coin.Data.Data[24].close)/100}%`}</div></td>
+                <td>
+                    <Linechart data={[7,5,8,6,4,2,7,7,8,6,4,5,2,1,7,4,8,6,]}/>
+                </td>
             </tr>
         }
         </>

@@ -15041,6 +15041,12 @@ footer .footer-inner .copyright-text a {
   font-weight: 500;
 }
 
+.change-chart {
+  height: 50px !important;
+  width: 200px !important;
+  aspect-ratio: 4/1 !important;
+}
+
 .change-col {
   display: flex;
   gap: 1em;
