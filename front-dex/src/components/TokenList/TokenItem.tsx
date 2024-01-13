@@ -14,6 +14,7 @@ interface ITokenProps{
 export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
     
     const [coin,setCoin] = useState<ICoin|null>(null)
+    const [coinPrices,setCoinPrices] = useState<number[]>([])
 
     useEffect(()=>{
         // const cancelTokenSrc = axios.CancelToken.source()
@@ -48,7 +49,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -59,7 +60,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -70,7 +71,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -81,7 +82,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -92,7 +93,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -103,7 +104,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -114,7 +115,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -125,7 +126,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -136,7 +137,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -147,7 +148,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -158,7 +159,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -169,7 +170,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -180,7 +181,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -191,7 +192,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -202,7 +203,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -213,7 +214,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -224,7 +225,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -235,7 +236,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -246,7 +247,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -257,7 +258,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -268,7 +269,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -279,7 +280,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -290,7 +291,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -301,7 +302,7 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                     open: 63000,
                     volumefrom: 5000,
                     volumeto: 4000,
-                    close: 64000,
+                    close: Math.random()*50000+50000,
                     conversionType: 'type',
                     conversionSype: 'symbol'
                 },
@@ -322,7 +323,12 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
 
     // Set the state
     setCoin(sampleCoin)
+    setCoinPrices(getClosePrices(sampleCoin))    
     },[])
+
+    const getClosePrices = (coin: ICoin) => {
+        return coin.Data.Data.map(item => item.close);
+    }
 
     return (
         <>
@@ -333,9 +339,9 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                 <td>{id}</td>
                 <td>{name} <span className="trigram">{trigram}</span></td>
                 <td>{`${coin.Data.Data[24].close}$`}</td>
-                <td><div className="change-col negative"><span className="change negative"></span>{`${Math.floor(10000*(coin.Data.Data[24].close - coin.Data.Data[0].close)/coin.Data.Data[24].close)/100}%`}</div></td>
+                <td><div className={`change-col ${coinPrices[coinPrices.length - 1] >= coinPrices[0] ? 'positive' : 'negative'}`}><span className="change negative"></span>{`${Math.floor(10000*(coin.Data.Data[24].close - coin.Data.Data[0].close)/coin.Data.Data[24].close)/100}%`}</div></td>
                 <td>
-                    <Linechart data={[7,5,8,6,4,2,7,7,8,6,4,5,2,1,7,4,8,6,]}/>
+                    <Linechart data={getClosePrices(coin)}/>
                 </td>
             </tr>
         }
