@@ -17,21 +17,23 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
     const [coinPrices,setCoinPrices] = useState<number[]>([])
 
     useEffect(()=>{
-        // const cancelTokenSrc = axios.CancelToken.source()
-        // const fetchData = async () => {
-        //     try{
-        //         const response = await CoinService.getCoin(trigram,time,cancelTokenSrc.token)
-        //         if(response !== null){
-        //             setCoin(response)
-        //             console.log(response);
+        const cancelTokenSrc = axios.CancelToken.source()
+        const fetchData = async () => {
+            try{
+                const response = await CoinService.getCoin(trigram,time,cancelTokenSrc.token)
+                if(response !== null){
+                    setCoin(response)
+                    setCoinPrices(getClosePrices(response))  
+                    // console.log(trigram);
                     
-        //         } 
-        //     }catch(error){
-        //         console.error(error)
-        //     }
-        // }
+                    // console.log(response);
+                    
+                } 
+            }catch(error){
+                console.error(error)
+            }
+        }
         // fetchData()
-        // Sample ICoin object
     const sampleCoin: ICoin =  {
         Response: 'Success',
         Message: 'Data retrieved successfully',
@@ -320,11 +322,11 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
             ]
         }
     }
-
-    // Set the state
-    setCoin(sampleCoin)
-    setCoinPrices(getClosePrices(sampleCoin))    
-    },[])
+    if(coin == null){
+        setCoin(sampleCoin)
+        setCoinPrices(getClosePrices(sampleCoin))
+    }
+    },[time])
 
     const getClosePrices = (coin: ICoin) => {
         return coin.Data.Data.map(item => item.close);
@@ -339,9 +341,11 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
                 <td>{id}</td>
                 <td>{name} <span className="trigram">{trigram}</span></td>
                 <td>{`${coin.Data.Data[24].close}$`}</td>
-                <td><div className={`change-col ${coinPrices[coinPrices.length - 1] >= coinPrices[0] ? 'positive' : 'negative'}`}><span className="change negative"></span>{`${Math.floor(10000*(coin.Data.Data[24].close - coin.Data.Data[0].close)/coin.Data.Data[24].close)/100}%`}</div></td>
+                <td><div className={`change-col ${coinPrices[coinPrices.length - 1] >= coinPrices[0] ? 'positive' : 'negative'}`}><span className="change"></span>{`${Math.floor(10000*(coin.Data.Data[24].close - coin.Data.Data[0].close)/coin.Data.Data[24].close)/100}%`}</div></td>
+                <td>{`${Math.floor(Math.random()*5)/10} Md $`}</td>
+                <td>{`${Math.floor(Math.random()*3)/10} Md $`}</td>
                 <td>
-                    <Linechart data={getClosePrices(coin)}/>
+                    <Linechart data={coinPrices}/>
                 </td>
             </tr>
         }

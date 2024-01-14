@@ -20,7 +20,7 @@ export const Linechart = (props:LineChartProps) => {
             datasets: [{
                 data: props.data,
                 fill: false,
-                borderColor:props.data[props.data.length-1] > props.data[0] ? 'rgb(20, 218, 93)' : 'rgb(197, 50, 27)',
+                borderColor:props.data[props.data.length-1] >= props.data[0] ? 'rgb(20, 218, 93)' : 'rgb(197, 50, 27)',
                 borderWidth:1,
                 pointRadius:0
             }]
