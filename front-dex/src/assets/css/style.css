@@ -15045,15 +15045,33 @@ footer .footer-inner .copyright-text a {
   background-color: white !important;
 }
 
+.logo-token {
+  width: 40px;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+}
+
+.name-too-long {
+  font-size: 12px;
+}
+
+.logo-col {
+  display: flex;
+  align-items: center;
+}
+.logo-col img {
+  max-width: 40px;
+}
+
 .change-chart {
   height: 50px !important;
-  width: 200px !important;
-  aspect-ratio: 4/1 !important;
+  width: 100px !important;
+  aspect-ratio: 2/1 !important;
 }
 
 .change-col {
   display: flex;
-  gap: 1em;
+  gap: 0.3em;
   justify-content: center;
   align-items: baseline;
   font-weight: 500;

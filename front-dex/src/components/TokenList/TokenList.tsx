@@ -13,9 +13,9 @@ interface IToken {
 }
 
 const tokens:IToken[] = [
-    {id:1,name:'Ether',trigram:'ETH'},
+    {id:1,name:'Ethereum',trigram:'ETH'},
     {id:2,name:'Bitcoin',trigram:'BTC'},
-    {id:3,name:'Arbitreum',trigram:'ARB'},
+    {id:3,name:'Arbitrum',trigram:'ARB'},
     {id:4,name:'Solana',trigram:'SOL'},
     {id:5,name:'Binance Coin',trigram:'BNB'},
     {id:6,name:'Avalanche',trigram:'AVAX'},
@@ -39,7 +39,7 @@ export const TokenList = () => {
                 <img className="bg-shape5" src={Shap3} alt="" />
                 <div className="container">
                     <div className="section-head text-center">
-                        <div className="col-md-2">
+                        <div className="col-md-1">
                             <Dropdown className="select-drop">
                                 <Dropdown.Toggle as="div" className="i-false select-drop-toggle select-time">
                                     {selectTime[1]} <i className="fa-sharp fa-solid fa-angle-down" />
@@ -55,6 +55,7 @@ export const TokenList = () => {
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th></th>
                                     <th>Token name</th>
                                     <th>Price</th>
                                     <th>Change</th>

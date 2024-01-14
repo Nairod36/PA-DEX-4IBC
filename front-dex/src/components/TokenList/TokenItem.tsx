@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { CoinService } from "../../services"
-import { ETime, ICoin } from "../../dto"
+import { ETime, ICoin, ICoinInfo } from "../../dto"
 import axios from "axios"
 import { Linechart } from "./LineChart"
 
@@ -14,7 +14,9 @@ interface ITokenProps{
 export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
     
     const [coin,setCoin] = useState<ICoin|null>(null)
+    const [coinInfo,setCoinInfo] = useState<ICoinInfo|null>(null)
     const [coinPrices,setCoinPrices] = useState<number[]>([])
+    
 
     useEffect(()=>{
         const cancelTokenSrc = axios.CancelToken.source()
@@ -32,8 +34,22 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
             }catch(error){
                 console.error(error)
             }
+            try{
+                const response = await CoinService.getCoinInfo(name,trigram,cancelTokenSrc.token)
+                if(response !== null){
+                    setCoinInfo(response)
+                    // console.log(trigram);                    
+                    // console.log(response);
+                    
+                } 
+            }catch(error){
+                console.error(error)
+            }
         }
-        // fetchData()
+        if(process.env.REACT_APP_CRYPTO_COMPARE_API_TOKEN !== undefined && process.env.REACT_APP_ALLOWED_FETCH == '1'){
+            fetchData()
+        }
+        
     const sampleCoin: ICoin =  {
         Response: 'Success',
         Message: 'Data retrieved successfully',
@@ -339,7 +355,8 @@ export const TokenItem:React.FC<ITokenProps> = ({id,name,trigram,time}) => {
         :
             <tr>
                 <td>{id}</td>
-                <td>{name} <span className="trigram">{trigram}</span></td>
+                <td><div className="logo-col"><img className="logo-token" src={coinInfo !== null ? coinInfo.logo : "./sampleCoin.png"}/></div></td>
+                <td><div className={name.length > 9 ? "name-too-long" : ""}>{name}</div><span className="trigram">{trigram}</span></td>
                 <td>{`${coin.Data.Data[24].close}$`}</td>
                 <td><div className={`change-col ${coinPrices[coinPrices.length - 1] >= coinPrices[0] ? 'positive' : 'negative'}`}><span className="change"></span>{`${Math.floor(10000*(coin.Data.Data[24].close - coin.Data.Data[0].close)/coin.Data.Data[24].close)/100}%`}</div></td>
                 <td>{`${Math.floor(Math.random()*5)/10} Md $`}</td>

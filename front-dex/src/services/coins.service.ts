@@ -1,5 +1,5 @@
 import axios,{CancelToken} from 'axios'
-import { ETime, ICoin } from '../dto'
+import { ETime, ICoin, ICoinInfo } from '../dto'
 
 export class CoinService {
     static async getCoin(coin: string, time: ETime, token?: CancelToken): Promise <ICoin|null>{
@@ -21,6 +21,16 @@ export class CoinService {
                 "Authorization":process.env.REACT_APP_CRYPTO_COMPARE_API_TOKEN
             }
         })
+        return response.data
+    }
+    static async getCoinInfo(name: string, symbol: string, token?: CancelToken): Promise <ICoinInfo|null>{
+        const formated = name.replaceAll(' ','-')
+        const id = `${symbol.toLowerCase()}-${formated.toLowerCase()}`
+        console.log(id);
+        const response = await axios.get(`https://api.coinpaprika.com/v1/coins/${id}`,{
+            cancelToken:token
+        })
+        console.log(response);
         return response.data
     }
 }
