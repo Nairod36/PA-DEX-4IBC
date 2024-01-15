@@ -26,6 +26,12 @@ export const Linechart = (props:LineChartProps) => {
             }]
         },
         options: {
+            animations:{
+                animation:{
+                    easing:'linear',
+                    duration:500
+                }
+            },
             plugins:{
                 legend:{
                     display:false
