@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PageLayout from './PageLayout';
 
-// Assume these are your cryptocurrency options
 const coins = ["Bitcoin", "Ethereum", "Litecoin"];
 
 function CoinSwap() {
