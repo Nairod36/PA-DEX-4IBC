@@ -1,31 +1,46 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import PageLayout from './PageLayout';
 
-import Shap1 from './../assets/images/home-banner/shape1.png';
-import Shap3 from './../assets/images/home-banner/shape3.png';
+// Assume these are your cryptocurrency options
+const coins = ["Bitcoin", "Ethereum", "Litecoin"];
 
-function Pricing(){
-    return(
-        <>
-            <div className="page-content">
-                <PageLayout pageTitle="Pricing Table" desc={''} />
-            </div>
-            <section className="content-inner pricing-plan-wrapper bg-primary-light">
-                <img className="bg-shape2" src={Shap1} alt="" />
-                <img className="bg-shape3" src={Shap1} alt="" />
-                <img className="bg-shape1" src={Shap3} alt="" />
-                <img className="bg-shape4" src={Shap3} alt="" />
-                <img className="bg-shape5" src={Shap3} alt="" />
+function CoinSwap() {
+    const [fromCoin, setFromCoin] = useState(coins[0]);
+    const [toCoin, setToCoin] = useState(coins[1]);
+    const [amount, setAmount] = useState('');
+
+    const handleSwap = () => {
+        // Logic to handle the swap
+    };
+
+   // Inside your CoinSwap component's return statement
+return (
+    <>
+        <div className="page-content">
+            <PageLayout pageTitle="Coin Swapping" desc={''} />
+            <section className="content-inner">
                 <div className="container">
                     <div className="section-head text-center">
-                        <h2 className="title">Awesome Swaping prices Cryptocurrency</h2>
+                        <h2 className="title">Swap Your Cryptocurrency</h2>
                     </div>
                     <div className="row justify-content-center">
+                        <div className="coin-swap-container">
+                            <select className="coin-swap-select" value={fromCoin} onChange={(e) => setFromCoin(e.target.value)}>
+                                {/* options */}
+                            </select>
+                            <select className="coin-swap-select" value={toCoin} onChange={(e) => setToCoin(e.target.value)}>
+                                {/* options */}
+                            </select>
+                            <input type="number" className="coin-swap-input" value={amount} onChange={(e) => setAmount(e.target.value)} />
+                            <button className="swap-button" onClick={handleSwap}>Swap</button>
+                        </div>
                     </div>
                 </div>
             </section>
-        </>
-    )
+        </div>
+    </>
+);
+
 }
-export  default Pricing;
+
+export default CoinSwap;

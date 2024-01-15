@@ -20,7 +20,7 @@ function Footer(){
                                     <div className="footer-logo logo-white">
                                         <Link to={"/"}><img src={logowhite} alt="" /></Link>
                                     </div>
-                                    <p>CryptoZone is a Crypto & Crypto Website by DexignZone lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et</p>
+                                    <p>StarDEX is a Crypto & Crypto Website </p>
                                     <div className="dz-social-icon transparent space-10">
                                         <ul>
                                             <li><a target="_blank" className="fab fa-facebook-f" href="https://www.facebook.com/"></a></li>{" "}
@@ -67,8 +67,8 @@ function Footer(){
                                 <div className="widget widget_locations">
                                     <h4 className="widget-title">Locations</h4>
                                     <div className="clearfix">
-                                        <h6 className="title">Washington</h6>
-                                        <p>1559 Alabama Ave SE, DC 20032, Washington, USA</p>
+                                        <h6 className="title">Paris</h6>
+                                        <p>242 rue du Faubourg Saint-Antoine, 75012 Paris</p>
                                         <img src={flags} alt="" />
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@ function Footer(){
                 </div>
                 <div className="footer-bottom text-center">
                     <div className="container">
-                        <span className="copyright-text">Copyright © 2023 <a href="https://dexignzone.com/" target="_blank">DexignZone</a>. All rights reserved.</span>
+                        <span className="copyright-text">Copyright © 2023 <a>ESGI</a>. All rights reserved.</span>
                     </div>
                 </div>
             </footer>
