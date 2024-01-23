@@ -1,3 +1,4 @@
+// CoinSwapping.tsx
 import React, { useState } from 'react';
 import PageLayout from './PageLayout';
 import CoinSwap from '../components/swapping/swapp';
@@ -10,28 +11,27 @@ function CoinSwapping() {
     const [amount, setAmount] = useState('');
 
     const handleSwap = () => {
-        // Logic to handle the swap
+        console.log(`Swapping ${amount} of ${fromCoin} to ${toCoin}`);
     };
 
-   // Inside your CoinSwap component's return statement
-return (
-    <>
-        <div className="page-content">
-            <PageLayout pageTitle="Coin Swapping" desc={''} />
-            <section className="content-inner">
-                <div className="container">
-                    <div className="section-head text-center">
-                        <h2 className="title">Swap Your Cryptocurrency</h2>
+    return (
+        <>
+            <div className="page-content">
+                <PageLayout pageTitle="Coin Swapping" desc={''} />
+                <section className="content-inner">
+                    <div className="container">
+                        <CoinSwap 
+                            fromCoin={fromCoin}
+                            toCoin={toCoin}
+                            amount={amount}
+                            onSwap={handleSwap}
+                            coins={coins} 
+                        />
                     </div>
-
-                        <CoinSwap></CoinSwap>
-                    
-                </div>
-            </section>
-        </div>
-    </>
-);
-
+                </section>
+            </div>
+        </>
+    );
 }
 
 export default CoinSwapping;
