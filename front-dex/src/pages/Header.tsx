@@ -40,7 +40,6 @@ function Header(){
                                 <div className="extra-cell">
                                     <a className="btn btn-outline-primary text-white" target="_blank" rel="noreferrer" href="">Login</a>
                                     <a className="btn btn-primary btn-gradient btn-shadow" target="_blank" rel="noreferrer" href="">Register</a>
-                                    <App3/>
                                 </div>
                             </div>                           
                                 
