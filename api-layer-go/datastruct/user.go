@@ -1,4 +1,4 @@
-package datastruc
+package datastruct
 
 type User struct {
     ID    int    `json:"id"`
