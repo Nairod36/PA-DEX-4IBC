@@ -7510,10 +7510,6 @@ textarea.form-control-lg {
   color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
 }
 
-.bg-violet {
-  background-color: #362465;
-}
-
 .text-body {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-body-color-rgb), var(--bs-text-opacity)) !important;
@@ -10565,7 +10561,7 @@ strong,
 }
 @media only screen and (max-width: 1480px) {
   .content-inner {
-    padding-top: 0px;
+    padding-top: 70px;
     padding-bottom: 50px;
   }
 }
