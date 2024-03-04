@@ -7,6 +7,7 @@ import (
     "encoding/json"
     "github.com/gorilla/mux"
     _ "github.com/lib/pq"
+    "api-layer-go/datastruc"
 )
 
 var db *sql.DB
@@ -42,7 +43,7 @@ func getUsers(w http.ResponseWriter, r *http.Request) {
     }
     defer rows.Close()
 
-    var users []User // User is a struct representing your user model
+    var users []datastruc.User // User is a struct representing your user model
     for rows.Next() {
         var u User
         err := rows.Scan(&u.ID, &u.Name, &u.Email) // Adjust attributes based on your user table
