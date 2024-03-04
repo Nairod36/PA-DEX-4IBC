@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+
+  front-dex:
+    build: 
+      context: .
+      dockerfile: ./front-dex/Dockerfile
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+
+  postgres:
+    image: postgres
+    restart: always
+    env_file:
+      - .env
+    platform: "linux/amd64"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $DB_NAME -U $DB_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+
+  api-layer:
+    build:
+      context: .
+      dockerfile: ./api-layer-go/Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      DB_HOST: postgres # Name of the postgres service
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy # Le healthcheck
+
+volumes:
+  db_volume:
