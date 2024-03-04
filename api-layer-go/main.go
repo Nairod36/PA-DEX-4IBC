@@ -5,6 +5,7 @@ import (
     "log"
     "net/http"
     "encoding/json"
+	  "os"
     "github.com/gorilla/mux"
     _ "github.com/lib/pq"
     "api-layer-go/datastruc"
@@ -14,7 +15,23 @@ var db *sql.DB
 
 func main() {
     var err error
-    connStr := "user=myuser password=mypassword dbname=mydatabase sslmode=disable"
+
+    DB_USER, ok := os.LookupEnv("DB_USER")
+    if !ok {
+        log.Fatal("DB_USER must be set and non-empty")
+    }
+
+    DB_PASSWORD, ok := os.LookupEnv("DB_PASSWORD")
+    if !ok {
+        log.Fatal("DB_PASSWORD must be set and non-empty")
+    }
+
+    DB_NAME, ok := os.LookupEnv("DB_NAME")
+    if !ok {
+        log.Fatal("DB_NAME must be set and non-empty")
+    }
+
+    connStr := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",DB_USER,DB_PASSWORD,DB_NAME)
     db, err = sql.Open("postgres", connStr)
     if err != nil {
         log.Fatal(err)
@@ -45,7 +62,7 @@ func getUsers(w http.ResponseWriter, r *http.Request) {
 
     var users []datastruc.User // User is a struct representing your user model
     for rows.Next() {
-        var u User
+        var u datastruct.User
         err := rows.Scan(&u.ID, &u.Name, &u.Email) // Adjust attributes based on your user table
         if err != nil {
             http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -62,7 +79,7 @@ func getUser(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
     id := params["id"]
 
-    var u User
+    var u datastruct.User
     err := db.QueryRow("SELECT * FROM users WHERE id = $1", id).Scan(&u.ID, &u.Name, &u.Email) // Adjust attributes
     if err != nil {
         if err == sql.ErrNoRows {
