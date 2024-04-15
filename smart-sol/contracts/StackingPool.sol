@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
-import "./IERC20.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "./Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 contract StakingPool is ReentrancyGuard, Ownable {
     struct Stake {
@@ -19,6 +19,10 @@ contract StakingPool is ReentrancyGuard, Ownable {
     
     // Événement pour le retrait de tokens stakés
     event TokenUnstaked(address indexed user, address token, uint256 amount);
+
+    // Constructeur qui initialise le propriétaire
+    constructor(address initialOwner) Ownable(initialOwner) {
+    }
 
     // Fonction pour staker des tokens
     function stakeTokens(address token, uint256 amount) public nonReentrant {
@@ -41,5 +45,4 @@ contract StakingPool is ReentrancyGuard, Ownable {
         stake.amount = 0;
         stake.startTime = 0;
     }
-
 }

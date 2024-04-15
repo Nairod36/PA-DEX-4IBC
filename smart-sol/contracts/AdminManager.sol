@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract AdminManager {
     address public owner;
@@ -13,17 +15,26 @@ contract AdminManager {
         _;
     }
 
-    function setFees(uint _fee) external onlyOwner {
-        // Définir les frais de la plateforme
+    // Définir les frais de la plateforme
+    uint256 public platformFee;
+
+    function setFees(uint256 _fee) external onlyOwner {
+        platformFee = _fee;
     }
+
+    // Mapping pour suivre les adresses bannies
+    mapping(address => bool) public bannedAddresses;
 
     function banAddress(address _user) external onlyOwner {
-        // Bannir
-        // une adresse utilisateur de l'utilisation de la plateforme
+        bannedAddresses[_user] = true;
     }
 
+    function unbanAddress(address _user) external onlyOwner {
+        bannedAddresses[_user] = false;
+    }
+
+    // Fonction pour donner des actifs gratuitement
     function grantAsset(address _to, address _token, uint256 _amount) external onlyOwner {
-        // Donner des actifs gratuitement à une adresse
+        IERC20(_token).transfer(_to, _amount);
     }
-
 }
