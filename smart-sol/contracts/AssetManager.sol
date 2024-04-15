@@ -4,7 +4,7 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract AssetManager is Ownable(address(0)) {
+contract AssetManager is Ownable {
     struct Asset {
         string name;
         address tokenAddress;
@@ -18,6 +18,9 @@ contract AssetManager is Ownable(address(0)) {
     event AssetAdded(uint256 indexed assetId, string name, address tokenAddress, uint256 price);
     event AssetUpdated(uint256 indexed assetId, uint256 price, uint256 volume, uint256 tradeCount);
 
+    // Constructeur qui initialise le propriétaire
+    constructor(address initialOwner) Ownable(initialOwner) {
+    }
     function addAsset(string memory name, address tokenAddress, uint256 price) public onlyOwner {
         assets.push(Asset(name, tokenAddress, price, 0, 0));
         emit AssetAdded(assets.length - 1, name, tokenAddress, price);
