@@ -2,9 +2,8 @@
 
 ## Création d'un échange décentralisé
 
-![SchemaDEXpe](https://github.com/Nairod36/PA-DEX-4IBC/assets/72071612/1fb8bb94-4704-49a3-80f0-2e968ecbb08a)
+![SchemaDEXpe](https://cdn.discordapp.com/attachments/1177580165925175356/1232310331582451783/IBCSchemaDEX.png?ex=6628fdee&is=6627ac6e&hm=37d12f54fd0b366f52a595483ea2a9a6e60a6dcfb3a7a8942af889e11f7ed0cd&)
 
-![SchemaDexCrypto](https://cdn.discordapp.com/attachments/1177580165925175356/1232278655435276298/smartContractSchemaDEX.png?ex=6628e06e&is=66278eee&hm=04e044dcb0e13e1dbf8ce674670391daa7bce57f272260d3141e18be0c1ee527&)
 
 ## Objectif
 
