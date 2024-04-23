@@ -45,10 +45,7 @@ contract StakingPool is AccessControl, ReentrancyGuard {
         rewardsToken = IERC20(_rewardsToken);
         rewardsDuration = _rewardsDuration;
         rewardRate = _totalReward / _rewardsDuration;
-
-        stakingToken = IERC20(_stakingToken);
-        rewardsToken = IERC20(_rewardsToken);
-    }
+    }    
 
     function setRewardsDuration(uint256 _newDuration) public onlyRole(ADMIN_ROLE) {
         require(_newDuration > 0, "Rewards duration must be positive");
@@ -108,24 +105,33 @@ contract StakingPool is AccessControl, ReentrancyGuard {
     }
 
     function updateReward(address account) internal {
-        rewardPerTokenStored = rewardPerToken();
-        lastUpdateTime = block.timestamp;
-
-        if (account != address(0)) {
-            rewards[account] = earned(account);
-            stakes[account].rewardDebt = rewardPerTokenStored;
+        uint256 newRewardPerToken = rewardPerToken();
+        if (newRewardPerToken != rewardPerTokenStored) {
+            lastUpdateTime = block.timestamp;
+            rewardPerTokenStored = newRewardPerToken;
+            if (account != address(0)) {
+                rewards[account] = earned(account);
+                stakes[account].rewardDebt = newRewardPerToken;
+            }
         }
     }
 
     function rewardPerToken() public view returns (uint256) {
         if (_totalSupply == 0) {
-            return 0;
+            return rewardPerTokenStored;
         }
         uint256 timeElapsed = block.timestamp - lastUpdateTime;
         (bool mulSuccess, uint256 multiplied) = rewardRate.tryMul(timeElapsed);
+        if (!mulSuccess) {
+            revert("Multiplication overflow");
+        }
         (bool divSuccess, uint256 divided) = multiplied.tryDiv(_totalSupply);
-        return rewardPerTokenStored + (divSuccess ? divided : 0);
+        if (!divSuccess) {
+            revert("Division by zero");
+        }
+        return rewardPerTokenStored + divided;
     }
+
 
     function earned(address account) public view returns (uint256) {
         uint256 currentRewardPerToken = rewardPerToken();
