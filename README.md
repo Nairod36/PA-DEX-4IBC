@@ -28,13 +28,45 @@ Le but principal de ce projet est de construire une dApp (application décentral
 
 OpenZeppelin Contracts: Utilisé pour les tokens ERC20, les contrôles d'accès et les gardes contre la réentrance.
 
+1. ERC20 (OpenZeppelin)
+ERC20 est une norme standard pour la création de jetons interchangeables sur Ethereum, ce qui signifie que ces jetons ont des propriétés et des fonctions identiques, permettant une intégration et une compatibilité uniformes avec l'écosystème de la blockchain. Utiliser la bibliothèque ERC20 d'OpenZeppelin offre plusieurs avantages :
+
+Sécurité renforcée : OpenZeppelin est largement testée et auditée, réduisant le risque d'erreurs ou de failles de sécurité dans la mise en œuvre du token.
+Gain de temps : Permet aux développeurs de se concentrer sur les fonctionnalités spécifiques du projet sans réinventer la roue pour les fonctionnalités standard des tokens.
+Intercompatibilité : Facilite l'intégration avec des échanges, des portefeuilles et d'autres contrats qui utilisent la norme ERC20.
+
+2. ReentrancyGuard (OpenZeppelin)
+ReentrancyGuard est un mécanisme de protection contre les attaques de réentrance, un type de vulnérabilité où des appels externes malveillants peuvent réentrer dans le même contrat avant que le premier appel soit terminé. L'utilisation de ReentrancyGuard offre :
+
+Sécurité accrue : Empêche que des fonctions soient appelées de nouveau avant qu'elles ne soient achevées, bloquant les attaques qui pourraient autrement exploiter des états intermédiaires du contrat.
+Facilité d'utilisation : Peut être ajouté à un contrat en utilisant simplement un modificateur sur les fonctions vulnérables, rendant le code plus sûr avec un minimum d'effort.
+
+3. AccessControl (OpenZeppelin)
+AccessControl fournit un système flexible et extensible de gestion des rôles pour les contrats Ethereum. Cela permet de contrôler qui peut exécuter certaines actions au sein d'un contrat, offrant plusieurs bénéfices :
+
+Gestion des permissions : Permet de définir, de gérer et d'appliquer des rôles, simplifiant l'administration des droits d'accès dans des systèmes complexes.
+Sécurité dynamique : Les rôles peuvent être adaptés en fonction des besoins évolutifs, contrairement à des solutions plus rigides comme l'usage du pattern onlyOwner.
+Auditabilité : Chaque rôle est clairement défini et vérifiable, ce qui facilite l'audit et le suivi des interactions de contrat.
+
+4. RainbowKit
+RainbowKit n'est pas une bibliothèque Solidity, mais plutôt un kit d'interface utilisateur pour la connexion des portefeuilles Ethereum dans des applications web. Il améliore l'expérience utilisateur en offrant :
+
+Intégration de portefeuille simplifiée : Fournit une interface riche et personnalisable pour la connexion de portefeuilles d'une manière intuitive et visuellement agréable.
+Support de plusieurs portefeuilles : Compatible avec une large gamme de portefeuilles Ethereum, ce qui augmente la flexibilité pour les utilisateurs.
+Optimisation mobile : Assure une bonne expérience utilisateur sur mobile, un aspect souvent négligé dans les applications blockchain.
+
 ## Structure Contrats
 
 AdminManager: Gère les frais de la plateforme et les adresses bannies.
+
 AssetManager: Gestion des actifs avec ajout, mise à jour et récupération des informations d'actifs.
+
 FactoryLiquidityPool: Création de pools de liquidité pour le trading de tokens.
+
 StakingPoolFactory: Création et gestion de pools de staking.
+
 LiquidityPool: Gestion des opérations de pool de liquidité, ajout et retrait de liquidité, ainsi que les échanges de tokens.
+
 StakingPool: Permet aux utilisateurs de staker des tokens, de retirer leurs stakes, et de réclamer des récompenses.
 
 
