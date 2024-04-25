@@ -90,6 +90,19 @@ Fonctions principales
 
 Foundry est un outil de test et de déploiement pour les contrats Ethereum. Pour tester ce projet avec Foundry:
 
+  - Remplir les variable d'environnements dans un .env :
+    ```
+    SEPOLIA_RPC_URL=
+    PRIVATE_KEY=
+    RAW_PRIVATE_KEY=
+    ETHERSCAN_API_KEY=
+    FACTORY=
+    TKNA=
+    TKNB=
+    USER_ADDRESS=
+    AMOUNT_TO_MINT=
+    ```
+
   - Installez Foundry en suivant la documentation officielle. 
     https://book.getfoundry.sh/getting-started/first-steps
     ( forge install, forge build, fore test)
