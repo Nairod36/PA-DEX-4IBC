@@ -23,11 +23,9 @@ contract LiquidityPool is ReentrancyGuard {
     event LiquidityAdded(address indexed user, address tokenA, address tokenB, uint256 amountA, uint256 amountB);
     event LiquidityRemoved(address indexed user, address tokenA, address tokenB, uint256 amountA, uint256 amountB);
 
-    constructor(address _tokenA, address _tokenB, uint256 _amountA, uint256 _amountB){
+    constructor(address _tokenA, address _tokenB){
         tokenA = _tokenA;
         tokenB = _tokenB;
-        liquidityA = _amountA;
-        liquidityB = _amountB;
     }
 
     function addLiquidity(address _tokenA, address _tokenB, uint256 _amountA, uint256 _amountB) public nonReentrant {

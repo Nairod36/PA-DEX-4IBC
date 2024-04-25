@@ -19,7 +19,7 @@ contract LiquidityPoolTest is Test {
         tokenA.mint(owner, 10000);
         tokenB.mint(owner, 10000);
 
-        pool = new LiquidityPool(address(tokenA), address(tokenB), 0, 0);
+        pool = new LiquidityPool(address(tokenA), address(tokenB));
 
         tokenA.approve(address(pool), 10000);
         tokenB.approve(address(pool), 10000);

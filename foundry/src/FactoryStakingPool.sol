@@ -2,22 +2,26 @@
 pragma solidity ^0.8.20;
 
 import "./StakingPool.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract StakingPoolFactory {
-    StakingPool[] public stakingPools;
+contract FactoryStakingPool is Ownable {
+    mapping (bytes32 => StakingPool) public stakingPools;
 
     event StakingPoolCreated(StakingPool indexed newStakingPool);
+    
+    constructor(address initialOwner) Ownable(initialOwner){}
 
-    function createStakingPool(address _stakingToken, address _rewardsToken, uint256 _totalReward, uint256 _rewardsDuration) public {
-        StakingPool newStakingPool = new StakingPool(_stakingToken, _rewardsToken, _totalReward, _rewardsDuration);
+    function createStakingPool(address _stakingToken, uint256 _rewardRate) public onlyOwner {
+        require(address(stakingPools[getStakingId(_stakingToken)]) == address(0),"Staking pool already exists.");
+        StakingPool newStakingPool = new StakingPool(_stakingToken, _rewardRate);
         newStakingPool.grantRole(newStakingPool.ADMIN_ROLE(), msg.sender); // Assign the admin role to the creator
         newStakingPool.grantRole(newStakingPool.STAKER_ROLE(), msg.sender); // Optionally assign the staker role to the creator if needed
 
-        stakingPools.push(newStakingPool);
+        stakingPools[getStakingId(_stakingToken)] = newStakingPool;
         emit StakingPoolCreated(newStakingPool);
     }
 
-    function getStakingPools() public view returns (StakingPool[] memory) {
-        return stakingPools;
+    function getStakingId(address _token) public pure returns (bytes32) {
+        return keccak256(abi.encodePacked(_token));
     }
 }
