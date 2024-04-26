@@ -11,7 +11,7 @@ Le but principal de ce projet est de construire une dApp (application décentral
 
 ## Sommaire
   - [I - Fonctionnalités 🔥](#i---fonctionnalités-)
-    - [1) Pour les utilisateurs](#1-pour-les-utilisateurs)
+    - [1) Pour les utilisateurs 👤](#1-pour-les-utilisateurs-)
     - [2) Pour les administrateurs 👨‍💼](#2-pour-les-administrateurs-)
   - [II - Dépendances 📦](#ii---dependences-)
   - [III - Structure Contrats 🏗️](#iii---structure-contrats-)
@@ -37,7 +37,7 @@ Le but principal de ce projet est de construire une dApp (application décentral
 
 ## I - Fonctionnalités 🔥
 
-####   1) Pour les utilisateurs
+####   1) Pour les utilisateurs 👤
 
 - **Visualisation des actifs :** Permet aux utilisateurs de voir la liste des actifs disponibles ainsi que leurs détails spécifiques, tels que le prix, le volume, et le nombre de trades.
 - **Échange d'actifs :** Offre la possibilité d'échanger des actifs via un mécanisme de token swap.
