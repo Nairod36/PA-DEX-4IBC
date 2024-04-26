@@ -67,7 +67,7 @@ StakingPoolFactory: Création et gestion de pools de staking.
 
 LiquidityPool: Gestion des opérations de pool de liquidité, ajout et retrait de liquidité, ainsi que les échanges de tokens.
 
-StakingPool: Permet aux utilisateurs de staker des tokens, de retirer leurs stakes, et de réclamer des récompenses.
+StakingPool: Permet aux utilisateurs de staker des tokens, de retirer leurs stakes, et de réclamer des récompenses.  Gère les opérations de staking de manière sécurisée avec des contrôles d'accès basés sur les rôles.
 
 
 ## Déscription des contrats
@@ -79,14 +79,14 @@ Fonctions principales
   - setFees(uint256 _fee): Définit les frais de la plateforme.
   - banAddress(address _user): Bannit une adresse.
   - unbanAddress(address _user): Retire le bannissement d'une adresse.
-  - grantAsset(address _to, address _token, uint256 _amount): Transfère des actifs gratuitement     à une adresse.
+  - grantAsset(address _to, address _token, uint256 _amount): Transfère des actifs gratuitement à une adresse.
 
 'AssetManager'
 Gestion des actifs via une liste structurée stockant les détails de chaque actif. Utilise le système de rôles d'OpenZeppelin pour sécuriser l'accès aux fonctions de gestion des actifs.
 
 Fonctions principales
   - addAsset(string memory name, address tokenAddress, uint256 price): Ajoute un nouvel actif.
-  - updateAsset(uint256 assetId, uint256 price, uint256 volume, uint256 tradeCount): Met à jour     les informations d'un actif.
+  - updateAsset(uint256 assetId, uint256 price, uint256 volume, uint256 tradeCount): Met à jour les informations d'un actif.
   - getAsset(uint256 assetId): Récupère les détails d'un actif spécifique
 
 'FactoryLiquidityPool'
@@ -94,13 +94,13 @@ Permet la création de pools de liquidité. Chaque pool est identifié de maniè
 
 Fonctions principales
   - createLiquidityPool(address _tokenA, address _tokenB, uint256 _amountA, uint256 _amountB):      Crée un nouveau pool de liquidité.
-  - getPoolId(address tokenA, address tokenB): Génère et retourne l'identifiant d'un pool à         partir des adresses des tokens.
+  - getPoolId(address tokenA, address tokenB): Génère et retourne l'identifiant d'un pool à  partir des adresses des tokens.
 
 'StakingPoolFactory'
 Crée et stocke les pools de staking. Chaque pool permet aux utilisateurs de staker des tokens pour gagner des récompenses.
 
 Fonctions principales
-  - createStakingPool(address _stakingToken, address _rewardsToken, uint256 _totalReward,           uint256 _rewardsDuration): Crée un nouveau pool de staking.
+  - createStakingPool(address _stakingToken, address _rewardsToken, uint256 _totalReward, uint256 _rewardsDuration): Crée un nouveau pool de staking.
 
 'LiquidityPool'
 Gère les opérations dans un pool de liquidité, telles que l'ajout et le retrait de liquidité, et les échanges de tokens.
@@ -143,3 +143,18 @@ Foundry est un outil de test et de déploiement pour les contrats Ethereum. Pour
 
 
 Ce projet offre une structure robuste pour la gestion d'actifs et de liquidités sur la blockchain, avec une flexibilité et une sécurité accrues grâce à l'utilisation des contrats OpenZeppelin et des outils de développement modernes comme Foundry.
+
+
+# Futur ajout
+
+## Utilisation d'OpenZeppelin Defender
+
+L'intégration d'OpenZeppelin Defender permettra une gestion plus sûre et plus efficace des opérations administratives de la plateforme. Defender offre des outils pour automatiser les transactions et gérer les smart contracts de manière sécurisée. En utilisant Defender, nous pourrons signer des transactions directement via le backend, ce qui renforce la sécurité en centralisant la gestion des clés et en réduisant les risques d'erreurs humaines ou d'attaques externes.
+
+## Renforcement de l'Utilisation de AccessControl
+
+Pour garantir que toutes les interactions avec les smart contracts se fassent via notre DApp et notre backend, nous utiliserons le module AccessControl d'OpenZeppelin. Cela nous permettra de définir des rôles spécifiques qui contrôlent l'accès aux fonctions critiques des contrats, forçant ainsi les utilisateurs à passer par les interfaces approuvées pour interagir avec le système. Cela aide à prévenir les utilisations non autorisées et à garantir que toutes les transactions sont validées et signées correctement via notre backend.
+
+Implémentation de la Signature Obligatoire via le Backend
+
+En plus d'utiliser AccessControl pour gérer l'accès, nous prévoyons d'implémenter un mécanisme où toutes les transactions doivent être signées par notre backend avant d'être exécutées. Cela ajoute une couche supplémentaire de sécurité en s'assurant que même si l'interface utilisateur est compromise, les transactions ne peuvent pas être effectuées sans la signature appropriée du backend.
