@@ -24,7 +24,7 @@ contract FactoryStakingPoolTest is Test {
         factory.createStakingPool(address(stakingToken), rewardRate);
         
         bytes32 poolId = factory.getStakingId(address(stakingToken));
-        StakingPool newStakingPool = factory.stakingPools(poolId);
+        StakingPool newStakingPool = factory.getStake(poolId);
 
         assertTrue(address(newStakingPool) != address(0), "Staking pool should be created");
         assertTrue(newStakingPool.hasRole(newStakingPool.ADMIN_ROLE(), owner), "Owner should have the admin role");
@@ -45,7 +45,7 @@ contract FactoryStakingPoolTest is Test {
         factory.createStakingPool(address(stakingToken), rewardRate);
         
         bytes32 poolId = factory.getStakingId(address(stakingToken));
-        StakingPool newStakingPool = factory.stakingPools(poolId);
+        StakingPool newStakingPool = factory.getStake(poolId);
 
         assertTrue(newStakingPool.hasRole(newStakingPool.STAKER_ROLE(), owner), "Owner should have the staker role");
     }

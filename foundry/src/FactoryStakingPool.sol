@@ -5,11 +5,12 @@ import "./StakingPool.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract FactoryStakingPool is Ownable {
-    mapping (bytes32 => StakingPool) public stakingPools;
+    mapping (bytes32 => StakingPool) private stakingPools;
 
     event StakingPoolCreated(StakingPool indexed newStakingPool);
     
-    constructor(address initialOwner) Ownable(initialOwner){}
+    constructor(address initialOwner) Ownable(initialOwner){
+    }
 
     function createStakingPool(address _stakingToken, uint256 _rewardRate) public onlyOwner {
         require(address(stakingPools[getStakingId(_stakingToken)]) == address(0),"Staking pool already exists.");

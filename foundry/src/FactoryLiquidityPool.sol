@@ -5,7 +5,7 @@ import "./LiquidityPool.sol";
 
 contract FactoryLiquidityPool {
     // Liste de tous les pools créés
-    mapping(bytes32 => LiquidityPool) public pools;
+    mapping(bytes32 => LiquidityPool) private pools;
 
     event PoolCreated(LiquidityPool indexed newPool);
 

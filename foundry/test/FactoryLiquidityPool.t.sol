@@ -26,7 +26,7 @@ contract FactoryLiquidityPoolTest is Test {
         sdx.approve(address(factory),10000*1e18);
         factory.createLiquidityPool(address(tokenA), address(tokenB));
         bytes32 poolId = factory.getPoolId(address(tokenA), address(tokenB));
-        LiquidityPool pool = factory.pools(poolId);
+        LiquidityPool pool = factory.getPool(poolId);
         
         assertTrue(address(pool) != address(0), "Pool should be created");
         assertEq(pool.tokenA(), address(tokenA), "Token A address should match");
