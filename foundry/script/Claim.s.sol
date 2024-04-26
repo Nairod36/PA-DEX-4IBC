@@ -13,10 +13,11 @@ contract Claim is Script {
         vm.startBroadcast();
 
         address factoryAddress = vm.envAddress("FACTORY_S");
+        address tokenA = vm.envAddress("TKNA");
 
         FactoryStakingPool factory = FactoryStakingPool(factoryAddress);
         
-        bytes32 id = factory.getStakeId(tokenA);
+        bytes32 id = factory.getStakingId(tokenA);
 
         StakingPool pool = factory.getStake(id);
 

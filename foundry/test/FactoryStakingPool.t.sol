@@ -18,7 +18,9 @@ contract FactoryStakingPoolTest is Test {
     }
 
     function testCreateStakingPool() public {
-        uint256 rewardRate = 1e18; // 1 token per second per staked token
+        uint256 rewardRate = 1e17; // 0.1 token per second per staked token
+        stakingToken.mint(owner,10000*1e18);
+        stakingToken.approve(address(factory),10000*1e18);
         factory.createStakingPool(address(stakingToken), rewardRate);
         
         bytes32 poolId = factory.getStakingId(address(stakingToken));
@@ -29,7 +31,7 @@ contract FactoryStakingPoolTest is Test {
     }
 
     function testFailCreateDuplicateStakingPool() public {
-        uint256 rewardRate = 1e18; // 1 token per second per staked token
+        uint256 rewardRate = 1e17; // 0.1 token per second per staked token
         factory.createStakingPool(address(stakingToken), rewardRate);
 
         // This call should fail because the staking pool for this token already exists
@@ -37,7 +39,9 @@ contract FactoryStakingPoolTest is Test {
     }
 
     function testRoleAssignmentInNewStakingPool() public {
-        uint256 rewardRate = 1e18; // 1 token per second per staked token
+        uint256 rewardRate = 1e17; // 0.1 token per second per staked token
+        stakingToken.mint(owner,10000*1e18);
+        stakingToken.approve(address(factory),10000*1e18);
         factory.createStakingPool(address(stakingToken), rewardRate);
         
         bytes32 poolId = factory.getStakingId(address(stakingToken));

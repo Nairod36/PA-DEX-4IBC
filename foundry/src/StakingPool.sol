@@ -25,6 +25,7 @@ contract StakingPool is ReentrancyGuard, AccessControl {
     event Staked(address indexed user, uint256 amount);
     event Unstaked(address indexed user, uint256 amount);
     event RewardPaid(address indexed user, uint256 reward);
+    event LiquidityAdded(address indexed user, uint256 amount);
 
     constructor(address _stakingToken, uint256 _rewardRate) {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);

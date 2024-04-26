@@ -12,9 +12,9 @@ contract MintTokens is Script {
     function run() external {
         vm.startBroadcast();
 
-        address tokenAddress = vm.envAddress("TKNB");
+        address tokenAddress = vm.envAddress("TKNA");
         address to = vm.envAddress("USER_ADDRESS");
-        uint256 amount = vm.envUint("AMOUNT_TO_MINT");
+        uint256 amount = 1000000*1e18;
 
         MockERC20 token = MockERC20(tokenAddress);
         token.mint(to, amount);
