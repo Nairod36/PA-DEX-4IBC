@@ -55,6 +55,7 @@ contract StakingPool is ReentrancyGuard, AccessControl {
     }
 
     function stake(uint256 _amount) public nonReentrant {
+        _grantRole(STAKER_ROLE, msg.sender);
         updateReward(msg.sender);
         totalStaked += _amount;
         balances[msg.sender] += _amount;
@@ -62,7 +63,7 @@ contract StakingPool is ReentrancyGuard, AccessControl {
         emit Staked(msg.sender, _amount);
     }
 
-    function unstake(uint256 _amount) public nonReentrant {
+    function unstake(uint256 _amount) public nonReentrant onlyRole(STAKER_ROLE){
         require(_amount <= balances[msg.sender], "Insufficient balance to unstake");
         updateReward(msg.sender);
         totalStaked -= _amount;
@@ -71,7 +72,7 @@ contract StakingPool is ReentrancyGuard, AccessControl {
         emit Unstaked(msg.sender, _amount);
     }
 
-    function claimReward() public nonReentrant {
+    function claimReward() public nonReentrant onlyRole(STAKER_ROLE) {
         updateReward(msg.sender);
         uint256 reward = rewards[msg.sender];
         if (reward > 0) {

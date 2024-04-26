@@ -17,7 +17,6 @@ contract StakingPoolTest is Test {
 
         stakingToken.mint(staker, 1000 * 1e18);
         stakingToken.approve(address(pool), 1000 * 1e18);
-        pool.grantRole(pool.STAKER_ROLE(), staker);
     }
 
     function testStake() public {
