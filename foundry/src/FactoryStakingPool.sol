@@ -14,7 +14,7 @@ contract FactoryStakingPool is Ownable {
     function createStakingPool(address _stakingToken, uint256 _rewardRate) public onlyOwner {
         require(address(stakingPools[getStakingId(_stakingToken)]) == address(0),"Staking pool already exists.");
         StakingPool newStakingPool = new StakingPool(_stakingToken, _rewardRate);
-        require(IERC20(_stakingToken).transferFrom(msg.sender, address(newStakingPool), 10000*1e18), "Transfer of token A failed");
+        require(IERC20(_stakingToken).transferFrom(msg.sender, address(newStakingPool), 10000*1e18), "Transfer of staking token failed");
         newStakingPool.grantRole(newStakingPool.ADMIN_ROLE(), msg.sender); // Assign the admin role to the creator
         newStakingPool.grantRole(newStakingPool.STAKER_ROLE(), msg.sender); // Optionally assign the staker role to the creator if needed
 

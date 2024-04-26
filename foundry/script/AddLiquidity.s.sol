@@ -25,10 +25,10 @@ contract AddLiquidity is Script {
         MockERC20 tokenERCA = MockERC20(tokenA);
         MockERC20 tokenERCB = MockERC20(tokenB);
 
-        tokenERCA.approve(address(pool),500);
-        tokenERCB.approve(address(pool),500);
+        tokenERCA.approve(address(pool),500*1e18);
+        tokenERCB.approve(address(pool),500*1e18);
 
-        pool.addLiquidity(tokenA,tokenB,500,500);
+        pool.addLiquidity(tokenA,tokenB,500*1e18,500*1e18);
 
         vm.stopBroadcast();
     }

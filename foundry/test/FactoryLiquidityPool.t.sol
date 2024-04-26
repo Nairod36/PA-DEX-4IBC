@@ -7,17 +7,23 @@ import "../src/FactoryLiquidityPool.sol";
 import "../src/LiquidityPool.sol";
 
 contract FactoryLiquidityPoolTest is Test {
+    address owner;
     FactoryLiquidityPool factory;
     MockERC20 tokenA;
     MockERC20 tokenB;
+    MockERC20 sdx;
 
     function setUp() public {
-        factory = new FactoryLiquidityPool();
+        owner = address(this);
+        sdx = new MockERC20("StarDex Token", "SDX", 18);
+        factory = new FactoryLiquidityPool(address(sdx));
         tokenA = new MockERC20("Token A", "TKA", 18);
         tokenB = new MockERC20("Token B", "TKB", 18);
+        sdx.mint(owner,100000*1e18);
     }
 
     function testCreateLiquidityPool() public {
+        sdx.approve(address(factory),10000*1e18);
         factory.createLiquidityPool(address(tokenA), address(tokenB));
         bytes32 poolId = factory.getPoolId(address(tokenA), address(tokenB));
         LiquidityPool pool = factory.pools(poolId);

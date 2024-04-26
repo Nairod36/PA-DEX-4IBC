@@ -12,7 +12,7 @@ contract MintTokens is Script {
     function run() external {
         vm.startBroadcast();
 
-        address tokenAddress = vm.envAddress("TKNA");
+        address tokenAddress = vm.envAddress("TKNB");
         address to = vm.envAddress("USER_ADDRESS");
         uint256 amount = 1000000*1e18;
 

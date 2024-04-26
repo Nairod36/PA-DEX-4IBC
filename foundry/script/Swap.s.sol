@@ -24,9 +24,9 @@ contract Swap is Script {
 
         MockERC20 tokenERCA = MockERC20(tokenA);
 
-        tokenERCA.approve(address(pool),250);
+        tokenERCA.approve(address(pool),250*1e18);
 
-        pool.swap(tokenA,250);
+        pool.swap(tokenA,250*1e18);
 
         vm.stopBroadcast();
     }

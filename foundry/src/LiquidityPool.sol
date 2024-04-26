@@ -16,6 +16,8 @@ contract LiquidityPool is ReentrancyGuard {
     uint256 public liquidityB;
     uint256 public reserveA;
     uint256 public reserveB;
+
+    address public starDexToken;
     
     // Pool identifier is a keccak256 hash of token addresses
     mapping(address => PoolInfo) public userLiquidity;
@@ -23,9 +25,10 @@ contract LiquidityPool is ReentrancyGuard {
     event LiquidityAdded(address indexed user, address tokenA, address tokenB, uint256 amountA, uint256 amountB);
     event LiquidityRemoved(address indexed user, address tokenA, address tokenB, uint256 amountA, uint256 amountB);
 
-    constructor(address _tokenA, address _tokenB){
+    constructor(address _tokenA, address _tokenB, address _starDexToken){
         tokenA = _tokenA;
         tokenB = _tokenB;
+        starDexToken = _starDexToken;
     }
 
     function addLiquidity(address _tokenA, address _tokenB, uint256 _amountA, uint256 _amountB) public nonReentrant {
@@ -34,6 +37,7 @@ contract LiquidityPool is ReentrancyGuard {
         // Transfer tokens to the pool
         require(IERC20(tokenA).transferFrom(msg.sender, address(this), _amountA), "Transfer of token A failed");
         require(IERC20(tokenB).transferFrom(msg.sender, address(this), _amountB), "Transfer of token B failed");
+        require(IERC20(starDexToken).transfer(msg.sender,(_amountA + _amountB)), "Transfer of StarDex Token failed");
         
         // Update pool and user liquidity information
         liquidityA += _amountA;

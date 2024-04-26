@@ -4,22 +4,27 @@ pragma solidity ^0.8.20;
 import "forge-std/Test.sol";
 import "../src/LiquidityPool.sol";
 import "./mocks/MockERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract LiquidityPoolTest is Test {
     LiquidityPool public pool;
     MockERC20 public tokenA;
     MockERC20 public tokenB;
+    MockERC20 public sdx;
     address public owner;
 
     function setUp() public {
         owner = address(this);
         tokenA = new MockERC20("Token A", "TKNA", 18);
         tokenB = new MockERC20("Token B", "TKNB", 18);
+        sdx = new MockERC20("StarDex Token", "SDX", 18);
 
         tokenA.mint(owner, 10000);
         tokenB.mint(owner, 10000);
+        sdx.mint(owner, 1000000*1e18);
 
-        pool = new LiquidityPool(address(tokenA), address(tokenB));
+        pool = new LiquidityPool(address(tokenA), address(tokenB), address(sdx));
+        IERC20(sdx).transfer(address(pool),10000*1e18);
 
         tokenA.approve(address(pool), 10000);
         tokenB.approve(address(pool), 10000);

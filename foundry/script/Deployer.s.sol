@@ -15,7 +15,10 @@ contract Deployer is Script {
         address deployerAddress = vm.envAddress("USER_ADDRESS");
         vm.startBroadcast(deployerPrivateKey);
 
-        FactoryLiquidityPool factory = new FactoryLiquidityPool();
+        MockERC20 stardexToken = new MockERC20("Stardex Token", "SDX", 18);
+        console.log("stardex Token address:",address(stardexToken));
+
+        FactoryLiquidityPool factory = new FactoryLiquidityPool(address(stardexToken));
         console.log("Factory address:",address(factory));
 
         MockERC20 tokenA = new MockERC20("Token A", "TKA", 18);
