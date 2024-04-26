@@ -10,29 +10,29 @@
 Le but principal de ce projet est de construire une dApp (application décentralisée) qui simule une plateforme d'échange décentralisée pour les actifs numériques sur Ethereum. Cette plateforme vise à offrir diverses fonctionnalités à ses utilisateurs et administrateurs, incluant la visualisation et l'échange d'actifs, ainsi que la gestion de liquidités et de staking.
 
 ## Sommaire
-  - [I - Fonctionnalités 🔥](#fonctionnalités-)
-    - [1) Pour les utilisateurs](#pour-les-utilisateurs)
-    - [2) Pour les administrateurs 👨‍💼](#pour-les-administrateurs-)
-  - [II - Dépendances 📦](#dépendances-)
-  - [III - Structure Contrats 🏗️](#structure-contrats-)
-  - [IV - Description des contrats 📜](#description-des-contrats-)
-    - [1) AdminManager 🚨](#adminmanager-)
-    - [2) AssetManager 📈](#assetmanager-)
-    - [3) FactoryLiquidityPool 💦](#factoryliquiditypool-)
-    - [4) StakingPoolFactory ⚙️](#stakingpoolfactory-)
-    - [5) LiquidityPool 💧](#liquiditypool-)
-    - [6) StakingPool 🏦](#stakingpool-)
-  - [V - Utilisation de Foundry 🔨](#utilisation-de-foundry-)
-    - [1) Déploiement des Contrats 🚀](#déploiement-des-contrats-)
-    - [2) Interaction avec les Contrats 🔄](#interaction-avec-les-contrats-)
-  - [VI- Difficultés/Tips 🛠️](#difficultéstips-)
-    - [1) Foundry/Installation ⚙️](#foundryinstallation-)
-    - [2) Foundry/Test 🧪](#foundrytest-)
-    - [3) RainbowKit/Installation 🌈](#rainbowkitinstallation-)
-  - [VII - Futurs ajouts 🌟](#futurs-ajouts-)
-    - [1) Utilisation d'OpenZeppelin Defender 🔐](#utilisation-dopenzeppelin-defender-)
-    - [2) Renforcement de l'Utilisation de AccessControl 🔑](#renforcement-de-lutilisation-de-accesscontrol-)
-    - [3) Implémentation de la Signature Obligatoire via le Backend 📝](#implémentation-de-la-signature-obligatoire-via-le-backend-)
+  - [I - Fonctionnalités 🔥](#i---fonctionnalités-)
+    - [1) Pour les utilisateurs](#1-pour-les-utilisateurs)
+    - [2) Pour les administrateurs 👨‍💼](#2-pour-les-administrateurs-)
+  - [II - Dépendances 📦](#ii---dependences-)
+  - [III - Structure Contrats 🏗️](#iii---structure-contrats-)
+  - [IV - Description des contrats 📜](#iv---déscription-des-contrats-)
+    - [1) AdminManager 🚨](#1-adminmanager-)
+    - [2) AssetManager 📈](#2-assetmanager-)
+    - [3) FactoryLiquidityPool 💦](#3-factoryliquiditypool-)
+    - [4) StakingPoolFactory ⚙️](#4-stakingpoolfactory-)
+    - [5) LiquidityPool 💧](#5-liquiditypool-)
+    - [6) StakingPool 🏦](#6-stakingpool-)
+  - [V - Utilisation de Foundry 🔨](#v---utilisation-de-foundry-)
+    - [1) Déploiement des Contrats 🚀](#1-déploiement-des-contrats-)
+    - [2) Interaction avec les Contrats 🔄](#2-interaction-avec-les-contrats-)
+  - [VI- Difficultés/Tips 🛠️](#vi---difficultéstips-)
+    - [1) Foundry/Installation ⚙️](#1-foundryinstallation-)
+    - [2) Foundry/Test 🧪](#2-foundrytest-)
+    - [3) RainbowKit/Installation 🌈](#3-rainbowkitinstallation-)
+  - [VII - Futurs ajouts 🌟](#vii---futurs-ajouts-)
+    - [1) Utilisation d'OpenZeppelin Defender 🔐](#1-utilisation-dopenzeppelin-defender-)
+    - [2) Renforcement de l'Utilisation de AccessControl 🔑](#2-renforcement-de-lutilisation-de-accesscontrol-)
+    - [3) Implémentation de la Signature Obligatoire via le Backend 📝](#3-implémentation-de-la-signature-obligatoire-via-le-backend-)
 
 
 ## I - Fonctionnalités 🔥
@@ -196,11 +196,11 @@ Les commandes sont des les fichiers de script correspondant.
 
 ## VI - Difficultés/Tips 🛠️
 
-#### 1)  Foundry/Installation ⚙️:
+#### 1) Foundry/Installation ⚙️:
 ⚠️ Lors de son installation, Foundry utilise la commande Fork de git, aussi cet emploi de git peut causer des erreurs de compatibilité. Nous conseillons d'ajouter le paramètre `--no-commit` pour pallier à ce problème.
 
 
-#### 2)  Foundry/Test 🧪:
+#### 2) Foundry/Test 🧪:
 Toutes les interactions passent par l'object VM, qui permet de simuler une adresse sender :
 ```
 vm.prank(owner);
@@ -211,24 +211,24 @@ vm.warp(block.timestamp + 100); // Avance de 100 secondes
 ```
 
 
-#### 3)  RainbowKit/Installation 🌈:
+#### 3) RainbowKit/Installation 🌈:
 ⚠️ Lors de l'installation nous avons eu beaucoup de problèmes de vertions et de compatibilités, le paramètre `--force` nous a débloqué.
 
-## VII -  Futurs ajouts 🌟
+## VII - Futurs ajouts 🌟
 
-#### 1)  Utilisation d'OpenZeppelin Defender 🔐
+#### 1) Utilisation d'OpenZeppelin Defender 🔐
 
 L'intégration d'**OpenZeppelin Defender** permettra une gestion plus sûre et plus efficace des opérations administratives de la plateforme. 
 **Defender** offre des outils pour automatiser les transactions et gérer les smart contracts de manière sécurisée. 
 En utilisant **Defender**, nous pourrons signer des transactions directement via le backend, ce qui renforce la sécurité en centralisant la gestion des clés et en réduisant les risques d'erreurs humaines ou d'attaques externes.
 
-#### 2)  Renforcement de l'Utilisation de AccessControl 🔑
+#### 2) Renforcement de l'Utilisation de AccessControl 🔑
 
 Pour garantir que toutes les interactions avec les smart contracts se fassent via notre DApp et notre backend, nous utiliserons le module **AccessControl** d'*OpenZeppelin*. 
 Cela nous permettra de définir des rôles spécifiques qui contrôlent l'accès aux fonctions critiques des contrats, forçant ainsi les utilisateurs à passer par les interfaces approuvées pour interagir avec le système. Cela aide à prévenir les utilisations non autorisées et à garantir que toutes les transactions sont validées et signées correctement via notre backend.
 
-#### 3)  Implémentation de la Signature Obligatoire via le Backend 📝
+#### 3) Implémentation de la Signature Obligatoire via le Backend 📝
 
 En plus d'utiliser **AccessControl** pour gérer l'accès, nous prévoyons d'implémenter un mécanisme où toutes les transactions doivent être signées par notre backend avant d'être exécutées. Cela ajoute une couche supplémentaire de sécurité en s'assurant que même si l'interface utilisateur est compromise, les transactions ne peuvent pas être effectuées sans la signature appropriée du backend.
 
-[⬆️](#sommaire)
+[⬆️ Retour au sommaire ⬆️](#sommaire)
