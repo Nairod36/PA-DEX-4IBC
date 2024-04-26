@@ -9,7 +9,7 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { WagmiProvider } from 'wagmi';
 import {
-  mainnet,
+  sepolia,
   polygon,
   optimism,
   arbitrum,
@@ -26,7 +26,7 @@ const queryClient = new QueryClient();
 const config = getDefaultConfig({
   appName: 'PA-DEX-24',
   projectId: 'ad0fb90e38e7329c5dd09dc17bb948ba',
-  chains: [mainnet, polygon, optimism, arbitrum, base],
+  chains: [sepolia, polygon, optimism, arbitrum, base],
   ssr: true, // If your dApp uses server side rendering (SSR)
 });
 
