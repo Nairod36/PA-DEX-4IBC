@@ -2,7 +2,7 @@
 
 ## Création d'un échange décentralisé
 
-![SchemaDEXpe](https://media.discordapp.net/attachments/1030238839136067695/1232995960389505044/IBCSchemaDEX.png?ex=662b7c78&is=662a2af8&hm=24821454e0317c9a8135d771e9bd39b4b4873c5e95731667dd80266f86661d0d&)
+![SchemaDEXpe](https://cdn.discordapp.com/attachments/1177580165925175356/1233374664202391692/IBCSchemaDEX.png?ex=662cdd2a&is=662b8baa&hm=3f12273a9564142d96af10987829ab57bc7cfd91dabbb3a0b3c769435eb408b9&)
 
 
 ## Objectif
