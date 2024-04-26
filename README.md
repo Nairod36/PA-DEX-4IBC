@@ -13,7 +13,7 @@ Le but principal de ce projet est de construire une dApp (application décentral
   - [I - Fonctionnalités 🔥](#i---fonctionnalités-)
     - [1) Pour les utilisateurs 👤](#1-pour-les-utilisateurs-)
     - [2) Pour les administrateurs 👨‍💼](#2-pour-les-administrateurs-)
-  - [II - Dépendances 📦](#ii---dependences-)
+  - [II - Dépendances 📦](#ii---dépendences-)
   - [III - Structure Contrats 🏗️](#iii---structure-contrats-)
   - [IV - Description des contrats 📜](#iv---déscription-des-contrats-)
     - [1) AdminManager 🚨](#1-adminmanager-)
@@ -50,7 +50,7 @@ Le but principal de ce projet est de construire une dApp (application décentral
 - **Dashboard :** Accès à un tableau de bord pour visualiser les statistiques et les performances de la plateforme.
 
 
-## II - Dependences 📦
+## II - Dépendences 📦
 
 OpenZeppelin Contracts: Utilisé pour les tokens ERC20, les contrôles d'accès et les gardes contre la réentrance.
 
@@ -148,7 +148,7 @@ Permet le staking de tokens, le retrait de ces tokens et la réclamation des ré
 
 Foundry est un outil de test et de déploiement pour les contrats Ethereum. Pour tester ce projet avec Foundry:
 
-  - Remplir les variable d'environnements dans un .env 📝:
+  - Remplir les variables d'environnements dans un .env 📝:
     ```
     SEPOLIA_RPC_URL=
     PRIVATE_KEY=
@@ -212,7 +212,7 @@ vm.warp(block.timestamp + 100); // Avance de 100 secondes
 
 
 #### 3) RainbowKit/Installation 🌈:
-⚠️ Lors de l'installation nous avons eu beaucoup de problèmes de vertions et de compatibilités, le paramètre `--force` nous a débloqué.
+⚠️ Lors de l'installation nous avons eu beaucoup de problèmes de versions et de compatibilités, l'utilisation du paramètre `--force` nous a permis de résoudre ces problèmes.
 
 ## VII - Futurs ajouts 🌟
 
