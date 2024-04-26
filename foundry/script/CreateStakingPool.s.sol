@@ -12,10 +12,15 @@ contract CreateStakingPool is Script {
         vm.startBroadcast();
 
         address factoryAddress = vm.envAddress("FACTORY_S");
-        address tokenA = vm.envAddress("TKNA");
+        address tokenAddress = vm.envAddress("TKNA");
 
         FactoryStakingPool factory = FactoryStakingPool(factoryAddress);
-        factory.createStakingPool(tokenA, 10000);
+
+        MockERC20 token = MockERC20(tokenAddress);
+
+        token.approve(address(factory),10000*1e18);
+
+        factory.createStakingPool(tokenAddress, 1e17);
 
         vm.stopBroadcast();
     }

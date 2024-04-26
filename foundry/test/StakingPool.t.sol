@@ -42,7 +42,7 @@ contract StakingPoolTest is Test {
         pool.stake(stakeAmount);
 
         // Fast forward time to accumulate some rewards
-        vm.warp(block.timestamp + 100); // Advance by 10 seconds
+        vm.warp(block.timestamp + 100); // Advance by 100 seconds
 
         uint256 expectedRewards = stakeAmount * 10; // As reward rate is 1 token per second per token staked
         uint256 actualRewards = pool.earned(staker); // Getting the actual calculated rewards before claiming
