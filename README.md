@@ -118,7 +118,7 @@ Fonctions principales
 
 
 
-## Utilisation avec Foundry
+# Utilisation de Foundry
 
 Foundry est un outil de test et de déploiement pour les contrats Ethereum. Pour tester ce projet avec Foundry:
 
@@ -129,17 +129,63 @@ Foundry est un outil de test et de déploiement pour les contrats Ethereum. Pour
     RAW_PRIVATE_KEY=
     ETHERSCAN_API_KEY=
     FACTORY=
+    FACTORY_S=
     TKNA=
     TKNB=
+    SDX=
     USER_ADDRESS=
     AMOUNT_TO_MINT=
     ```
 
-  - Installez Foundry en suivant la documentation officielle. 
-    https://book.getfoundry.sh/getting-started/first-steps
+  - Installez Foundry en suivant la documentation officielle [ici](https://book.getfoundry.sh/getting-started/first-steps).
     ( forge install, forge build, fore test)
-  - Déployez les contrats via les scripts de déploiement.
+    
   - Utilisez les scripts de test pour valider la logique et les interactions des contrats.
+
+## Déploiement des Contrats
+
+Dans cette commande on spécifie le fichier ainsi que le contrat de script qu'on souhaite utiliser, puis on renseigne le rpc-url (présent dans le .env) qui correspond au RPC utilisé pour intéragir avec le réseau.
+Dans notre cas nous avons utilisé Alchemy pour intéragir avec le réseau sepolia. Le paramètre broadcast sert quant à lui à logger toutes les transactions qui auront lieu dans le script. 
+Verify va questionner Etherscan afin de vérifier que la transaction est bien accessible via ce dernier. 
+Enfin le paramètre -vvvv permet de préciser le niveau de verbosité des logs, ici niveau 4 (Print execution traces for all tests, and setup traces for failing tests). 
+La liste des niveau de verbosité et des paramètres est accessible [ici](https://book.getfoundry.sh/reference/forge/forge-debug).
+
+```
+forge script script/Deployer.s.sol:Deployer --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv
+```
+
+
+## Interaction avec les Contrats
+
+Une fois le contrat déployé, vous pouvez interagir avec lui en utilisant les scripts, par exemple :
+
+```
+forge script script/Swap.s.sol:Swap --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv --private-key $PRIVATE_KE
+```
+Les commandes sont des les fichiers de script correspondant.
+
+
+# Difficultés/Tips
+
+##Foundry/Installation
+⚠️ Lors de son installation, Foundry utilise la commande Fork de git, aussi cet emploi de git peut causer des erreurs de compatibilité. Nous conseillons d'ajouter le paramètre `--no-commit` pour pallier à ce problème.
+
+
+## Foundry/Test :
+Tout les interactions passent par l'object VM, qui permet de simuler une adresse sender :
+```
+vm.prank(owner);
+```
+Ou encore le temps :
+```
+vm.warp(block.timestamp + 100); // Avance de 100 secondes
+```
+
+
+## RainbowKit/Installation
+⚠️ Lors de l'installation nous avons eu beaucoup de problèmes de vertions et de compatibilités, le paramètre `--force` nous a débloqué.
+
+
 
 
 Ce projet offre une structure robuste pour la gestion d'actifs et de liquidités sur la blockchain, avec une flexibilité et une sécurité accrues grâce à l'utilisation des contrats OpenZeppelin et des outils de développement modernes comme Foundry.
