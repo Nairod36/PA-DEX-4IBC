@@ -230,3 +230,5 @@ Cela nous permettra de définir des rôles spécifiques qui contrôlent l'accès
 #### 3)  Implémentation de la Signature Obligatoire via le Backend 📝
 
 En plus d'utiliser **AccessControl** pour gérer l'accès, nous prévoyons d'implémenter un mécanisme où toutes les transactions doivent être signées par notre backend avant d'être exécutées. Cela ajoute une couche supplémentaire de sécurité en s'assurant que même si l'interface utilisateur est compromise, les transactions ne peuvent pas être effectuées sans la signature appropriée du backend.
+
+[⬆️](#sommaire)
