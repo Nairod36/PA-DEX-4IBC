@@ -4,6 +4,8 @@ import {NavLink, Link} from 'react-router-dom';
 import Logo from './../assets/images/logo.png';
 import LogoWhite from './../assets/images/logo-white.png';
 import App3 from '../components/Home/web3';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
 
 function Header(){
 
@@ -39,6 +41,7 @@ function Header(){
                             <div className="extra-nav">
                                 <div className="extra-cell">
                                     <a className="btn btn-outline-primary text-white" target="_blank" rel="noreferrer" href="">Login</a>
+                                    <ConnectButton />
                                     <a className="btn btn-primary btn-gradient btn-shadow" target="_blank" rel="noreferrer" href="">Register</a>
                                 </div>
                             </div>                           
