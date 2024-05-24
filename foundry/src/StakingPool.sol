@@ -27,6 +27,11 @@ contract StakingPool is ReentrancyGuard, AccessControl {
     event RewardPaid(address indexed user, uint256 reward);
     event LiquidityAdded(address indexed user, uint256 amount);
 
+    /**
+     * @notice Initializes the staking pool with given staking token and reward rate
+     * @param _stakingToken Address of the staking token
+     * @param _rewardRate Reward rate per token per second
+     */
     constructor(address _stakingToken, uint256 _rewardRate) {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(ADMIN_ROLE, msg.sender);
@@ -34,6 +39,10 @@ contract StakingPool is ReentrancyGuard, AccessControl {
         rewardRate = _rewardRate;
     }
 
+    /**
+     * @notice Calculates the reward per token
+     * @return The reward per token stored
+     */
     function rewardPerToken() public view returns (uint256) {
         if (totalStaked == 0) {
             return rewardPerTokenStored;
@@ -41,10 +50,19 @@ contract StakingPool is ReentrancyGuard, AccessControl {
         return rewardPerTokenStored + rewardRate * (block.timestamp - lastUpdateTime) * 1e18 / totalStaked;
     }
 
+    /**
+     * @notice Calculates the earned rewards for an account
+     * @param account The address of the account
+     * @return The earned rewards for the account
+     */
     function earned(address account) public view returns (uint256) {
         return balances[account] * (rewardPerToken() - rewardPerTokenPaid[account]) / 1e18 + rewards[account];
     }
 
+    /**
+     * @notice Updates the reward for a given account
+     * @param account The address of the account to update rewards for
+     */
     function updateReward(address account) internal {
         rewardPerTokenStored = rewardPerToken();
         lastUpdateTime = block.timestamp;
@@ -54,6 +72,10 @@ contract StakingPool is ReentrancyGuard, AccessControl {
         }
     }
 
+    /**
+     * @notice Stakes a given amount of tokens
+     * @param _amount The amount of tokens to stake
+     */
     function stake(uint256 _amount) public nonReentrant {
         _grantRole(STAKER_ROLE, msg.sender);
         updateReward(msg.sender);
@@ -63,7 +85,11 @@ contract StakingPool is ReentrancyGuard, AccessControl {
         emit Staked(msg.sender, _amount);
     }
 
-    function unstake(uint256 _amount) public nonReentrant onlyRole(STAKER_ROLE){
+    /**
+     * @notice Unstakes a given amount of tokens
+     * @param _amount The amount of tokens to unstake
+     */
+    function unstake(uint256 _amount) public nonReentrant onlyRole(STAKER_ROLE) {
         require(_amount <= balances[msg.sender], "Insufficient balance to unstake");
         updateReward(msg.sender);
         totalStaked -= _amount;
@@ -72,6 +98,9 @@ contract StakingPool is ReentrancyGuard, AccessControl {
         emit Unstaked(msg.sender, _amount);
     }
 
+    /**
+     * @notice Claims the reward for the caller
+     */
     function claimReward() public nonReentrant onlyRole(STAKER_ROLE) {
         updateReward(msg.sender);
         uint256 reward = rewards[msg.sender];

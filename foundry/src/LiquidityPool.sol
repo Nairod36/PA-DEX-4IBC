@@ -25,19 +25,32 @@ contract LiquidityPool is ReentrancyGuard {
     event LiquidityAdded(address indexed user, address tokenA, address tokenB, uint256 amountA, uint256 amountB);
     event LiquidityRemoved(address indexed user, address tokenA, address tokenB, uint256 amountA, uint256 amountB);
 
-    constructor(address _tokenA, address _tokenB, address _starDexToken){
+    /**
+     * @notice Initializes the liquidity pool with given token addresses and StarDex token
+     * @param _tokenA Address of token A
+     * @param _tokenB Address of token B
+     * @param _starDexToken Address of StarDex token
+     */
+    constructor(address _tokenA, address _tokenB, address _starDexToken) {
         tokenA = _tokenA;
         tokenB = _tokenB;
         starDexToken = _starDexToken;
     }
 
+    /**
+     * @notice Adds liquidity to the pool
+     * @param _tokenA Address of token A
+     * @param _tokenB Address of token B
+     * @param _amountA Amount of token A to add
+     * @param _amountB Amount of token B to add
+     */
     function addLiquidity(address _tokenA, address _tokenB, uint256 _amountA, uint256 _amountB) public nonReentrant {
         require(_amountA > 0 && _amountB > 0, "Amounts must be greater than zero");
         
         // Transfer tokens to the pool
         require(IERC20(tokenA).transferFrom(msg.sender, address(this), _amountA), "Transfer of token A failed");
         require(IERC20(tokenB).transferFrom(msg.sender, address(this), _amountB), "Transfer of token B failed");
-        require(IERC20(starDexToken).transfer(msg.sender,(_amountA + _amountB)), "Transfer of StarDex Token failed");
+        require(IERC20(starDexToken).transfer(msg.sender, (_amountA + _amountB)), "Transfer of StarDex Token failed");
         
         // Update pool and user liquidity information
         liquidityA += _amountA;
@@ -48,6 +61,13 @@ contract LiquidityPool is ReentrancyGuard {
         emit LiquidityAdded(msg.sender, _tokenA, _tokenB, _amountA, _amountB);
     }
 
+    /**
+     * @notice Removes liquidity from the pool
+     * @param _tokenA Address of token A
+     * @param _tokenB Address of token B
+     * @param _amountA Amount of token A to remove
+     * @param _amountB Amount of token B to remove
+     */
     function removeLiquidity(address _tokenA, address _tokenB, uint256 _amountA, uint256 _amountB) public nonReentrant {
         PoolInfo storage userPool = userLiquidity[msg.sender];
         
@@ -66,27 +86,32 @@ contract LiquidityPool is ReentrancyGuard {
         emit LiquidityRemoved(msg.sender, _tokenA, _tokenB, _amountA, _amountB);
     }
 
-    function swap(address _tokenIn, uint256 _amountIn) public nonReentrant{
-        require(address(_tokenIn) == address(tokenA) || address(_tokenIn) == address(tokenB),"Token not found in pair");
-        if(address(_tokenIn) == address(tokenA)){
+    /**
+     * @notice Swaps a given amount of input token for the other token in the pair
+     * @param _tokenIn Address of the input token
+     * @param _amountIn Amount of the input token to swap
+     */
+    function swap(address _tokenIn, uint256 _amountIn) public nonReentrant {
+        require(address(_tokenIn) == address(tokenA) || address(_tokenIn) == address(tokenB), "Token not found in pair");
+        if (address(_tokenIn) == address(tokenA)) {
             require(liquidityA > _amountIn, "Not enough liquidity");   
 
             // Transfer tokens to the pool
             require(IERC20(tokenA).transferFrom(msg.sender, address(this), _amountIn), "Transfer of token A failed");
 
-            (uint256 amountIn, uint256 amountOut) = getAmounts(_amountIn ,liquidityA, liquidityB);
+            (uint256 amountIn, uint256 amountOut) = getAmounts(_amountIn, liquidityA, liquidityB);
             liquidityA += amountIn;
             reserveA += _amountIn - amountIn;
             liquidityB -= amountOut;
             require(IERC20(tokenB).transfer(msg.sender, amountOut), "Transfer of token A failed");
 
-        }else if(address(_tokenIn) == address(tokenB)){
+        } else if (address(_tokenIn) == address(tokenB)) {
             require(liquidityB > _amountIn, "Not enough liquidity");   
 
             // Transfer tokens to the pool
             require(IERC20(tokenB).transferFrom(msg.sender, address(this), _amountIn), "Transfer of token B failed");
 
-            (uint256 amountIn, uint256 amountOut) = getAmounts(_amountIn ,liquidityB, liquidityA);
+            (uint256 amountIn, uint256 amountOut) = getAmounts(_amountIn, liquidityB, liquidityA);
             liquidityB += amountIn;
             reserveB += _amountIn - amountIn;
             liquidityA -= amountOut;
@@ -94,14 +119,21 @@ contract LiquidityPool is ReentrancyGuard {
         }
     }
 
-    // Price calculation using the constant product formula (x * y = k)
-    function getAmounts(uint256 _amountIn, uint256 _liquidityIn, uint256 _liquidityOut) public pure returns (uint256,uint256) {
+    /**
+     * @notice Calculates the amounts for a swap based on the constant product formula (x * y = k)
+     * @param _amountIn Amount of input token
+     * @param _liquidityIn Liquidity of input token in the pool
+     * @param _liquidityOut Liquidity of output token in the pool
+     * @return amountInWithFee Amount of input token with fee applied
+     * @return amountOut Amount of output token
+     */
+    function getAmounts(uint256 _amountIn, uint256 _liquidityIn, uint256 _liquidityOut) public pure returns (uint256 amountInWithFee, uint256 amountOut) {
         require(_amountIn > 0, "Invalid input amount");
         require(_liquidityIn > 0 && _liquidityOut > 0, "Insufficient liquidity");
-        uint256 amountInWithFee = _amountIn * 970;
+        amountInWithFee = _amountIn * 970;
         uint256 numerator = _liquidityIn * _liquidityOut * 1000;
         uint256 denominator = _liquidityIn * 1000 + amountInWithFee;
         uint256 newLiquidityOut = numerator / denominator;
-        return((amountInWithFee / 1000), (_liquidityOut - newLiquidityOut));
+        amountOut = _liquidityOut - newLiquidityOut;
     }
 }
