@@ -72,4 +72,23 @@
 // 6. Pages
 @import "./pages/pages";
 
+.bg-purple{
+	background-color: rgb(149 104 255);
+}
+
+.swap-input{
+	display: flex;
+	border: 1px solid black;
+	/* Pour les navigateurs WebKit (Chrome, Safari) */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Pour Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+}
 // @import 'node_modules/react-modal-video/scss/modal-video.scss';

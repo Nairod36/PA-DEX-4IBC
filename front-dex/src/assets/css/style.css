@@ -23844,4 +23844,23 @@ pre {
   padding-right: 1rem;
 }
 
+.bg-purple {
+  background-color: rgb(149, 104, 255);
+}
+
+.swap-input {
+  display: flex;
+  border: 1px solid black;
+  /* Pour les navigateurs WebKit (Chrome, Safari) */
+  /* Pour Firefox */
+}
+.swap-input input[type=number]::-webkit-outer-spin-button,
+.swap-input input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.swap-input input[type=number] {
+  -moz-appearance: textfield;
+}
+
 /*# sourceMappingURL=style.css.map */
