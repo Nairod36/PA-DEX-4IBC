@@ -1,8 +1,8 @@
 import React from 'react';
 
-import coin1 from './../../assets/images/coins/coin1.png';
-import coin3 from './../../assets/images/coins/coin3.png';
-import coin4 from './../../assets/images/coins/coin4.png';
+import coin1 from '../../assets/images/coins/coin1.png';
+import coin3 from '../../assets/images/coins/coin3.png';
+import coin4 from '../../assets/images/coins/coin4.png';
 
 const cardData = [
     {image: coin4, title:'Bitcoin', subtitle:'BTC', price:'16,048.40', percent:'-1.26'},
