@@ -40,9 +40,9 @@ function Header(){
                             </button>                            
                             <div className="extra-nav">
                                 <div className="extra-cell">
-                                    <a className="btn btn-outline-primary text-white" target="_blank" rel="noreferrer" href="">Login</a>
+                                    {/* <a className="btn btn-outline-primary text-white" target="_blank" rel="noreferrer" href="">Login</a> */}
                                     <ConnectButton />
-                                    <a className="btn btn-primary btn-gradient btn-shadow" target="_blank" rel="noreferrer" href="">Register</a>
+                                    {/* <a className="btn btn-primary btn-gradient btn-shadow" target="_blank" rel="noreferrer" href="">Register</a> */}
                                 </div>
                             </div>                           
                                 
@@ -55,6 +55,7 @@ function Header(){
                                     <li><NavLink to={"/about-us"}>About Us</NavLink></li>
                                     <li><NavLink to={"/swapping"}>Swapping</NavLink></li>
                                     <li><NavLink to={"/tokens"}>Tokens</NavLink></li>
+                                    <li><NavLink to={"/admin"}>Admin</NavLink></li>
                                     <li className={`sub-menu-down ${showMenu ? "open" : ""}`} id="menushow"
                                        onClick={()=>setShowMenu(!showMenu)}
                                       
