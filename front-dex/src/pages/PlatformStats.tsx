@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
 function PlatformStatistics() {
-    const [stats, setStats] = useState({ users: 0, transactions: 0, totalAssets: 0 });
+    const [stats, setStats] = useState({ totalUsers: 0, bannedUsers: 0, activeUsers: 0 });
 
     useEffect(() => {
-        // Fetch platform statistics from the backend
         const fetchStats = async () => {
-            console.log('Fetching platform statistics...');
-            // Simulation, replace with actual API call
-            // Exemple: const response = await fetch('/api/platform-stats');
-            // const data = await response.json();
-            // setStats(data);
-            // Here we simulate some data
-            setStats({ users: 1000, transactions: 350, totalAssets: 1500 });
+            try {
+                console.log('Fetching platform statistics...');
+                const response = await fetch('/api/platform-stats');
+                const data = await response.json();
+                setStats(data);
+            } catch (error) {
+                console.error('Error fetching platform statistics:', error);
+            }
         };
 
         fetchStats();
@@ -21,9 +21,9 @@ function PlatformStatistics() {
     return (
         <div>
             <h1>Platform Statistics</h1>
-            <p>Number of Users: {stats.users}</p>
-            <p>Number of Transactions: {stats.transactions}</p>
-            <p>Total Assets: {stats.totalAssets}</p>
+            <p>Total Users: {stats.totalUsers}</p>
+            <p>Banned Users: {stats.bannedUsers}</p>
+            <p>Active Users: {stats.activeUsers}</p>
         </div>
     );
 }

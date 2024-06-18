@@ -61,13 +61,14 @@ func main() {
 	router.HandleFunc("/api/register-public-key", registerPublicKey).Methods("POST")
 	router.HandleFunc("/api/ban-user", banUser).Methods("POST")
 	router.HandleFunc("/api/platform-stats", getPlatformStats).Methods("GET")
-	// ... other CRUD operations
+	router.HandleFunc("/api/check-banned/{publicKey}", checkBanned).Methods("GET")
+	router.HandleFunc("/api/check-admin/{publicKey}", checkAdmin).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":3000", router))
 }
 
 func runMigrations() {
-	entries, err := os.ReadDir("/datastruct/migration")
+	entries, err := os.ReadDir("/migrations")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -76,7 +77,7 @@ func runMigrations() {
 		if entry.IsDir() {
 			continue
 		}
-		path := filepath.Join("/datastruct/migration", entry.Name())
+		path := filepath.Join("/migrations", entry.Name())
 		content, err := os.ReadFile(path)
 		if err != nil {
 			log.Fatal(err)
@@ -201,4 +202,42 @@ func getPlatformStats(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(stats)
+}
+
+func checkBanned(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	publicKey := params["publicKey"]
+
+	var banned bool
+	err := db.QueryRow("SELECT banned FROM users WHERE public_key = $1", publicKey).Scan(&banned)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			http.Error(w, "User not found", http.StatusNotFound)
+			return
+		}
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]bool{"banned": banned})
+}
+
+func checkAdmin(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	publicKey := params["publicKey"]
+
+	var isAdmin bool
+	err := db.QueryRow("SELECT is_admin FROM users WHERE public_key = $1", publicKey).Scan(&isAdmin)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			http.Error(w, "User not found", http.StatusNotFound)
+			return
+		}
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]bool{"isAdmin": isAdmin})
 }

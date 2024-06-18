@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { useAccount } from 'wagmi';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { useAccount, useDisconnect } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Logo from './../assets/images/logo.png';
 import LogoWhite from './../assets/images/logo-white.png';
@@ -10,29 +10,20 @@ function Header() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const { address, isConnected } = useAccount();
+    const { disconnect } = useDisconnect();
+    const [isBanned, setIsBanned] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         window.addEventListener('scroll', () => {
             setHeaderFix(window.scrollY > 50);
         });
 
-        // Enregistrement de la clé publique lors de la connexion
         if (isConnected && address) {
-            fetch('/api/register-public-key', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ publicKey: address }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        console.log('Public key registered successfully');
-                    } else {
-                        console.error('Failed to register public key');
-                    }
-                })
+            registerPublicKey(address)
+                .then(() => checkIfBanned(address))
+                .then(() => checkIfAdmin(address))
                 .catch((error) => console.error('Error:', error));
         }
 
@@ -42,6 +33,44 @@ function Header() {
             });
         };
     }, [isConnected, address]);
+
+    const registerPublicKey = async (publicKey: string) => {
+        const response = await fetch('/api/register-public-key', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ publicKey }),
+        });
+        const data = await response.json();
+        if (!data.success) {
+            throw new Error('Failed to register public key');
+        }
+    };
+
+    const checkIfBanned = async (publicKey: string) => {
+        const response = await fetch(`/api/check-banned/${publicKey}`);
+        const data = await response.json();
+        if (data.banned) {
+            setIsBanned(true);
+            alert('You are banned from using this platform.');
+            disconnect(); // Optionally disconnect the user
+        }
+    };
+
+    const checkIfAdmin = async (publicKey: string) => {
+        const response = await fetch(`/api/check-admin/${publicKey}`);
+        const data = await response.json();
+        setIsAdmin(data.isAdmin);
+    };
+
+    const handleAdminClick = () => {
+        if (isAdmin) {
+            navigate('/admin');
+        } else {
+            alert('You do not have access to the admin page.');
+        }
+    };
 
     return (
         <>
@@ -64,7 +93,7 @@ function Header() {
                             </button>                            
                             <div className="extra-nav">
                                 <div className="extra-cell">
-                                    <ConnectButton />
+                                    {!isBanned && <ConnectButton />}
                                 </div>
                             </div>                           
                                 
@@ -77,7 +106,7 @@ function Header() {
                                     <li><NavLink to={"/about-us"}>About Us</NavLink></li>
                                     <li><NavLink to={"/swapping"}>Swapping</NavLink></li>
                                     <li><NavLink to={"/tokens"}>Tokens</NavLink></li>
-                                    <li><NavLink to={"/admin"}>Admin</NavLink></li>
+                                    <li><button onClick={handleAdminClick}>Admin</button></li>
                                     <li className={`sub-menu-down ${showMenu ? 'open' : ''}`} id="menushow" onClick={() => setShowMenu(!showMenu)}></li>
                                     <li><NavLink to={"/contact-us"}>Contact Us</NavLink></li>
                                 </ul>                               
