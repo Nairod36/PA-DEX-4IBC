@@ -103,7 +103,7 @@ function Header() {
                                 </div>                            
                                 <ul className="nav navbar-nav navbar">
                                     <li><NavLink to={"/"}>Home</NavLink></li>
-                                    <li><NavLink to={"/about-us"}>About Us</NavLink></li>
+                                    {/* <li><NavLink to={"/about-us"}>About Us</NavLink></li> */}
                                     <li><NavLink to={"/swapping"}>Swapping</NavLink></li>
                                     <li><NavLink to={"/tokens"}>Tokens</NavLink></li>
                                     <li><button onClick={handleAdminClick}>Admin</button></li>
