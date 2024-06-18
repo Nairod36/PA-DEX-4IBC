@@ -2,15 +2,15 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PageLayout from './PageLayout';
-import AdminSettings from './GlobalSetting';  // Assurez-vous que le chemin d'importation est correct
-import PlatformStatistics from './PlatformStats';  // Assurez-vous que le chemin d'importation est correct
+import AdminSettings from './GlobalSetting'; 
+import PlatformStatistics from './PlatformStats';
 
 function Admin() {
     const nav = useNavigate();
     
     const handleLogout = () => {
-        // Here you would handle user logout
-        nav("/login"); // Redirect to login after logout
+        // handle user logout
+        nav("/login"); 
     };
 
     return (

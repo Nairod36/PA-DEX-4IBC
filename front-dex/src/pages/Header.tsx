@@ -1,38 +1,62 @@
-import React, {useEffect, useState} from 'react';
-import {NavLink, Link} from 'react-router-dom';
-
+import React, { useEffect, useState } from 'react';
+import { NavLink, Link } from 'react-router-dom';
+import { useAccount } from 'wagmi';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Logo from './../assets/images/logo.png';
 import LogoWhite from './../assets/images/logo-white.png';
-import App3 from '../components/Home/web3';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 
+function Header() {
+    const [headerFix, setHeaderFix] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
+    const { address, isConnected } = useAccount();
 
-function Header(){
+    useEffect(() => {
+        window.addEventListener('scroll', () => {
+            setHeaderFix(window.scrollY > 50);
+        });
 
-    /* for sticky header */
-	const [headerFix, setheaderFix] = React.useState(false);
-	useEffect(() => {
-		window.addEventListener("scroll", () => {
-			setheaderFix(window.scrollY > 50);
-		});
-	}, []); 
+        // Enregistrement de la clé publique lors de la connexion
+        if (isConnected && address) {
+            fetch('/api/register-public-key', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ publicKey: address }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        console.log('Public key registered successfully');
+                    } else {
+                        console.error('Failed to register public key');
+                    }
+                })
+                .catch((error) => console.error('Error:', error));
+        }
 
-    const [sidebarOpen, setSidebarOpen] = useState(false);	
-    const [showMenu, setShowMenu] = useState(false);	   
-    return(
+        return () => {
+            window.removeEventListener('scroll', () => {
+                setHeaderFix(false);
+            });
+        };
+    }, [isConnected, address]);
+
+    return (
         <>
             <header className="site-header mo-left header header-transparent style-1">
-                <div className={`sticky-header main-bar-wraper navbar-expand-lg ${headerFix ? "is-fixed" : ""}`}>
+                <div className={`sticky-header main-bar-wraper navbar-expand-lg ${headerFix ? 'is-fixed' : ''}`}>
                     <div className="main-bar clearfix">
                         <div className="container clearfix">
                             <div className="logo-header">
                                 <Link to={"/"} className="logo-dark"><img src={Logo} alt="" /></Link>
-                                <Link to={"/"} className="logo-light"><img src={LogoWhite}  alt="" /></Link>
+                                <Link to={"/"} className="logo-light"><img src={LogoWhite} alt="" /></Link>
                             </div>
                             
-                            <button  type="button"
-                                className={`navbar-toggler  navicon justify-content-end ${sidebarOpen ? 'open' : 'collapsed' }`} 
-                                onClick={()=>setSidebarOpen(!sidebarOpen)}
+                            <button type="button"
+                                className={`navbar-toggler navicon justify-content-end ${sidebarOpen ? 'open' : 'collapsed'}`} 
+                                onClick={() => setSidebarOpen(!sidebarOpen)}
                             >
                                 <span></span>
                                 <span></span>
@@ -40,13 +64,11 @@ function Header(){
                             </button>                            
                             <div className="extra-nav">
                                 <div className="extra-cell">
-                                    {/* <a className="btn btn-outline-primary text-white" target="_blank" rel="noreferrer" href="">Login</a> */}
                                     <ConnectButton />
-                                    {/* <a className="btn btn-primary btn-gradient btn-shadow" target="_blank" rel="noreferrer" href="">Register</a> */}
                                 </div>
                             </div>                           
                                 
-                            <div className={`header-nav navbar-collapse collapse justify-content-end ${sidebarOpen ? "show" : ""}`} id="navbarNavDropdown" >
+                            <div className={`header-nav navbar-collapse collapse justify-content-end ${sidebarOpen ? 'show' : ''}`} id="navbarNavDropdown">
                                 <div className="logo-header mostion">
                                     <NavLink to={"#"} className="logo-dark"><img src={Logo} alt="" /></NavLink>
                                 </div>                            
@@ -56,33 +78,27 @@ function Header(){
                                     <li><NavLink to={"/swapping"}>Swapping</NavLink></li>
                                     <li><NavLink to={"/tokens"}>Tokens</NavLink></li>
                                     <li><NavLink to={"/admin"}>Admin</NavLink></li>
-                                    <li className={`sub-menu-down ${showMenu ? "open" : ""}`} id="menushow"
-                                       onClick={()=>setShowMenu(!showMenu)}
-                                      
-                                    > 
-                                    </li>
+                                    <li className={`sub-menu-down ${showMenu ? 'open' : ''}`} id="menushow" onClick={() => setShowMenu(!showMenu)}></li>
                                     <li><NavLink to={"/contact-us"}>Contact Us</NavLink></li>
                                 </ul>                               
                             
                                 <div className="header-bottom">
                                     <div className="dz-social-icon">
                                         <ul>
-                                            <li><a target="_blank" className="fab fa-facebook-f" rel="noreferrer" href="https://www.facebook.com/"></a></li>{" "}
-                                            <li><a target="_blank" className="fab fa-twitter" rel="noreferrer" href="https://twitter.com/"></a></li>{" "}
-                                            <li><a target="_blank" className="fab fa-linkedin-in" rel="noreferrer" href="https://www.linkedin.com/"></a></li>{" "}
+                                            <li><a target="_blank" className="fab fa-facebook-f" rel="noreferrer" href="https://www.facebook.com/"></a></li>
+                                            <li><a target="_blank" className="fab fa-twitter" rel="noreferrer" href="https://twitter.com/"></a></li>
+                                            <li><a target="_blank" className="fab fa-linkedin-in" rel="noreferrer" href="https://www.linkedin.com/"></a></li>
                                             <li><a target="_blank" className="fab fa-instagram" rel="noreferrer" href="https://www.instagram.com/"></a></li>
                                         </ul>
                                     </div>	
                                 </div>
-                                
                             </div>
-                            
                         </div>
                     </div>
-
                 </div>
             </header>
         </>
-    )
+    );
 }
+
 export default Header;
