@@ -1,7 +1,7 @@
 FROM node:alpine as build-react-stage
 WORKDIR /app
 COPY ./front-dex /app
-RUN npm install
+RUN npm install --force
 RUN npm run build
 
 FROM nginx:latest
