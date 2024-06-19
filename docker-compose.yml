@@ -12,6 +12,8 @@ services:
 
   postgres:
     image: postgres
+    ports:
+      - "5432:5432"
     restart: always
     env_file:
       - .env
@@ -25,10 +27,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 6
+
+  adminer:
+    image: adminer
+    restart: always
     ports:
-      - "5432:5432"
-    volumes:
-      - db_volume:/var/lib/postgresql/data
+      - "8080:8080"
+    depends_on:
+      - postgres
 
   api-layer:
     build:

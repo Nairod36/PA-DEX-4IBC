@@ -15,27 +15,34 @@ function Header() {
     const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
+    const API_URL = process.env.REACT_APP_API_URL;
+
     useEffect(() => {
-        window.addEventListener('scroll', () => {
+        const handleScroll = () => {
             setHeaderFix(window.scrollY > 50);
-        });
+        };
+
+        window.addEventListener('scroll', handleScroll);
 
         if (isConnected && address) {
-            registerPublicKey(address)
-                .then(() => checkIfBanned(address))
-                .then(() => checkIfAdmin(address))
-                .catch((error) => console.error('Error:', error));
+            (async () => {
+                try {
+                    await registerPublicKey(address);
+                    await checkIfBanned(address);
+                    await checkIfAdmin(address);
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            })();
         }
 
         return () => {
-            window.removeEventListener('scroll', () => {
-                setHeaderFix(false);
-            });
+            window.removeEventListener('scroll', handleScroll);
         };
     }, [isConnected, address]);
 
     const registerPublicKey = async (publicKey: string) => {
-        const response = await fetch('/api/register-public-key', {
+        const response = await fetch(`${API_URL}/register-public-key`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,13 +50,14 @@ function Header() {
             body: JSON.stringify({ publicKey }),
         });
         const data = await response.json();
+        console.log('Register Public Key Response:', data);
         if (!data.success) {
             throw new Error('Failed to register public key');
         }
     };
 
     const checkIfBanned = async (publicKey: string) => {
-        const response = await fetch(`/api/check-banned/${publicKey}`);
+        const response = await fetch(`${API_URL}/check-banned/${publicKey}`);
         const data = await response.json();
         if (data.banned) {
             setIsBanned(true);
@@ -59,7 +67,7 @@ function Header() {
     };
 
     const checkIfAdmin = async (publicKey: string) => {
-        const response = await fetch(`/api/check-admin/${publicKey}`);
+        const response = await fetch(`${API_URL}/check-admin/${publicKey}`);
         const data = await response.json();
         setIsAdmin(data.isAdmin);
     };
@@ -103,7 +111,6 @@ function Header() {
                                 </div>                            
                                 <ul className="nav navbar-nav navbar">
                                     <li><NavLink to={"/"}>Home</NavLink></li>
-                                    {/* <li><NavLink to={"/about-us"}>About Us</NavLink></li> */}
                                     <li><NavLink to={"/swapping"}>Swapping</NavLink></li>
                                     <li><NavLink to={"/tokens"}>Tokens</NavLink></li>
                                     <li><button onClick={handleAdminClick}>Admin</button></li>

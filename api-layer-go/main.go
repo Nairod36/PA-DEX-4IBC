@@ -10,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 )
@@ -64,7 +65,13 @@ func main() {
 	router.HandleFunc("/api/check-banned/{publicKey}", checkBanned).Methods("GET")
 	router.HandleFunc("/api/check-admin/{publicKey}", checkAdmin).Methods("GET")
 
-	log.Fatal(http.ListenAndServe(":3000", router))
+	corsOptions := handlers.CORS(
+		handlers.AllowedOrigins([]string{"http://localhost", "http://localhost:80", "http://localhost:3000"}),
+		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
+		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
+	)
+
+	log.Fatal(http.ListenAndServe(":3000", corsOptions(router)))
 }
 
 func runMigrations() {
@@ -133,25 +140,28 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func registerPublicKey(w http.ResponseWriter, r *http.Request) {
-	var req struct {
+	var data struct {
 		PublicKey string `json:"publicKey"`
 	}
-
-	err := json.NewDecoder(r.Body).Decode(&req)
-	if err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	if req.PublicKey == "" {
-		http.Error(w, "Public key is required", http.StatusBadRequest)
-		return
-	}
-
-	_, err = db.Exec("INSERT INTO users (public_key) VALUES ($1) ON CONFLICT (public_key) DO NOTHING", req.PublicKey)
+	// Check if the public key already exists in the database
+	var exists bool
+	err := db.QueryRow("SELECT EXISTS(SELECT 1 FROM users WHERE public_key = $1)", data.PublicKey).Scan(&exists)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
+	}
+
+	if !exists {
+		_, err = db.Exec("INSERT INTO users (public_key) VALUES ($1)", data.PublicKey)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 
 	w.WriteHeader(http.StatusOK)
@@ -205,39 +215,37 @@ func getPlatformStats(w http.ResponseWriter, r *http.Request) {
 }
 
 func checkBanned(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	publicKey := params["publicKey"]
+	publicKey := mux.Vars(r)["publicKey"]
 
 	var banned bool
 	err := db.QueryRow("SELECT banned FROM users WHERE public_key = $1", publicKey).Scan(&banned)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			http.Error(w, "User not found", http.StatusNotFound)
-			return
+		} else {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]bool{"banned": banned})
 }
 
 func checkAdmin(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	publicKey := params["publicKey"]
+	publicKey := mux.Vars(r)["publicKey"]
 
 	var isAdmin bool
 	err := db.QueryRow("SELECT is_admin FROM users WHERE public_key = $1", publicKey).Scan(&isAdmin)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			http.Error(w, "User not found", http.StatusNotFound)
-			return
+		} else {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]bool{"isAdmin": isAdmin})
 }
