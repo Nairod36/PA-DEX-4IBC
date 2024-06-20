@@ -3,7 +3,6 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useAccount, useDisconnect } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Logo from './../assets/images/logo.png';
-import LogoWhite from './../assets/images/logo-white.png';
 
 function Header() {
     const [headerFix, setHeaderFix] = useState(false);
@@ -42,7 +41,8 @@ function Header() {
     }, [isConnected, address]);
 
     const registerPublicKey = async (publicKey: string) => {
-        const response = await fetch(`${API_URL}/register-public-key`, {
+        console.log(API_URL);
+        const response = await fetch(`http://localhost:3000/api/register-public-key`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ function Header() {
     };
 
     const checkIfBanned = async (publicKey: string) => {
-        const response = await fetch(`${API_URL}/check-banned/${publicKey}`);
+        const response = await fetch(`http://localhost:3000/api/check-banned/${publicKey}`);
         const data = await response.json();
         if (data.banned) {
             setIsBanned(true);
@@ -67,7 +67,7 @@ function Header() {
     };
 
     const checkIfAdmin = async (publicKey: string) => {
-        const response = await fetch(`${API_URL}/check-admin/${publicKey}`);
+        const response = await fetch(`http://localhost:3000/api/check-admin/${publicKey}`);
         const data = await response.json();
         setIsAdmin(data.isAdmin);
     };
@@ -88,7 +88,7 @@ function Header() {
                         <div className="container clearfix">
                             <div className="logo-header">
                                 <Link to={"/"} className="logo-dark"><img src={Logo} alt="" /></Link>
-                                <Link to={"/"} className="logo-light"><img src={LogoWhite} alt="" /></Link>
+                                <Link to={"/"} className="logo-light"><img src={Logo}  alt="" /></Link>
                             </div>
                             
                             <button type="button"

@@ -61,9 +61,12 @@ func main() {
 	router.HandleFunc("/api/users/{id}", getUser).Methods("GET")
 	router.HandleFunc("/api/register-public-key", registerPublicKey).Methods("POST")
 	router.HandleFunc("/api/ban-user", banUser).Methods("POST")
+	router.HandleFunc("/api/unban-user", unbanUser).Methods("POST")
 	router.HandleFunc("/api/platform-stats", getPlatformStats).Methods("GET")
 	router.HandleFunc("/api/check-banned/{publicKey}", checkBanned).Methods("GET")
 	router.HandleFunc("/api/check-admin/{publicKey}", checkAdmin).Methods("GET")
+	router.HandleFunc("/api/add-admin", addAdmin).Methods("POST")
+	router.HandleFunc("/api/remove-admin", removeAdmin).Methods("POST")
 
 	corsOptions := handlers.CORS(
 		handlers.AllowedOrigins([]string{"http://localhost", "http://localhost:80", "http://localhost:3000"}),
@@ -189,6 +192,27 @@ func banUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]bool{"success": true})
 }
 
+func unbanUser(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		PublicKey string `json:"publicKey"`
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	_, err = db.Exec("UPDATE users SET banned = FALSE WHERE public_key = $1", req.PublicKey)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]bool{"success": true})
+}
+
 func getPlatformStats(w http.ResponseWriter, r *http.Request) {
 	var stats struct {
 		TotalUsers  int `json:"totalUsers"`
@@ -248,4 +272,46 @@ func checkAdmin(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]bool{"isAdmin": isAdmin})
+}
+
+func addAdmin(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		PublicKey string `json:"publicKey"`
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	_, err = db.Exec("UPDATE users SET is_admin = TRUE WHERE public_key = $1", req.PublicKey)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]bool{"success": true})
+}
+
+func removeAdmin(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		PublicKey string `json:"publicKey"`
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	_, err = db.Exec("UPDATE users SET is_admin = FALSE WHERE public_key = $1", req.PublicKey)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]bool{"success": true})
 }
