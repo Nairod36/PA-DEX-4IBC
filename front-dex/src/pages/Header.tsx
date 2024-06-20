@@ -116,7 +116,6 @@ function Header() {
                                     <li><NavLink to={"/Staking"}>Staking</NavLink></li>
                                     <li><button onClick={handleAdminClick}>Admin</button></li>
                                     <li className={`sub-menu-down ${showMenu ? 'open' : ''}`} id="menushow" onClick={() => setShowMenu(!showMenu)}></li>
-                                    <li><NavLink to={"/contact-us"}>Contact Us</NavLink></li>
                                 </ul>                               
                             
                                 <div className="header-bottom">

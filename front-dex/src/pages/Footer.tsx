@@ -36,31 +36,8 @@ function Footer(){
                                     <h4 className="widget-title">Other Links</h4>
                                     <ul>
                                         <li><Link to={"/about-us"}>About Us</Link></li>
-                                        <li><Link to={"/pricing"}>Pricing Plan</Link></li>
-                                        <li><Link to={"/blog-list"}>Blog List</Link></li>
-                                        <li><Link to={"/blog-grid"}>Our Blogs</Link></li>
                                         <li><Link to={"/contact-us"}>Contact Us</Link></li>
                                     </ul>
-                                </div>
-                            </div>
-                            <div className="col-xl-3 col-lg-4 col-sm-6" >
-                                <div className="widget recent-posts-entry">
-                                    <h4 className="widget-title">Blog Posts</h4>
-                                    <div className="widget-post-bx">
-                                        <div className="widget-post clearfix">
-                                            <div className="dz-info">
-                                                <h6 className="title"><Link to={"/blog-details"}>What is cryptocurrency and how does it work.</Link></h6>
-                                                <span className="post-date"> JUNE 18, 2023</span>
-                                            </div>
-                                        </div>
-                                        <div className="post-separator"></div>
-                                        <div className="widget-post clearfix">
-                                            <div className="dz-info">
-                                                <h6 className="title"><Link to={"/blog-details"}>A cryptocurrency is a digital currency.</Link></h6>
-                                                <span className="post-date"> AUGUST 22, 2023</span>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div className="col-xl-3 col-lg-4 col-sm-12" >
