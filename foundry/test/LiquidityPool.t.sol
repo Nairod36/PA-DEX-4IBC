@@ -19,15 +19,15 @@ contract LiquidityPoolTest is Test {
         tokenB = new MockERC20("Token B", "TKNB", 18);
         sdx = new MockERC20("StarDex Token", "SDX", 18);
 
-        tokenA.mint(owner, 10000);
-        tokenB.mint(owner, 10000);
+        tokenA.mint(owner, 10000*1e18);
+        tokenB.mint(owner, 10000*1e18);
         sdx.mint(owner, 1000000*1e18);
 
         pool = new LiquidityPool(address(tokenA), address(tokenB), address(sdx));
         IERC20(sdx).transfer(address(pool),10000*1e18);
 
-        tokenA.approve(address(pool), 10000);
-        tokenB.approve(address(pool), 10000);
+        tokenA.approve(address(pool), 10000*1e18);
+        tokenB.approve(address(pool), 10000*1e18);
     }
 
     function testAddLiquidity() public {
@@ -59,17 +59,27 @@ contract LiquidityPoolTest is Test {
 
     function testSwapTokenAForTokenB() public {
         uint256 amountIn = 100;
-        pool.addLiquidity(address(tokenA), address(tokenB), 1000, 1000);
+        pool.addLiquidity(address(tokenA), address(tokenB), 1000*1e18, 1000*1e18);
         uint256 initialReserveA = pool.liquidityA();
         uint256 initialReserveB = pool.liquidityB();
 
         vm.prank(owner);
-        pool.swap(address(tokenA), amountIn);
 
         (uint256 amountInWithFee, uint256 amountOut) = pool.getAmounts(amountIn, initialReserveA, initialReserveB);
 
+        console.log("amount in with fees :", amountInWithFee);
+        console.log("amount out :", amountOut);
+        console.log("initial reserve in :", initialReserveA);
+        console.log("initial reserve out : ", initialReserveB);
+
+        pool.swap(address(tokenA), amountIn);
+
+
         uint256 newReserveA = pool.liquidityA();
         uint256 newReserveB = pool.liquidityB();
+
+        console.log("initial reserve in :", newReserveA);
+        console.log("initial reserve out : ", newReserveB);
 
         assertEq(newReserveA, initialReserveA + amountInWithFee, "Reserve A should increase by amount in");
         assertEq(newReserveB, initialReserveB - amountOut, "Reserve B should decrease by amount out");
@@ -78,12 +88,12 @@ contract LiquidityPoolTest is Test {
     }
 
     function testSwapTokenBForTokenA() public {
-        uint256 amountIn = 100;
-        pool.addLiquidity(address(tokenA), address(tokenB), 1000, 1000);
+        vm.prank(owner);
+        uint256 amountIn = 100*1e18;
+        pool.addLiquidity(address(tokenA), address(tokenB), 1000*1e18, 1000*1e18);
         uint256 initialReserveA = pool.liquidityA();
         uint256 initialReserveB = pool.liquidityB();
 
-        vm.prank(owner);
         pool.swap(address(tokenB), amountIn);
 
         (uint256 amountInWithFee, uint256 amountOut) = pool.getAmounts(amountIn, initialReserveB, initialReserveA);
