@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# tr -d '\r' < extract_all_abi.sh > .extract_all_abi.clean && mv .extract_all_abi.clean extract_all_abi.sh
+# ./extract_all_abi.sh
+
 # Assurez-vous d'être dans le répertoire de votre projet
 cd "$(dirname "$0")"
 

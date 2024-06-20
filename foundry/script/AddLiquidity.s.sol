@@ -6,7 +6,7 @@ import "../src/FactoryLiquidityPool.sol";
 import "../src/LiquidityPool.sol";
 import "../test/mocks/MockERC20.sol";
 
-// forge script script/AddLiquidity.s.sol:AddLiquidity --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv --private-key $PRIVATE_KEY
+// forge script script/AddLiquidity.s.sol:AddLiquidity --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv --private-key $PRIVATE_KEY --legacy
 
 contract AddLiquidity is Script {
     function run() external {

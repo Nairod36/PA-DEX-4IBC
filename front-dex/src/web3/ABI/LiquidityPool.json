@@ -70,12 +70,41 @@
     ],
     "outputs": [
       {
-        "name": "amountInWithFee",
+        "name": "",
         "type": "uint256",
         "internalType": "uint256"
       },
       {
-        "name": "amountOut",
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "pure"
+  },
+  {
+    "type": "function",
+    "name": "getAmountsReverse",
+    "inputs": [
+      {
+        "name": "_amountOut",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "_liquidityIn",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "_liquidityOut",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "amountInWithFee",
         "type": "uint256",
         "internalType": "uint256"
       }

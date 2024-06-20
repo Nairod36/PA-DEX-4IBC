@@ -7,7 +7,7 @@ import "../src/FactoryLiquidityPool.sol";
 import "../src/FactoryStakingPool.sol";
 import "../test/mocks/MockERC20.sol";
 
-// forge script script/FactoryLiquidityPool.s.sol:Deployer --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv
+// forge script script/Deployer.s.sol:Deployer --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv --legacy --private-key $PRIVATE_KEY
 
 contract Deployer is Script {
     function run() external {
