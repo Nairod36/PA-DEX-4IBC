@@ -9,6 +9,7 @@ import Swapping from './Swapping';
 import ContactUs from './ContactUS';
 import AboutUs from './AboutUS';
 import { TokenItem, TokenList } from '../components/TokenList';
+import Staking from './Staking';
 import Admin from './Admin';
 
 const Index: React.FC = () => {
@@ -21,6 +22,7 @@ const Index: React.FC = () => {
                     <Route path='/about-us' element={<AboutUs />} />
                     <Route path='/swapping' element={<Swapping />} />
                     <Route path='/tokens' element={<TokenList />} />
+                    <Route path='/Staking' element={<Staking />} />
                     <Route path='/contact-us'  element={<ContactUs />} />
                     <Route path='/admin' element={<Admin />} />
                 </Routes>
