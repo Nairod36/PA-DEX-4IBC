@@ -1,3 +1,4 @@
+import { ethers } from "ethers";
 import { useState } from "react";
 
 export interface ISwapInput {
@@ -8,23 +9,36 @@ export interface ISwapInput {
   TriB: string;
   logoB: string;
   input: number | null;
+  remaining:number
   setInput: (input: number | null) => void;
+  getAmount: (amount:bigint) => Promise<bigint|null>;
 }
 
 export const SwapInput = (props: ISwapInput) => {
-  const [output, setOutput] = useState<number | null>(null);
+  const [output, setOutput] = useState<string | null>(null);
 
   const handleChange = (e: any) => {
-    console.log(e.target.value);
     props.setInput(e.target.value);
-    fetchPrice();
+    updatePrice(e.target.value);
   };
 
-  const fetchPrice = () => {
+  const updatePrice = async (input:number) => {
     // TODO
-    if (props.input === null) setOutput(null);
-    else setOutput(Math.floor(Math.random() * props.input * 100) / 100);
-  };
+    if (input === null || input == 0) setOutput(null);
+    else{
+      const inputAmount = ethers.parseUnits(input.toString(), 18)
+      console.log(inputAmount)
+      const result = await props.getAmount(inputAmount)
+      console.log(result)
+      if(result !== null){
+        const formattedResult = ethers.formatUnits(result, 18);
+      console.log(formattedResult)
+      const resultToTwoDecimals = parseFloat(formattedResult).toFixed(2);
+      console.log(resultToTwoDecimals)
+        setOutput(resultToTwoDecimals);
+      }
+    }
+    };
 
   return (
     <>
@@ -91,7 +105,13 @@ export const SwapInput = (props: ISwapInput) => {
             width: "80%",
           }}
         >
-          {output != null ? <span>{output}</span> : <></>}
+          {output != null ? 
+          <div style={{width:"100%", display:"flex", flexDirection:"column", alignItems:"center"}}>
+          <span>{output.toString()}</span>
+          <span style={{fontSize:"1.1rem", opacity:"75%"}}>{props.remaining > 0 ? props.remaining.toFixed(2) : "New block coming"}</span>
+          </div>
+           : 
+           <></>}
         </div>
         <div
           style={{

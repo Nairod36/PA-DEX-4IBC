@@ -8,6 +8,8 @@ import factoryLiquidityPoolABI from "../../web3/ABI/FactoryLiquidityPool.json";
 import liquidityPoolABI from "../../web3/ABI/LiquidityPool.json";
 import mockERC20ABI from "../../web3/ABI/MockERC20.json";
 import { SwapInput } from "./swapInput";
+import { SwapCard } from "./SwapCard";
+import { SwapAction } from "./SwapAction";
 
 interface CoinSwapProps {
   nameA: string;
@@ -23,6 +25,7 @@ interface CoinSwapProps {
 
 export const CoinSwap = (props: CoinSwapProps) => {
   const [input, setInput] = useState<number | null>(null);
+  const [output, setOutput] = useState<number | null>(null);
   const [tokenA, setTokenA] = useState({
     name: props.nameA,
     address: props.addressA,
@@ -36,8 +39,43 @@ export const CoinSwap = (props: CoinSwapProps) => {
     tri: props.triB,
   });
 
+  const [currentLiquidityPool, setCurrentLiquidityPool] =
+    useState<ethers.Contract | null>(null);
+  const [token, setToken] = useState<ethers.Contract | null>(null);
+
+  const [liquidityA, setLiquidityA] = useState(BigInt(0));
+  const [liquidityB, setLiquidityB] = useState(BigInt(0));
+
+  const [remaining, setRemaining] = useState<number|string>(0);
+
   const { address, isConnected } = useAccount();
   const { data: walletClient } = useWalletClient();
+
+  const updateInput = async (newInput: number | null) => {
+    if (newInput) {
+      setInput(newInput);
+      const inputAmount = ethers.parseUnits(newInput.toString(), 18);
+      const result = await getAmount(inputAmount);
+      if (result !== null) {
+        const formattedResult = ethers.formatUnits(result, 18);
+        const resultToTwoDecimals = parseFloat(formattedResult).toFixed(2);
+        setOutput(Number(resultToTwoDecimals));
+      }
+    }
+  };
+
+  const updateOutput = async (newOutput: number | null) => {
+    if (newOutput) {
+      setOutput(newOutput);
+      const inputAmount = ethers.parseUnits(newOutput.toString(), 18);
+      const result = await getAmountReverse(inputAmount);
+      if (result !== null) {
+        const formattedResult = ethers.formatUnits(result, 18);
+        const resultToTwoDecimals = parseFloat(formattedResult).toFixed(2);
+        setInput(Number(resultToTwoDecimals));
+      }
+    }
+  };
 
   async function setupContract(
     contractAddress: string,
@@ -48,48 +86,92 @@ export const CoinSwap = (props: CoinSwapProps) => {
     return new ethers.Contract(contractAddress, contractABI, signer);
   }
 
+  const getPear = async () => {
+    const currentToken = await setupContract(tokenA.address, mockERC20ABI);
+    setToken(currentToken);
+    const factoryLiquidityPool = await setupContract(
+      props.factory,
+      factoryLiquidityPoolABI
+    );
+    let poolId = await factoryLiquidityPool.getPoolId(
+      tokenA.address,
+      tokenB.address
+    );
+    let pool = await factoryLiquidityPool.getPool(poolId);
+
+    // Vérifier si le pool est à l'adresse zéro
+    if (pool === ethers.ZeroAddress) {
+      // Inverser les adresses des tokens et réessayer
+      poolId = await factoryLiquidityPool.getPoolId(
+        tokenB.address,
+        tokenA.address
+      );
+      pool = await factoryLiquidityPool.getPool(poolId);
+    }
+
+    if (pool === ethers.ZeroAddress) {
+      console.error("Le pool n'existe pas pour les paires de tokens fournies.");
+      return;
+    }
+    const liquidityPool = await setupContract(pool, liquidityPoolABI);
+    if (!liquidityPool) return;
+    setCurrentLiquidityPool(liquidityPool);
+    setLiquidityA(await liquidityPool.liquidityA());
+    setLiquidityB(await liquidityPool.liquidityB());
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    setInterval(async () => {
+      const block_number = await provider.getBlockNumber();
+      const currentblock = await provider.getBlock(block_number);
+      if (!currentblock) return;
+      const remainingTime = 30 + currentblock?.timestamp - Date.now() / 1000;
+      if (remainingTime > 0) setRemaining(remainingTime);
+      else {
+        setRemaining("New block coming");
+        setLiquidityA(await liquidityPool.liquidityA());
+        setLiquidityB(await liquidityPool.liquidityB());
+      }
+    }, 100);
+  };
+
+  const getAmount = async (_amountIn: bigint): Promise<bigint | null> => {
+    if (!currentLiquidityPool || liquidityA <= 0 || liquidityB <= 0)
+      return null;
+    const result = await currentLiquidityPool.getAmounts(
+      _amountIn,
+      liquidityA,
+      liquidityB
+    );
+    if (result[1] >= 0) return result[1];
+    return null;
+  };
+
+  const getAmountReverse = async (_amountout: bigint): Promise<bigint | null> => {
+    if (!currentLiquidityPool || liquidityA <= 0 || liquidityB <= 0)
+      return null;
+    const result = await currentLiquidityPool.getAmountsReverse(
+      _amountout,
+      liquidityA,
+      liquidityB
+    );
+    if (result >= 0) return result;
+    return null;
+  };
+
   const getSwap = async () => {
+    console.log(liquidityA)
+    console.log(liquidityB)
     if (input === null) return;
     try {
-        console.log(tokenA.name)
-        console.log(tokenA.address)
-        console.log(tokenB.name)
-        console.log(tokenB.address)
       const amount = ethers.parseUnits(input.toString(), 18);
-      const factoryLiquidityPool = await setupContract(
-        props.factory,
-        factoryLiquidityPoolABI
-      );
-      if (!factoryLiquidityPool) return;
-      const token = await setupContract(tokenA.address, mockERC20ABI);
       if (!token) return;
-      let poolId = await factoryLiquidityPool.getPoolId(
-        tokenA.address,
-        tokenB.address
+      if (!currentLiquidityPool) return;
+      const approval = await token.approve(
+        currentLiquidityPool.getAddress(),
+        amount
       );
-      let pool = await factoryLiquidityPool.getPool(poolId);
-
-      // Vérifier si le pool est à l'adresse zéro
-      if (pool === ethers.ZeroAddress) {
-        // Inverser les adresses des tokens et réessayer
-        poolId = await factoryLiquidityPool.getPoolId(
-          tokenB.address,
-          tokenA.address
-        );
-        pool = await factoryLiquidityPool.getPool(poolId);
-      }
-
-      if (pool === ethers.ZeroAddress) {
-        console.error("Le pool n'existe pas pour les paires de tokens fournies.");
-        return;
-      }
-      const liquidityPool = await setupContract(pool, liquidityPoolABI);
-      if (!liquidityPool) return;
-      const approval = await token.approve(pool, amount);
       await approval.wait();
-      console.log(approval);
-      const swap = await liquidityPool.swap(tokenA.address, amount);
-      console.log(swap);
+      const swap = await currentLiquidityPool.swap(tokenA.address, amount);
+      console.log(swap)
     } catch (error: any) {
       if (error.code === "ACTION_REJECTED") {
         console.error("Transaction rejetée par l'utilisateur");
@@ -103,9 +185,17 @@ export const CoinSwap = (props: CoinSwapProps) => {
 
   const swapTokens = () => {
     const temp = { ...tokenA };
+    const tempL = liquidityA;
     setTokenA({ ...tokenB });
     setTokenB(temp);
+    setLiquidityA(liquidityB);
+    setLiquidityB(tempL);
+    updateInput(output)
   };
+
+  useEffect(() => {
+    if (isConnected) getPear();
+  }, [isConnected]);
 
   return (
     <div
@@ -124,17 +214,21 @@ export const CoinSwap = (props: CoinSwapProps) => {
                   gap: "20px",
                 }}
               >
-                <SwapInput
+                <SwapAction
                   input={input}
-                  setInput={setInput}
+                  output={output}
+                  updateInput={updateInput}
+                  updateOutput={updateOutput}
+                  swapTokens={swapTokens}
+                  getSwap={getSwap}
                   nameA={tokenA.name}
                   nameB={tokenB.name}
                   TriA={tokenA.tri}
                   TriB={tokenB.tri}
                   logoA={tokenA.logo}
                   logoB={tokenB.logo}
+                  remaining={remaining}
                 />
-                {input != null ? <button onClick={getSwap}>GO</button> : <></>}
               </div>
             </div>
           </div>
@@ -142,7 +236,7 @@ export const CoinSwap = (props: CoinSwapProps) => {
           <div>Please connect your wallet</div>
         )}
       </div>
-      <div
+      {/* <div
         onClick={swapTokens}
         style={{
           width: "100px",
@@ -160,7 +254,7 @@ export const CoinSwap = (props: CoinSwapProps) => {
         }}
       >
         <FaArrowsRotate />
-      </div>
+      </div> */}
     </div>
   );
 };

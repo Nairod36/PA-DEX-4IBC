@@ -18,18 +18,18 @@ function CoinSwapping() {
         <>
             <div className="page-content">
                 <PageLayout pageTitle="Coin Swapping" desc={''} />
-                <section className="content-inner">
+                <section style={{paddingTop:"0px"}} className="content-inner">
                     <div className="container">
                         <CoinSwap
                             nameA='TokenA'
                             nameB='TokenB'
-                            addressA="0x822E1c8eF3f6741893931bBE9C19B01537f3E946"
+                            addressA="0x69c424BD90d9D5dC6ec19a46fe89A0a072dAb57c"
                             logoA='./sampleCoin.png'
                             triA='TKA'
                             logoB='./sampleCoin.png'
                             triB='TKB'
-                            factory="0x11749D3838ED9456E299E724bCD47504cdcd955b"
-                            addressB="0x892da913F2095E43e2010F2fc5fD3FE9014cE832"
+                            factory="0xA3038E1d084733019A471A01082709FBF57521BA"
+                            addressB="0x80849999eb9B4c9a479f257d48A079F7A74f76c6"
                         />
                     </div>
                 </section>
