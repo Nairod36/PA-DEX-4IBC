@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
-import App3 from "../Home/web3";
 import { useAccount, useWalletClient } from "wagmi";
 import { ethers } from "ethers";
-import { FaArrowsRotate } from "react-icons/fa6";
 
 import factoryLiquidityPoolABI from "../../web3/ABI/FactoryLiquidityPool.json";
 import liquidityPoolABI from "../../web3/ABI/LiquidityPool.json";
 import mockERC20ABI from "../../web3/ABI/MockERC20.json";
-import { SwapInput } from "./swapInput";
-import { SwapCard } from "./SwapCard";
-import { SwapAction } from "./SwapAction";
 
-interface CoinSwapProps {
+interface INewPool {
   nameA: string;
   addressA: string;
   logoA: string;
@@ -23,7 +18,7 @@ interface CoinSwapProps {
   factory: string;
 }
 
-export const CoinSwap = (props: CoinSwapProps) => {
+export const NewPool = (props: INewPool) => {
   const [input, setInput] = useState<number | null>(null);
   const [output, setOutput] = useState<number | null>(null);
   const [tokenA, setTokenA] = useState({
@@ -41,7 +36,8 @@ export const CoinSwap = (props: CoinSwapProps) => {
 
   const [currentLiquidityPool, setCurrentLiquidityPool] =
     useState<ethers.Contract | null>(null);
-  const [token, setToken] = useState<ethers.Contract | null>(null);
+  const [tkA, setTKA] = useState<ethers.Contract | null>(null);
+  const [tkB, setTKB] = useState<ethers.Contract | null>(null);
 
   const [liquidityA, setLiquidityA] = useState(BigInt(0));
   const [liquidityB, setLiquidityB] = useState(BigInt(0));
@@ -87,8 +83,10 @@ export const CoinSwap = (props: CoinSwapProps) => {
   }
 
   const getPear = async () => {
-    const currentToken = await setupContract(tokenA.address, mockERC20ABI);
-    setToken(currentToken);
+    const currentTokenA = await setupContract(tokenA.address, mockERC20ABI);
+    const currentTokenB = await setupContract(tokenB.address, mockERC20ABI);
+    setTKA(currentTokenA);
+    setTKB(currentTokenB);
     const factoryLiquidityPool = await setupContract(
       props.factory,
       factoryLiquidityPoolABI
@@ -136,42 +134,51 @@ export const CoinSwap = (props: CoinSwapProps) => {
   const getAmount = async (_amountIn: bigint): Promise<bigint | null> => {
     if (!currentLiquidityPool || liquidityA <= 0 || liquidityB <= 0)
       return null;
-    const result = await currentLiquidityPool.getAmounts(
-      _amountIn,
-      liquidityA,
-      liquidityB
-    );
-    if (result[1] >= 0) return result[1];
+    const newLiquidityA = liquidityA + _amountIn
+    const newLiquidityB = (liquidityB * newLiquidityA) / liquidityA 
+    const _output = newLiquidityB - liquidityB
+    if (_output >= 0) return _output;
     return null;
   };
 
   const getAmountReverse = async (_amountout: bigint): Promise<bigint | null> => {
     if (!currentLiquidityPool || liquidityA <= 0 || liquidityB <= 0)
       return null;
-    const result = await currentLiquidityPool.getAmountsReverse(
-      _amountout,
-      liquidityA,
-      liquidityB
-    );
-    if (result >= 0) return result;
+    const newLiquidityB = liquidityB + _amountout
+    const newLiquidityA = (liquidityA * newLiquidityB) / liquidityB 
+    const _output = newLiquidityA - liquidityA
+    if (_output >= 0) return _output;
     return null;
   };
 
-  const getSwap = async () => {
-    console.log(liquidityA)
-    console.log(liquidityB)
+  const addCoin = async () => {
     if (input === null) return;
+    if (output === null) return;
     try {
-      const amount = ethers.parseUnits(input.toString(), 18);
-      if (!token) return;
+        console.log(liquidityA)
+        console.log(liquidityB)
+        console.log(input)
+        console.log(output)
+      if (!tkA) return;
+      if (!tkB) return;
       if (!currentLiquidityPool) return;
-      const approval = await token.approve(
+
+      const inputInWei = ethers.parseUnits(input.toString(), 18);
+        const outputInWei = ethers.parseUnits(output.toString(), 18);
+
+      const approvalA = await tkA.approve(
         currentLiquidityPool.getAddress(),
-        amount
+        inputInWei
       );
-      await approval.wait();
-      const swap = await currentLiquidityPool.swap(tokenA.address, amount);
-      console.log(swap)
+      await approvalA.wait();
+      const approvalB = await tkB.approve(
+        currentLiquidityPool.getAddress(),
+        outputInWei
+      );
+      await approvalB.wait();
+      const add = await currentLiquidityPool.addLiquidity(tokenA.address, tokenB.address, inputInWei, outputInWei);
+      console.log(liquidityA)
+      console.log(liquidityB)
     } catch (error: any) {
       if (error.code === "ACTION_REJECTED") {
         console.error("Transaction rejetée par l'utilisateur");
@@ -181,16 +188,6 @@ export const CoinSwap = (props: CoinSwapProps) => {
         alert("Une erreur est survenue lors de la transaction.");
       }
     }
-  };
-
-  const swapTokens = () => {
-    const temp = { ...tokenA };
-    const tempL = liquidityA;
-    setTokenA({ ...tokenB });
-    setTokenB(temp);
-    setLiquidityA(liquidityB);
-    setLiquidityB(tempL);
-    updateInput(output)
   };
 
   useEffect(() => {
@@ -214,21 +211,6 @@ export const CoinSwap = (props: CoinSwapProps) => {
                   gap: "20px",
                 }}
               >
-                <SwapAction
-                  input={input}
-                  output={output}
-                  updateInput={updateInput}
-                  updateOutput={updateOutput}
-                  swapTokens={swapTokens}
-                  getSwap={getSwap}
-                  nameA={tokenA.name}
-                  nameB={tokenB.name}
-                  TriA={tokenA.tri}
-                  TriB={tokenB.tri}
-                  logoA={tokenA.logo}
-                  logoB={tokenB.logo}
-                  remaining={remaining}
-                />
               </div>
             </div>
           </div>
@@ -236,27 +218,6 @@ export const CoinSwap = (props: CoinSwapProps) => {
           <div>Please connect your wallet</div>
         )}
       </div>
-      {/* <div
-        onClick={swapTokens}
-        style={{
-          width: "100px",
-          height: "100px",
-          borderRadius: "50%",
-          background: "white",
-          border: "1px solid black",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "4rem",
-          color: "black",
-          position: "absolute",
-          top: "50%",
-        }}
-      >
-        <FaArrowsRotate />
-      </div> */}
     </div>
   );
 };
-
-export default CoinSwap;

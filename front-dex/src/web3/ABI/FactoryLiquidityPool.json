@@ -1,16 +1,5 @@
 [
   {
-    "type": "constructor",
-    "inputs": [
-      {
-        "name": "_starDexToken",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "stateMutability": "nonpayable"
-  },
-  {
     "type": "function",
     "name": "createLiquidityPool",
     "inputs": [
@@ -23,10 +12,33 @@
         "name": "_tokenB",
         "type": "address",
         "internalType": "address"
+      },
+      {
+        "name": "_amountA",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "_amountB",
+        "type": "uint256",
+        "internalType": "uint256"
       }
     ],
     "outputs": [],
     "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "getAllPools",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address[]",
+        "internalType": "address[]"
+      }
+    ],
+    "stateMutability": "view"
   },
   {
     "type": "function",
@@ -73,13 +85,19 @@
   },
   {
     "type": "function",
-    "name": "starDexToken",
-    "inputs": [],
+    "name": "pools",
+    "inputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
     "outputs": [
       {
         "name": "",
         "type": "address",
-        "internalType": "address"
+        "internalType": "contract LiquidityPool"
       }
     ],
     "stateMutability": "view"
