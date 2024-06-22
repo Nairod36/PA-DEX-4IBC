@@ -3,12 +3,16 @@ pragma solidity ^0.8.20;
 
 import "forge-std/Script.sol";
 import "../src/FactoryLiquidityPool.sol";
-import "../test/mocks/MockERC20.sol";
+import "../src/MockERC20.sol";
 
-// forge script script/MintTokens.s.sol:MintTokens --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv --private-key $PRIVATE_KEY
+// forge script script/MintTokens.s.sol:MintTokens --rpc-url $SEPOLIA_RPC_URL --broadcast --verify --legacy -vvvv --private-key $PRIVATE_KEY
 
 
 contract MintTokens is Script {
+
+    // To avoid coverage
+    function testA() public {}
+
     function run() external {
         vm.startBroadcast();
 

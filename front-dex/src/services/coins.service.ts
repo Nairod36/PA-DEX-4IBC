@@ -26,11 +26,43 @@ export class CoinService {
     static async getCoinInfo(name: string, symbol: string, token?: CancelToken): Promise <ICoinInfo|null>{
         const formated = name.replaceAll(' ','-')
         const id = `${symbol.toLowerCase()}-${formated.toLowerCase()}`
-        console.log(id);
         const response = await axios.get(`https://api.coinpaprika.com/v1/coins/${id}`,{
             cancelToken:token
         })
-        console.log(response);
         return response.data
+    }
+
+    static async getTokenIdByAddress(tokenAddress:string) {
+        try {
+            const response = await axios.get(`https://api.coingecko.com/api/v3/coins/ethereum/contract/${tokenAddress}`,{
+                headers:{
+                    "x_cg_demo_api_key":process.env.REACT_APP_CRYPTO_COMPARE_API_TOKEN
+                }
+            });
+            return response.data.id;
+        } catch (error:any) {
+            if (error.response && error.response.status === 404) {
+              console.warn(`Token not found on CoinGecko: ${tokenAddress}`);
+              return null;
+            } else {
+              console.error('Error fetching token ID:', error);
+              return null;
+            }
+        }
+    }
+    
+    // Fonction pour obtenir le logo du token à partir de son ID
+    static async getTokenLogoById(tokenId:any) {
+        try {
+            const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${tokenId}`,{
+                headers:{
+                    "x_cg_demo_api_key":process.env.REACT_APP_CRYPTO_COMPARE_API_TOKEN
+                }
+            });
+            return response.data.image.large;
+        } catch (error) {
+            console.error('Error fetching token logo:', error);
+            return null;
+        }
     }
 }

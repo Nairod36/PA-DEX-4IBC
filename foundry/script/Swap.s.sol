@@ -4,11 +4,15 @@ pragma solidity ^0.8.20;
 import "forge-std/Script.sol";
 import "../src/FactoryLiquidityPool.sol";
 import "../src/LiquidityPool.sol";
-import "../test/mocks/MockERC20.sol";
+import "../src/MockERC20.sol";
 
-// forge script script/Swap.s.sol:Swap --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv --private-key $PRIVATE_KEY
+// forge script script/Swap.s.sol:Swap --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv --private-key $PRIVATE_KEY --legacy
 
 contract Swap is Script {
+
+    // To avoid coverage
+    function testA() public {}
+
     function run() external {
         vm.startBroadcast();
 
@@ -24,9 +28,9 @@ contract Swap is Script {
 
         MockERC20 tokenERCA = MockERC20(tokenA);
 
-        tokenERCA.approve(address(pool),250*1e18);
+        tokenERCA.approve(address(pool),28960000000000000000);
 
-        pool.swap(tokenA,250*1e18);
+        pool.swap(tokenA,28960000000000000000);
 
         vm.stopBroadcast();
     }

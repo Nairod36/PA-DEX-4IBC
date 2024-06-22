@@ -1,8 +1,50 @@
-.swapCard{
- background-color: #452F7E;
- max-width: 390px;
- width: 100%;
- height: 230px;  
- border-radius: 5px;
- color:#fff 
-}
+.token-select {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: 290px;
+    height: 48px;
+    width: 100%;
+  }
+  
+  .selected-token {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    color: black;
+  }
+  
+  .token-logo {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  .token-label {
+    margin-right: 5px;
+  }
+  
+  .token-symbol {
+    color: gray;
+    margin-right: auto;
+  }
+  
+  .dropdown-icon {
+    margin-left: auto;
+  }
+  
+  .hidden-select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
