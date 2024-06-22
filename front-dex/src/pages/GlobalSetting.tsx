@@ -11,6 +11,7 @@ function AdminSettings() {
     const [signer, setSigner] = useState(null);
     const [contract, setContract] = useState(null);
     const contractAddress = '0xYourContractAddress'; // Adresse de votre contrat déployé
+    const API_URL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const init = async () => {
@@ -56,7 +57,27 @@ function AdminSettings() {
     const handleBanUser = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(`Banning user with address: ${banAddress}`);
-        // Implement the ban functionality here
+        
+        try {
+            const response = await fetch(`${API_URL}/ban-user`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ publicKey: banAddress }),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert('User banned successfully');
+                setBanAddress(''); 
+            } else {
+                alert('Failed to ban user');
+            }
+        } catch (error) {
+            console.error('Error banning user:', error);
+            alert('An error occurred while banning the user');
+        }
     };
 
     const handleDonateAssets = async (e: React.FormEvent<HTMLFormElement>) => {
