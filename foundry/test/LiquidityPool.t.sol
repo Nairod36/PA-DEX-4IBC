@@ -3,107 +3,148 @@ pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
 import "../src/LiquidityPool.sol";
-import "./mocks/MockERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "../src/MockERC20.sol";
 
 contract LiquidityPoolTest is Test {
-    LiquidityPool public pool;
+    LiquidityPool public liquidityPool;
     MockERC20 public tokenA;
     MockERC20 public tokenB;
-    MockERC20 public sdx;
-    address public owner;
+
+    address public user1;
+    address public user2;
 
     function setUp() public {
-        owner = address(this);
-        tokenA = new MockERC20("Token A", "TKNA", 18);
-        tokenB = new MockERC20("Token B", "TKNB", 18);
-        sdx = new MockERC20("StarDex Token", "SDX", 18);
+        tokenA = new MockERC20("Token A", "TKA",18);
+        tokenB = new MockERC20("Token B", "TKB",18);
 
-        tokenA.mint(owner, 10000*1e18);
-        tokenB.mint(owner, 10000*1e18);
-        sdx.mint(owner, 1000000*1e18);
+        tokenA.mint(address(this), 10000 ether);
+        tokenB.mint(address(this), 10000 ether);
 
-        pool = new LiquidityPool(address(tokenA), address(tokenB), address(sdx));
-        IERC20(sdx).transfer(address(pool),10000*1e18);
 
-        tokenA.approve(address(pool), 10000*1e18);
-        tokenB.approve(address(pool), 10000*1e18);
+        liquidityPool = new LiquidityPool(address(tokenA), address(tokenB), 1000 ether, 1000 ether);
+        
+        tokenA.transfer(address(liquidityPool),1000 ether);
+        tokenB.transfer(address(liquidityPool),1000 ether);
+
+        user1 = address(0x1);
+        user2 = address(0x2);
+
+        tokenA.mint(user1, 2000 ether);
+        tokenB.mint(user1, 2000 ether);
+        tokenA.mint(user2, 2000 ether);
+        tokenB.mint(user2, 2000 ether);
     }
 
     function testAddLiquidity() public {
-        uint256 amountA = 1000;
-        uint256 amountB = 1000;
-        
-        vm.prank(owner);
-        pool.addLiquidity(address(tokenA), address(tokenB), amountA, amountB);
+        vm.startPrank(user1);
 
-        assertEq(tokenA.balanceOf(address(pool)), amountA, "Pool should have correct amount of tokenA");
-        assertEq(tokenB.balanceOf(address(pool)), amountB, "Pool should have correct amount of tokenB");
-        assertEq(pool.liquidityA(), amountA, "LiquidityA should match added liquidity");
-        assertEq(pool.liquidityB(), amountB, "LiquidityB should match added liquidity");
+        tokenA.approve(address(liquidityPool), 500 ether);
+        tokenB.approve(address(liquidityPool), 500 ether);
+        liquidityPool.addLiquidity(address(tokenA), address(tokenB), 500 ether, 500 ether);
+
+        (uint256 liquidityTokenA, uint256 liquidityTokenB) = liquidityPool.userLiquidity(user1);
+        assertEq(liquidityTokenA, 500 ether);
+        assertEq(liquidityTokenB, 500 ether);
+        assertEq(liquidityPool.liquidityA(), 1500 ether);
+        assertEq(liquidityPool.liquidityB(), 1500 ether);
+
+        vm.stopPrank();
     }
 
     function testRemoveLiquidity() public {
-        uint256 amountA = 500;
-        uint256 amountB = 500;
-        
-        vm.prank(owner);
-        pool.addLiquidity(address(tokenA), address(tokenB), 1000, 1000);
-        pool.removeLiquidity(address(tokenA), address(tokenB), amountA, amountB);
+        vm.startPrank(user1);
 
-        assertEq(tokenA.balanceOf(address(pool)), 500, "Pool should have correct amount of tokenA after removal");
-        assertEq(tokenB.balanceOf(address(pool)), 500, "Pool should have correct amount of tokenB after removal");
-        assertEq(pool.liquidityA(), 500, "LiquidityA should match remaining liquidity");
-        assertEq(pool.liquidityB(), 500, "LiquidityB should match remaining liquidity");
+        tokenA.approve(address(liquidityPool), 500 ether);
+        tokenB.approve(address(liquidityPool), 500 ether);
+        liquidityPool.addLiquidity(address(tokenA), address(tokenB), 500 ether, 500 ether);
+
+        liquidityPool.removeLiquidity(address(tokenA), address(tokenB), 200 ether, 200 ether);
+
+        (uint256 liquidityTokenA, uint256 liquidityTokenB) = liquidityPool.userLiquidity(user1);
+        assertEq(liquidityTokenA, 300 ether);
+        assertEq(liquidityTokenB, 300 ether);
+        assertEq(liquidityPool.liquidityA(), 1300 ether);
+        assertEq(liquidityPool.liquidityB(), 1300 ether);
+
+        vm.stopPrank();
     }
 
-    function testSwapTokenAForTokenB() public {
-        uint256 amountIn = 100;
-        pool.addLiquidity(address(tokenA), address(tokenB), 1000*1e18, 1000*1e18);
-        uint256 initialReserveA = pool.liquidityA();
-        uint256 initialReserveB = pool.liquidityB();
+    function testSwap() public {
+        vm.startPrank(user1);
 
-        vm.prank(owner);
+        (uint256 amountIn, uint256 amountOut) = liquidityPool.getAmounts(100 ether,liquidityPool.liquidityA(),liquidityPool.liquidityB());
+        tokenA.approve(address(liquidityPool), 100 ether);
 
-        (uint256 amountInWithFee, uint256 amountOut) = pool.getAmounts(amountIn, initialReserveA, initialReserveB);
+        liquidityPool.swap(address(tokenA), 100 ether);
 
-        console.log("amount in with fees :", amountInWithFee);
-        console.log("amount out :", amountOut);
-        console.log("initial reserve in :", initialReserveA);
-        console.log("initial reserve out : ", initialReserveB);
+        uint256 balanceB = tokenB.balanceOf(user1);
+        assertGt(balanceB, 0); // Check that user1 received tokenB
+        assertEq(liquidityPool.liquidityA(), 1000 ether + amountIn); // initial liquidity + swap amount
+        assertEq(liquidityPool.liquidityB(), 1000 ether - amountOut);
 
-        pool.swap(address(tokenA), amountIn);
-
-
-        uint256 newReserveA = pool.liquidityA();
-        uint256 newReserveB = pool.liquidityB();
-
-        console.log("initial reserve in :", newReserveA);
-        console.log("initial reserve out : ", newReserveB);
-
-        assertEq(newReserveA, initialReserveA + amountInWithFee, "Reserve A should increase by amount in");
-        assertEq(newReserveB, initialReserveB - amountOut, "Reserve B should decrease by amount out");
-        assertEq(pool.reserveA(), amountIn - amountInWithFee, "Fees are not stored");
-        assertEq(tokenB.balanceOf(owner), 10000 - initialReserveB + amountOut, "Owner balance of Token B incorrect after swap");
+        vm.stopPrank();
     }
 
-    function testSwapTokenBForTokenA() public {
-        vm.prank(owner);
-        uint256 amountIn = 100*1e18;
-        pool.addLiquidity(address(tokenA), address(tokenB), 1000*1e18, 1000*1e18);
-        uint256 initialReserveA = pool.liquidityA();
-        uint256 initialReserveB = pool.liquidityB();
+    function testClaimRewards() public {
+        vm.startPrank(user1);
 
-        pool.swap(address(tokenB), amountIn);
+        tokenA.approve(address(liquidityPool), 500 ether);
+        tokenB.approve(address(liquidityPool), 500 ether);
+        liquidityPool.addLiquidity(address(tokenA), address(tokenB), 500 ether, 500 ether);
 
-        (uint256 amountInWithFee, uint256 amountOut) = pool.getAmounts(amountIn, initialReserveB, initialReserveA);
+        vm.stopPrank();
+        vm.startPrank(user2);
 
-        uint256 newReserveA = pool.liquidityA();
-        uint256 newReserveB = pool.liquidityB();
+        tokenA.approve(address(liquidityPool), 100 ether);
+        liquidityPool.swap(address(tokenA), 100 ether);
 
-        assertEq(newReserveA, initialReserveA - amountOut, "Reserve A should decrease by amount out");
-        assertEq(newReserveB, initialReserveB + amountInWithFee, "Reserve B should increase by amount in");
-        assertEq(pool.reserveB(), amountIn - amountInWithFee, "Fees are not stored");
-        assertEq(tokenA.balanceOf(owner), 10000 - initialReserveA + amountOut, "Owner balance of Token A incorrect after swap");
+        vm.stopPrank();
+        vm.startPrank(user1);
+
+        liquidityPool.claimRewards();
+
+        uint256 rewardA = liquidityPool.getUserRewardsA();
+        uint256 rewardB = liquidityPool.getUserRewardsB();
+        assertEq(rewardA, 0);
+        assertEq(rewardB, 0);
+
+        vm.stopPrank();
+    }
+
+    function testRewardAfterAddingLiquidity() public {
+        vm.startPrank(user1);
+
+        tokenA.approve(address(liquidityPool), 500 ether);
+        tokenB.approve(address(liquidityPool), 500 ether);
+        liquidityPool.addLiquidity(address(tokenA), address(tokenB), 500 ether, 500 ether);
+
+        vm.stopPrank();
+        vm.startPrank(user2);
+
+        tokenA.approve(address(liquidityPool), 100 ether);
+        liquidityPool.swap(address(tokenA), 100 ether);
+
+        vm.stopPrank();
+        vm.startPrank(user1);
+
+        liquidityPool.claimRewards();
+        uint256 initialRewardA = liquidityPool.getUserRewardsA();
+        uint256 initialRewardB = liquidityPool.getUserRewardsB();
+
+        tokenA.approve(address(liquidityPool), 1000 ether);
+        tokenB.approve(address(liquidityPool), 1000 ether);
+        liquidityPool.addLiquidity(address(tokenA), address(tokenB), 1000 ether, 1000 ether);
+
+        liquidityPool.claimRewards();
+        uint256 newRewardA = liquidityPool.getUserRewardsA();
+        uint256 newRewardB = liquidityPool.getUserRewardsB();
+
+        assertEq(initialRewardA, 0);
+        assertEq(initialRewardB, 0);
+        assertEq(newRewardA, 0);
+        assertEq(newRewardB, 0);
+
+        vm.stopPrank();
     }
 }

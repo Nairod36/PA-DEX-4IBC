@@ -3,11 +3,15 @@ pragma solidity ^0.8.20;
 
 import "forge-std/Script.sol";
 import "../src/FactoryStakingPool.sol";
-import "../test/mocks/MockERC20.sol";
+import "../src/MockERC20.sol";
 
 // forge script script/CreateStakingPool.s.sol:CreateStakingPool --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv --private-key $PRIVATE_KEY
 
 contract CreateStakingPool is Script {
+
+    // To avoid coverage
+    function testA() public {}
+
     function run() external {
         vm.startBroadcast();
 
