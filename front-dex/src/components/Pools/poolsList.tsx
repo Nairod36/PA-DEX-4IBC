@@ -6,7 +6,7 @@ import mockERC20ABI from "../../web3/ABI/MockERC20.json";
 import { useEffect, useState } from "react";
 import { CoinService } from "../../services";
 import { PoolItem } from "./PoolItem";
-import { NewPool } from "./NewPool";
+import { NewPool } from "./newPool";
 
 export interface IPoolsList {
   address: string;
