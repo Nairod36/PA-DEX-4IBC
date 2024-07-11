@@ -1,0 +1,8 @@
+.newPool-btn{
+    border: 6px dashed rgba(28,110,164,0.32);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+}

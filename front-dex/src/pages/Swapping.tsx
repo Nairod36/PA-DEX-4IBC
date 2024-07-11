@@ -20,7 +20,7 @@ function CoinSwapping() {
                 <PageLayout pageTitle="Coin Swapping" desc={''} />
                 <section style={{paddingTop:"0px"}} className="content-inner">
                     <div className="container">
-                        <SwapUI factory_address='0xee1B953C6f9b2423CBaE9e315F971D25063f35Bc'/>
+                        <SwapUI factory_address='0xB0e31f36C66C218b8201fd55c2A4A9956e2254Ab'/>
                     </div>
                 </section>
             </div>

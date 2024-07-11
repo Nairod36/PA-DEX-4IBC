@@ -5,6 +5,8 @@ import liquidityPoolABI from "../../web3/ABI/LiquidityPool.json";
 import mockERC20ABI from "../../web3/ABI/MockERC20.json";
 import { useEffect, useState } from "react";
 import { CoinService } from "../../services";
+import { PoolItem } from "./PoolItem";
+import { NewPool } from "./NewPool";
 
 export interface IPoolsList {
   address: string;
@@ -107,19 +109,17 @@ export const PoolsList = (props: IPoolsList) => {
             <th>#</th>
             <th></th>
             <th>Pair</th>
-            <th>Change</th>
-            <th>Trade Volume</th>
+            <th>Ratio</th>
             <th>Volume</th>
+            <th>Change</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-            {pairList.map((pair,idx) => (
-                <tr key={idx}>
-                    <td>{idx}</td>
-                    <td></td>
-                    <td>{`${pair.tokenA.symbol}/${pair.tokenB.symbol}`}</td>
-                </tr>
+            {pairList.map((pair) => (
+                <PoolItem factory_address={props.address} pair={pair} />
             ))}
+            <NewPool/>
         </tbody>
       </table>
       </>
