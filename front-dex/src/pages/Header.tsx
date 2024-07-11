@@ -111,7 +111,8 @@ function Header() {
                                 </div>                            
                                 <ul className="nav navbar-nav navbar">
                                     <li><NavLink to={"/"}>Home</NavLink></li>
-                                    <li><NavLink to={"/swapping"}>Swapping</NavLink></li>
+                                    <li><NavLink to={"/swapping"}>Swap</NavLink></li>
+                                    <li><NavLink to={"/pools"}>Pools</NavLink></li>
                                     <li><NavLink to={"/tokens"}>Tokens</NavLink></li>
                                     <li><NavLink to={"/Staking"}>Staking</NavLink></li>
                                     <li><button onClick={handleAdminClick}>Admin</button></li>

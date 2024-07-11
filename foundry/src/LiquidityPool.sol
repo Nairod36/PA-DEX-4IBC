@@ -60,6 +60,8 @@ contract LiquidityPool is ReentrancyGuard {
         tokenB = _tokenB;
         liquidityA = _amountA;
         liquidityB = _amountB;
+        userLiquidity[msg.sender].liquidityTokenA += _amountA;
+        userLiquidity[msg.sender].liquidityTokenB += _amountB;
     }
 
     /**
@@ -286,6 +288,19 @@ contract LiquidityPool is ReentrancyGuard {
         amountInWithFee = amountIn;
     }
 
+    // liquidityB' = (liquidityB * liquidityA') / LiquidityA
+    function getAmountForAdd(address _tokenIn, uint256 _amount) external view returns (uint256){
+        require(_tokenIn == tokenA || _tokenIn == tokenB, "Selected token not present in pool");
+        if(_tokenIn == tokenA){
+            uint256 newLiquidityB = (liquidityB * (liquidityA + _amount)) / liquidityA;
+            return newLiquidityB - liquidityB;
+        }
+        if(_tokenIn == tokenB){
+            uint256 newLiquidityA = (liquidityA * (liquidityB + _amount)) / liquidityB;
+            return newLiquidityA - liquidityA;
+        }
+    }
+
     /**
      * @notice Updates the reward for a user based on their liquidity and the total fees collected.
      * @dev This function is called internally to update the user's pending rewards.
@@ -350,5 +365,9 @@ contract LiquidityPool is ReentrancyGuard {
      */
     function getUserRewardsB() external view returns (uint256) {
         return userRewardsB[msg.sender];
+    }
+
+    function getUserLiquidity() external view returns (uint256,uint256){
+        return (userLiquidity[msg.sender].liquidityTokenA,userLiquidity[msg.sender].liquidityTokenB);
     }
 }
