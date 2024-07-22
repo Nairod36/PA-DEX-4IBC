@@ -3,10 +3,12 @@ pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
 import "../src/FactoryLiquidityPool.sol";
+import "../src/AdminManager.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "../src/MockERC20.sol";
 
 contract FactoryLiquidityPoolTest is Test {
+    AdminManager public admin;
     FactoryLiquidityPool public factory;
     MockERC20 public tokenA;
     MockERC20 public tokenB;
@@ -14,13 +16,15 @@ contract FactoryLiquidityPoolTest is Test {
     address public user1;
 
     function setUp() public {
+        admin = new AdminManager();
+
         tokenA = new MockERC20("Token A", "TKA", 18);
         tokenB = new MockERC20("Token B", "TKB", 18);
 
         tokenA.mint(address(this), 10000 ether);
         tokenB.mint(address(this), 10000 ether);
 
-        factory = new FactoryLiquidityPool();
+        factory = new FactoryLiquidityPool(address(admin));
 
         user1 = address(0x1);
 

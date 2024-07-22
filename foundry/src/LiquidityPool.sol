@@ -3,7 +3,12 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "./AdminManager.sol";
 
+/**
+ * @title LiquidityPool
+ * @dev A contract for a decentralized liquidity pool supporting token swapping, liquidity provision, and reward distribution.
+ */
 contract LiquidityPool is ReentrancyGuard {
     struct PoolInfo {
         uint256 liquidityTokenA;
@@ -16,6 +21,8 @@ contract LiquidityPool is ReentrancyGuard {
     uint256 public liquidityB;
     uint256 public totalFeesA;
     uint256 public totalFeesB;
+
+    AdminManager private admin;
 
     mapping(address => PoolInfo) public userLiquidity;
     mapping(address => uint256) public userRewardDebtA;
@@ -40,22 +47,25 @@ contract LiquidityPool is ReentrancyGuard {
     event RewardClaimed(address indexed user, uint256 rewardA, uint256 rewardB);
 
     /**
-     * @notice Initializes the liquidity pool with given token addresses and initial liquidity
-     * @param _tokenA Address of token A
-     * @param _tokenB Address of token B
-     * @param _amountA Initial amount of token A
-     * @param _amountB Initial amount of token B
+     * @notice Initializes the liquidity pool with given token addresses and initial liquidity.
+     * @param _tokenA Address of token A.
+     * @param _tokenB Address of token B.
+     * @param _amountA Initial amount of token A.
+     * @param _amountB Initial amount of token B.
      */
     constructor(
         address _tokenA,
         address _tokenB,
         uint256 _amountA,
-        uint256 _amountB
+        uint256 _amountB,
+        address _admin
     ) {
         require(_tokenA != address(0), "Token A address null");
         require(_tokenB != address(0), "Token B address null");
         require(_amountA > 0, "Amount A null");
         require(_amountB > 0, "Amount B null");
+        require(_admin != address(0));
+        admin = AdminManager(_admin);
         tokenA = _tokenA;
         tokenB = _tokenB;
         liquidityA = _amountA;
@@ -65,11 +75,11 @@ contract LiquidityPool is ReentrancyGuard {
     }
 
     /**
-     * @notice Adds liquidity to the pool
-     * @param _tokenA Address of token A
-     * @param _tokenB Address of token B
-     * @param _amountA Amount of token A to add
-     * @param _amountB Amount of token B to add
+     * @notice Adds liquidity to the pool.
+     * @param _tokenA Address of token A.
+     * @param _tokenB Address of token B.
+     * @param _amountA Amount of token A to add.
+     * @param _amountB Amount of token B to add.
      */
     function addLiquidity(
         address _tokenA,
@@ -108,11 +118,11 @@ contract LiquidityPool is ReentrancyGuard {
     }
 
     /**
-     * @notice Removes liquidity from the pool
-     * @param _tokenA Address of token A
-     * @param _tokenB Address of token B
-     * @param _amountA Amount of token A to remove
-     * @param _amountB Amount of token B to remove
+     * @notice Removes liquidity from the pool.
+     * @param _tokenA Address of token A.
+     * @param _tokenB Address of token B.
+     * @param _amountA Amount of token A to remove.
+     * @param _amountB Amount of token B to remove.
      */
     function removeLiquidity(
         address _tokenA,
@@ -154,9 +164,9 @@ contract LiquidityPool is ReentrancyGuard {
     }
 
     /**
-     * @notice Swaps a given amount of input token for the other token in the pair
-     * @param _tokenIn Address of the input token
-     * @param _amountIn Amount of the input token to swap
+     * @notice Swaps a given amount of input token for the other token in the pair.
+     * @param _tokenIn Address of the input token.
+     * @param _amountIn Amount of the input token to swap.
      */
     function swap(address _tokenIn, uint256 _amountIn) public nonReentrant {
         require(
@@ -243,24 +253,24 @@ contract LiquidityPool is ReentrancyGuard {
     }
 
     /**
-     * @notice Calculates the amounts for a swap based on the constant product formula (x * y = k)
-     * @param _amountIn Amount of input token
-     * @param _liquidityIn Liquidity of input token in the pool
-     * @param _liquidityOut Liquidity of output token in the pool
-     * @return amountInWithFee Amount of input token with fee applied
-     * @return amountOut Amount of output token
+     * @notice Calculates the amounts for a swap based on the constant product formula (x * y = k).
+     * @param _amountIn Amount of input token.
+     * @param _liquidityIn Liquidity of input token in the pool.
+     * @param _liquidityOut Liquidity of output token in the pool.
+     * @return amountInWithFee Amount of input token with fee applied.
+     * @return amountOut Amount of output token.
      */
     function getAmounts(
         uint256 _amountIn,
         uint256 _liquidityIn,
         uint256 _liquidityOut
-    ) public pure returns (uint256, uint256) {
+    ) public view returns (uint256, uint256) {
         require(_amountIn > 0, "Invalid input amount");
         require(
             _liquidityIn > 0 && _liquidityOut > 0,
             "Insufficient liquidity"
         );
-        uint256 amountInWithFee = (_amountIn * 970) / 1000;
+        uint256 amountInWithFee = (_amountIn * admin.getFees()) / 1000;
         uint256 numerator = _liquidityIn * _liquidityOut;
         uint256 denominator = _liquidityIn + amountInWithFee;
         uint256 newLiquidityOut = numerator / denominator;
@@ -269,26 +279,31 @@ contract LiquidityPool is ReentrancyGuard {
     }
 
     /**
-     * @notice Calculates the amounts for a swap based on the constant product formula (x * y = k)
-     * @param _amountOut Amount of output token
-     * @param _liquidityIn Liquidity of input token in the pool
-     * @param _liquidityOut Liquidity of output token in the pool
-     * @return amountInWithFee Amount of input token with fee applied
+     * @notice Calculates the amounts for a swap based on the constant product formula (x * y = k).
+     * @param _amountOut Amount of output token.
+     * @param _liquidityIn Liquidity of input token in the pool.
+     * @param _liquidityOut Liquidity of output token in the pool.
+     * @return amountInWithFee Amount of input token with fee applied.
      */
-    function getAmountsReverse(uint256 _amountOut, uint256 _liquidityIn, uint256 _liquidityOut) public pure returns (uint256 amountInWithFee) {
+    function getAmountsReverse(uint256 _amountOut, uint256 _liquidityIn, uint256 _liquidityOut) public view returns (uint256 amountInWithFee) {
         require(_amountOut > 0, "Invalid output amount");
         require(_liquidityIn > 0 && _liquidityOut > 0, "Insufficient liquidity");
         
         // Calculate the amount of input tokens needed before applying the fee
         uint256 numerator = _liquidityIn * _amountOut * 1000;
-        uint256 denominator = (_liquidityOut - _amountOut) * 970;
+        uint256 denominator = (_liquidityOut - _amountOut) * admin.getFees();
         uint256 amountIn = numerator / denominator;
         
         // Apply the fee
         amountInWithFee = amountIn;
     }
 
-    // liquidityB' = (liquidityB * liquidityA') / LiquidityA
+    /**
+     * @notice Calculates the amount of the other token needed to maintain the ratio for a given token addition.
+     * @param _tokenIn Address of the input token.
+     * @param _amount Amount of the input token.
+     * @return The required amount of the other token to maintain the ratio.
+     */
     function getAmountForAdd(address _tokenIn, uint256 _amount) external view returns (uint256){
         require(_tokenIn == tokenA || _tokenIn == tokenB, "Selected token not present in pool");
         if(_tokenIn == tokenA){
@@ -367,6 +382,10 @@ contract LiquidityPool is ReentrancyGuard {
         return userRewardsB[msg.sender];
     }
 
+    /**
+     * @notice Retrieves the liquidity of the user in the pool.
+     * @return The amounts of token A and token B liquidity provided by the sender.
+     */
     function getUserLiquidity() external view returns (uint256,uint256){
         return (userLiquidity[msg.sender].liquidityTokenA,userLiquidity[msg.sender].liquidityTokenB);
     }

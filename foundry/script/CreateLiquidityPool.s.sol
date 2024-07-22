@@ -36,7 +36,7 @@ contract CreateLiquidityPool is Script {
         // TKB / SDX
         IERC20(tokenB).approve(address(factory),1000*1e18);
         IERC20(stardex).approve(address(factory),1000*1e18);
-        factory.createLiquidityPool(tokenB, stardex, 1000*1e18, 1000*1e18);
+        // factory.createLiquidityPool(tokenB, stardex, 1000*1e18, 1000*1e18);
 
         vm.stopBroadcast();
     }

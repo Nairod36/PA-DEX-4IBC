@@ -10,7 +10,7 @@ function AdminSettings() {
     const [provider, setProvider] = useState(null);
     const [signer, setSigner] = useState(null);
     const [contract, setContract] = useState(null);
-    const contractAddress = '0xYourContractAddress'; // Adresse de votre contrat déployé
+    const contractAddress = '0xb2E8Aa1D2Ad719d23AD6f697741Aa052bD624F47'; // Adresse de votre contrat déployé
     const API_URL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {

@@ -7,27 +7,28 @@ import { useEffect, useState } from "react";
 import { CoinService } from "../../services";
 import { PoolItem } from "./PoolItem";
 import { NewPool } from "./NewPool";
+import { CreateLiquidityModal } from "./CreateLiquidityModal";
 
 export interface IPoolsList {
   address: string;
 }
 
 interface IToken {
-    address:string;
-    name:string;
-    symbol:string;
-    logo:string;
+  address: string;
+  name: string;
+  symbol: string;
+  logo: string;
 }
 
 export interface IPair {
-    tokenA:IToken;
-    tokenB:IToken;
+  tokenA: IToken;
+  tokenB: IToken;
 }
 
 export const PoolsList = (props: IPoolsList) => {
-
-    const [pairList, setPairList] = useState<IPair[]>([])
-
+  const [loading, setLoading] = useState(true);
+  const [pairList, setPairList] = useState<IPair[]>([]);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   async function setupContract(
     contractAddress: string,
@@ -44,52 +45,60 @@ export const PoolsList = (props: IPoolsList) => {
     const newPairs: IPair[] = [];
 
     for (const poolAddress of pools) {
-        const pool = await setupContract(poolAddress, liquidityPoolABI);
+      const pool = await setupContract(poolAddress, liquidityPoolABI);
 
-        const tkA = await pool.tokenA();
-        // await pool.updateReward()
-        const contractA = await setupContract(tkA, mockERC20ABI);
-        const idA = await CoinService.getTokenIdByAddress(tkA) ?? null;
-        const logoA = idA ? await CoinService.getTokenLogoById(idA) : null;
-        const nameA = await contractA.name();
-        const symbolA = await contractA.symbol();
+      const tkA = await pool.tokenA();
+      // await pool.updateReward()
+      const contractA = await setupContract(tkA, mockERC20ABI);
+      const idA = (await CoinService.getTokenIdByAddress(tkA)) ?? null;
+      const logoA = idA ? await CoinService.getTokenLogoById(idA) : null;
+      const nameA = await contractA.name();
+      const symbolA = await contractA.symbol();
 
-        const tokenA: IToken = {
-            address: tkA,
-            name: nameA,
-            symbol: symbolA,
-            logo: logoA,
-        };
+      const tokenA: IToken = {
+        address: tkA,
+        name: nameA,
+        symbol: symbolA,
+        logo: logoA,
+      };
 
-        const tkB = await pool.tokenB();
-        const contractB = await setupContract(tkB, mockERC20ABI);
-        const idB = await CoinService.getTokenIdByAddress(tkB) ?? null;
-        const logoB = idB ? await CoinService.getTokenLogoById(idB) : null;
-        const nameB = await contractB.name();
-        const symbolB = await contractB.symbol();
+      const tkB = await pool.tokenB();
+      const contractB = await setupContract(tkB, mockERC20ABI);
+      const idB = (await CoinService.getTokenIdByAddress(tkB)) ?? null;
+      const logoB = idB ? await CoinService.getTokenLogoById(idB) : null;
+      const nameB = await contractB.name();
+      const symbolB = await contractB.symbol();
 
-        const tokenB: IToken = {
-            address: tkB,
-            name: nameB,
-            symbol: symbolB,
-            logo: logoB,
-        };
+      const tokenB: IToken = {
+        address: tkB,
+        name: nameB,
+        symbol: symbolB,
+        logo: logoB,
+      };
 
-        const pair: IPair = {
-            tokenA,
-            tokenB,
-        };
+      const pair: IPair = {
+        tokenA,
+        tokenB,
+      };
 
-        newPairs.push(pair);
+      newPairs.push(pair);
     }
 
     return newPairs;
-};
+  };
 
   const updatePools = async () => {
-    const newPairs = await getPairs()
-    setPairList(newPairs)
-    console.log(newPairs)
+    const newPairs = await getPairs();
+    setPairList(newPairs);
+    setLoading(false)
+  };
+
+  const handleCreateLiquidity = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -98,32 +107,39 @@ export const PoolsList = (props: IPoolsList) => {
 
   return (
     <>
-    {pairList.length === 0 &&
-        <p>Loading</p>
-    }
-    {pairList.length > 0 &&
-    <>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th></th>
-            <th>Pair</th>
-            <th>Ratio</th>
-            <th>Volume</th>
-            <th>Change</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-            {pairList.map((pair) => (
+      {loading && <p>Loading</p>}
+      {pairList.length > 0 && (
+        <>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th></th>
+                <th>Pair</th>
+                <th>Ratio</th>
+                <th>Volume</th>
+                <th>Change</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pairList.map((pair) => (
                 <PoolItem factory_address={props.address} pair={pair} />
-            ))}
-            <NewPool/>
-        </tbody>
-      </table>
-      </>
-    }
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+      {!loading && (
+        <table className="table" style={{borderBottomWidth:"6px"}}>
+          <NewPool onclick={handleCreateLiquidity} />
+        </table>
+      )}
+      <CreateLiquidityModal
+        show={showModal}
+        onClose={closeModal}
+        factory_address={props.address}
+      />
     </>
   );
 };

@@ -15,6 +15,7 @@ contract AdminManager {
      */
     constructor() {
         owner = msg.sender;
+        platformFee = 3;
     }
 
     /**
@@ -33,6 +34,7 @@ contract AdminManager {
      * @param _fee The new platform fee.
      */
     function setFees(uint256 _fee) external onlyOwner {
+        require(_fee <= 5, "fees cannot excess 5%");
         platformFee = _fee;
     }
 
@@ -63,5 +65,9 @@ contract AdminManager {
      */
     function grantAsset(address _to, address _token, uint256 _amount) external onlyOwner {
         IERC20(_token).transfer(_to, _amount);
+    }    
+
+    function getFees() public view returns(uint256){
+        return (1000 - 10 * platformFee);
     }
 }
