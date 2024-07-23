@@ -68,6 +68,23 @@ func main() {
 	router.HandleFunc("/api/add-admin", addAdmin).Methods("POST")
 	router.HandleFunc("/api/remove-admin", removeAdmin).Methods("POST")
 
+	// New routes for stacking pools, liquidity pools, and transactions
+	router.HandleFunc("/api/stacking-pools", createStackingPool).Methods("POST")
+	router.HandleFunc("/api/stacking-pools", getStackingPools).Methods("GET")
+	router.HandleFunc("/api/stacking-pools/{id}", getStackingPool).Methods("GET")
+	router.HandleFunc("/api/stacking-pools/{id}", updateStackingPool).Methods("PUT")
+	router.HandleFunc("/api/stacking-pools/{id}", deleteStackingPool).Methods("DELETE")
+
+	router.HandleFunc("/api/liquidity-pools", createLiquidityPool).Methods("POST")
+	router.HandleFunc("/api/liquidity-pools", getLiquidityPools).Methods("GET")
+	router.HandleFunc("/api/liquidity-pools/{id}", getLiquidityPool).Methods("GET")
+	router.HandleFunc("/api/liquidity-pools/{id}", updateLiquidityPool).Methods("PUT")
+	router.HandleFunc("/api/liquidity-pools/{id}", deleteLiquidityPool).Methods("DELETE")
+
+	router.HandleFunc("/api/transactions", createTransaction).Methods("POST")
+	router.HandleFunc("/api/transactions", getTransactions).Methods("GET")
+	router.HandleFunc("/api/transactions/{id}", getTransaction).Methods("GET")
+
 	corsOptions := handlers.CORS(
 		handlers.AllowedOrigins([]string{"http://localhost", "http://localhost:80", "http://localhost:3000"}),
 		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
@@ -314,4 +331,256 @@ func removeAdmin(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]bool{"success": true})
+}
+
+// New Handlers
+
+func createStackingPool(w http.ResponseWriter, r *http.Request) {
+	var pool datastruct.StackingPool
+	if err := json.NewDecoder(r.Body).Decode(&pool); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	err := db.QueryRow(
+		"INSERT INTO stacking_pools (token_id, total_amount) VALUES ($1, $2) RETURNING id",
+		pool.TokenID, pool.TotalAmount,
+	).Scan(&pool.ID)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(pool)
+}
+
+func getStackingPools(w http.ResponseWriter, r *http.Request) {
+	rows, err := db.Query("SELECT id, token_id, total_amount FROM stacking_pools")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	var pools []datastruct.StackingPool
+	for rows.Next() {
+		var pool datastruct.StackingPool
+		if err := rows.Scan(&pool.ID, &pool.TokenID, &pool.TotalAmount); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		pools = append(pools, pool)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(pools)
+}
+
+func getStackingPool(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["id"]
+	var pool datastruct.StackingPool
+
+	err := db.QueryRow("SELECT id, token_id, total_amount FROM stacking_pools WHERE id = $1", id).Scan(
+		&pool.ID, &pool.TokenID, &pool.TotalAmount,
+	)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			http.NotFound(w, r)
+			return
+		}
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(pool)
+}
+
+func updateStackingPool(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["id"]
+	var pool datastruct.StackingPool
+	if err := json.NewDecoder(r.Body).Decode(&pool); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	_, err := db.Exec("UPDATE stacking_pools SET token_id = $1, total_amount = $2 WHERE id = $3",
+		pool.TokenID, pool.TotalAmount, id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]bool{"success": true})
+}
+
+func deleteStackingPool(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["id"]
+
+	_, err := db.Exec("DELETE FROM stacking_pools WHERE id = $1", id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]bool{"success": true})
+}
+
+func createLiquidityPool(w http.ResponseWriter, r *http.Request) {
+	var pool datastruct.LiquidityPool
+	if err := json.NewDecoder(r.Body).Decode(&pool); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	err := db.QueryRow(
+		"INSERT INTO liquidity_pools (tokenA_id, tokenB_id, total_amountA, total_amountB) VALUES ($1, $2, $3, $4) RETURNING id",
+		pool.TokenAID, pool.TokenBID, pool.TotalAmountA, pool.TotalAmountB,
+	).Scan(&pool.ID)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(pool)
+}
+
+func getLiquidityPools(w http.ResponseWriter, r *http.Request) {
+	rows, err := db.Query("SELECT id, tokenA_id, tokenB_id, total_amountA, total_amountB FROM liquidity_pools")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	var pools []datastruct.LiquidityPool
+	for rows.Next() {
+		var pool datastruct.LiquidityPool
+		if err := rows.Scan(&pool.ID, &pool.TokenAID, &pool.TokenBID, &pool.TotalAmountA, &pool.TotalAmountB); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		pools = append(pools, pool)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(pools)
+}
+
+func getLiquidityPool(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["id"]
+	var pool datastruct.LiquidityPool
+
+	err := db.QueryRow("SELECT id, tokenA_id, tokenB_id, total_amountA, total_amountB FROM liquidity_pools WHERE id = $1", id).Scan(
+		&pool.ID, &pool.TokenAID, &pool.TokenBID, &pool.TotalAmountA, &pool.TotalAmountB,
+	)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			http.NotFound(w, r)
+			return
+		}
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(pool)
+}
+
+func updateLiquidityPool(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["id"]
+	var pool datastruct.LiquidityPool
+	if err := json.NewDecoder(r.Body).Decode(&pool); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	_, err := db.Exec("UPDATE liquidity_pools SET tokenA_id = $1, tokenB_id = $2, total_amountA = $3, total_amountB = $4 WHERE id = $5",
+		pool.TokenAID, pool.TokenBID, pool.TotalAmountA, pool.TotalAmountB, id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]bool{"success": true})
+}
+
+func deleteLiquidityPool(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["id"]
+
+	_, err := db.Exec("DELETE FROM liquidity_pools WHERE id = $1", id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]bool{"success": true})
+}
+
+func createTransaction(w http.ResponseWriter, r *http.Request) {
+	var tx datastruct.Transaction
+	if err := json.NewDecoder(r.Body).Decode(&tx); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	err := db.QueryRow(
+		"INSERT INTO transactions (user_id, pool_id, pool_type, amountA, amountB) VALUES ($1, $2, $3, $4, $5) RETURNING id",
+		tx.UserID, tx.PoolID, tx.PoolType, tx.AmountA, tx.AmountB,
+	).Scan(&tx.ID)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(tx)
+}
+
+func getTransactions(w http.ResponseWriter, r *http.Request) {
+	rows, err := db.Query("SELECT id, user_id, pool_id, pool_type, amountA, amountB, created_at FROM transactions")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	var transactions []datastruct.Transaction
+	for rows.Next() {
+		var tx datastruct.Transaction
+		if err := rows.Scan(&tx.ID, &tx.UserID, &tx.PoolID, &tx.PoolType, &tx.AmountA, &tx.AmountB, &tx.CreatedAt); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		transactions = append(transactions, tx)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(transactions)
+}
+
+func getTransaction(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["id"]
+	var tx datastruct.Transaction
+
+	err := db.QueryRow("SELECT id, user_id, pool_id, pool_type, amountA, amountB, created_at FROM transactions WHERE id = $1", id).Scan(
+		&tx.ID, &tx.UserID, &tx.PoolID, &tx.PoolType, &tx.AmountA, &tx.AmountB, &tx.CreatedAt,
+	)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			http.NotFound(w, r)
+			return
+		}
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(tx)
 }
