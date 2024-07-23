@@ -15,7 +15,7 @@ contract AdminManager {
      */
     constructor() {
         owner = msg.sender;
-        platformFee = 3;
+        platformFee = 3; // percentage of fees
     }
 
     /**

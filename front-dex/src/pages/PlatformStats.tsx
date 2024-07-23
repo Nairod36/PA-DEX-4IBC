@@ -7,7 +7,7 @@ function PlatformStatistics() {
         const fetchStats = async () => {
             try {
                 console.log('Fetching platform statistics...');
-                const response = await fetch('/api/platform-stats');
+                const response = await fetch('http://localhost:3000/api/platform-stats');
                 const data = await response.json();
                 setStats(data);
             } catch (error) {

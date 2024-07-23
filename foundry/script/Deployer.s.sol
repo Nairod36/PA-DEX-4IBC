@@ -26,8 +26,8 @@ contract Deployer is Script {
         // FactoryLiquidityPool factory = new FactoryLiquidityPool(address(admin));
         // console.log("Factory address:",address(factory));
 
-        FactoryStakingPool factoryS = new FactoryStakingPool(deployerAddress);
-        console.log("Staking Factory address:",address(factoryS));
+        // FactoryStakingPool factoryS = new FactoryStakingPool(deployerAddress);
+        // console.log("Staking Factory address:",address(factoryS));
 
         // MockERC20 tokenA = new MockERC20("Token A", "TKA", 18);
         // console.log("TokenA address:",address(tokenA));
@@ -37,6 +37,9 @@ contract Deployer is Script {
 
         // MockERC20 stardex = new MockERC20("StarDex", "SDX", 18);
         // console.log("Stardex address:",address(stardex));
+
+        MockERC20 dit = new MockERC20("Do It Together", "DIT", 18);
+        console.log("DIT address:",address(dit));
 
         vm.stopBroadcast();
     }
