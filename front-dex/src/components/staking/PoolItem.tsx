@@ -9,6 +9,7 @@ import { Linechart } from "../TokenList";
 import "./poolItem.css";
 import { StakeModal } from "./StakeModal";
 import { IToken } from "../swapping/TokenSelector";
+import { PoolClaim } from "../Pools/PoolClaim";
 
 export interface IPoolItem {
   token: IToken;
@@ -57,7 +58,7 @@ export const PoolItem = (props: IPoolItem) => {
 
   const claim = async () => {
     if (!currentStakingPool) return;
-    const claiming = await currentStakingPool.claimRewards();
+    const claiming = await currentStakingPool.claimReward();
     console.log("Claiming...");
     await claiming.wait();
     console.log("Claim success");
@@ -82,11 +83,12 @@ export const PoolItem = (props: IPoolItem) => {
     const liquidity = await pool.totalStaked();
     const formattedLiquidity = ethers.formatUnits(liquidity, 18);
     const resultToTwoDecimals = parseFloat(formattedLiquidity).toFixed(2);
+    const newUserLiquidity = await pool.getUserLiquidity();
     // const userLiquidities: bigint[] = await pool.getUserLiquidity();
     // const total: number = userLiquidities
     //   .map((e) => Number(e))
     //   .reduce((ac, cu) => ac + cu);
-    // setUserLiquidity(total);
+    setUserLiquidity(newUserLiquidity);
     setVolume(Number(resultToTwoDecimals));
     setVolumes(await fetchVolumes());
   };
@@ -121,9 +123,15 @@ export const PoolItem = (props: IPoolItem) => {
           <Linechart data={volumes} />
         </td>
         <td>
-          <div onClick={handleAddLiquidity} className="pool-btn">
-            <span>ADD</span>
-          </div>
+          {userLiquidity > 0 ?
+            <PoolClaim add={handleAddLiquidity} claim={handleClaim}/>
+          :
+          <>
+            <div onClick={handleAddLiquidity} className="pool-btn">
+                <span>ADD</span>
+            </div>
+          </>
+          }
         </td>
       </tr>
       <StakeModal

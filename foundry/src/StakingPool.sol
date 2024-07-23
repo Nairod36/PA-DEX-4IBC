@@ -110,4 +110,12 @@ contract StakingPool is ReentrancyGuard, AccessControl {
             emit RewardPaid(msg.sender, reward);
         }
     }
+
+    /**
+     * @notice Retrieves the liquidity of the user in the pool.
+     * @return The amounts of token liquidity provided by the sender.
+     */
+    function getUserLiquidity() external view returns (uint256){
+        return (balances[msg.sender]);
+    }
 }

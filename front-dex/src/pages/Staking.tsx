@@ -10,7 +10,7 @@ function Staking() {
             <PageLayout pageTitle="Pool" desc={''} />
             <section style={{paddingTop:"0px",minHeight:"500px"}} className="content-inner">
                 <div className="container">
-                    <PoolsList address="0x7F145944d374980229C7c136515b80f67626bF81"/>
+                    <PoolsList address="0xd65024A299c229F99EEBC93527830fd3237452DA"/>
                 </div>
             </section>
         </div>

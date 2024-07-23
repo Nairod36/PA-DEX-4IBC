@@ -5,7 +5,7 @@ import "forge-std/Script.sol";
 import "../src/FactoryStakingPool.sol";
 import "../src/MockERC20.sol";
 
-// forge script script/CreateStakingPool.s.sol:CreateStakingPool --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv --private-key $PRIVATE_KEY
+// forge script script/CreateStakingPool.s.sol:CreateStakingPool --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv --private-key $PRIVATE_KEY --legacy
 
 contract CreateStakingPool is Script {
 
@@ -16,7 +16,7 @@ contract CreateStakingPool is Script {
         vm.startBroadcast();
 
         address factoryAddress = vm.envAddress("FACTORY_S");
-        address tokenAddress = vm.envAddress("TKNA");
+        address tokenAddress = vm.envAddress("TKNB");
 
         FactoryStakingPool factory = FactoryStakingPool(factoryAddress);
 
@@ -24,7 +24,7 @@ contract CreateStakingPool is Script {
 
         token.approve(address(factory),10000*1e18);
 
-        factory.createStakingPool(tokenAddress, 1e17);
+        factory.createStakingPool(tokenAddress, 1e15);
 
         vm.stopBroadcast();
     }
