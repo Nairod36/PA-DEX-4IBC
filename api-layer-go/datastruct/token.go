@@ -25,8 +25,8 @@ type Transaction struct {
 	ID        int     `json:"id"`
 	UserID    int     `json:"user_id"`
 	PoolID    int     `json:"pool_id"`
-	Amount    float64 `json:"amount"`
-	Type      string  `json:"type"`
-	CreatedAt string  `json:"created_at"`
 	PoolType  string  `json:"pool_type"` // 'stacking' or 'liquidity'
+	AmountA   float64 `json:"amountA"`
+	AmountB   float64 `json:"amountB,omitempty"` // Only for liquidity pools
+	CreatedAt string  `json:"created_at"`
 }
