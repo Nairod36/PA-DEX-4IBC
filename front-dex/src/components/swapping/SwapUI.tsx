@@ -52,7 +52,10 @@ export const SwapUI = (props: ISwap) => {
       props.factory_address,
       factoryLiquidityPoolABI
     );
+    console.log(factory)
+    console.log(factoryLiquidityPoolABI)
     const pools = await factory.getAllPools();
+    console.log(pools)
     const newTokens: IToken[] = [];
 
     for (const poolAddress of pools) {

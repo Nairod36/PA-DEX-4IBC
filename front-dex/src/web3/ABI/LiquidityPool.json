@@ -21,6 +21,11 @@
         "name": "_amountB",
         "type": "uint256",
         "internalType": "uint256"
+      },
+      {
+        "name": "_admin",
+        "type": "address",
+        "internalType": "address"
       }
     ],
     "stateMutability": "nonpayable"
@@ -116,7 +121,7 @@
         "internalType": "uint256"
       }
     ],
-    "stateMutability": "pure"
+    "stateMutability": "view"
   },
   {
     "type": "function",
@@ -145,7 +150,7 @@
         "internalType": "uint256"
       }
     ],
-    "stateMutability": "pure"
+    "stateMutability": "view"
   },
   {
     "type": "function",

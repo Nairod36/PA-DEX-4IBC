@@ -1,8 +1,39 @@
+@property --myColor1 {
+    syntax: '<color>';
+    initial-value: #f0f5ff;
+    inherits: false;
+  }
+  
+  @property --myColor2 {
+    syntax: '<color>';
+    initial-value: #f0f5ff;
+    inherits: false;
+  }
+  
+  @property --borderColor {
+    syntax: '<color>';
+    initial-value: rgba(28,110,164,0.32);
+    inherits: false;
+  }
+
 .newPool-btn{
-    border: 6px dashed rgba(28,110,164,0.32);
+    border: 6px dashed var(--borderColor);
+    border-bottom: 6px !important;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 60px;
+    transition: all 1s;
+    background: linear-gradient(180deg, var(--myColor1) 0%, var(--myColor2) 100%);
+    transition: ease-in-out --myColor1 1s, --myColor2 1s, --borderColor 1s;
+    transition-delay: --borderColor 1s;
+
+    &:hover{
+        --myColor1: #3a266b ;
+        --myColor2: #6543b6 ;
+        --borderColor: rgba(28,110,164,0);
+        color:white;
+        border: 0px;
+    }
 }

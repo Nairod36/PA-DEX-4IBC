@@ -7,6 +7,7 @@ import "../src/FactoryLiquidityPool.sol";
 import "../src/FactoryStakingPool.sol";
 import "../src/MockERC20.sol";
 
+// source .env
 // forge script script/Deployer.s.sol:Deployer --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv --legacy --private-key $PRIVATE_KEY
 
 contract Deployer is Script {
@@ -19,20 +20,23 @@ contract Deployer is Script {
         address deployerAddress = vm.envAddress("USER_ADDRESS");
         vm.startBroadcast(deployerPrivateKey);
 
-        FactoryLiquidityPool factory = new FactoryLiquidityPool();
-        console.log("Factory address:",address(factory));
+        // AdminManager admin = new AdminManager();
+        // console.log("Admin manager address:", address(admin));
+
+        // FactoryLiquidityPool factory = new FactoryLiquidityPool(address(admin));
+        // console.log("Factory address:",address(factory));
 
         FactoryStakingPool factoryS = new FactoryStakingPool(deployerAddress);
         console.log("Staking Factory address:",address(factoryS));
 
-        MockERC20 tokenA = new MockERC20("Token A", "TKA", 18);
-        console.log("TokenA address:",address(tokenA));
+        // MockERC20 tokenA = new MockERC20("Token A", "TKA", 18);
+        // console.log("TokenA address:",address(tokenA));
 
-        MockERC20 tokenB = new MockERC20("Token B", "TKB", 18);
-        console.log("TokenB address:",address(tokenB));
+        // MockERC20 tokenB = new MockERC20("Token B", "TKB", 18);
+        // console.log("TokenB address:",address(tokenB));
 
-        MockERC20 stardex = new MockERC20("StarDex", "SDX", 18);
-        console.log("Stardex address:",address(stardex));
+        // MockERC20 stardex = new MockERC20("StarDex", "SDX", 18);
+        // console.log("Stardex address:",address(stardex));
 
         vm.stopBroadcast();
     }

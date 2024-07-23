@@ -21,7 +21,7 @@ contract AdminManagerTest is Test {
     }
 
     function testSetFees() public {
-        uint256 newFee = 100;
+        uint256 newFee = 5;
         adminManager.setFees(newFee);
         assertEq(adminManager.platformFee(), newFee);
     }

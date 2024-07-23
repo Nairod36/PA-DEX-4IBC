@@ -10,7 +10,7 @@ function AdminSettings() {
     const [isAdmin, setIsAdmin] = useState(false);
     const [signer, setSigner] = useState<ethers.Signer | null>(null);
     const [contract, setContract] = useState<ethers.Contract | null>(null);
-    const contractAddress = '0xYourContractAddress'; // Adresse TODO
+    const contractAddress = '0xb2E8Aa1D2Ad719d23AD6f697741Aa052bD624F47'; // Adresse TODO
     const API_URL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {

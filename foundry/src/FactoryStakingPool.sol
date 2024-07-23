@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract FactoryStakingPool is Ownable {
     mapping (bytes32 => StakingPool) private stakingPools;
+    bytes32[] private poolIds;
 
     event StakingPoolCreated(StakingPool indexed newStakingPool);
     
@@ -28,6 +29,7 @@ contract FactoryStakingPool is Ownable {
         newStakingPool.grantRole(newStakingPool.STAKER_ROLE(), msg.sender); // Optionally assign the staker role to the creator if needed
 
         stakingPools[getStakingId(_stakingToken)] = newStakingPool;
+        poolIds.push(getStakingId(_stakingToken));
         emit StakingPoolCreated(newStakingPool);
     }
 
@@ -47,5 +49,17 @@ contract FactoryStakingPool is Ownable {
      */
     function getStakingId(address _token) public pure returns (bytes32) {
         return keccak256(abi.encodePacked(_token));
+    }
+
+    /**
+     * @notice Returns all pool addresses
+     * @return An array of all pool addresses
+     */
+    function getAllPools() public view returns (address[] memory) {
+        address[] memory poolAddresses = new address[](poolIds.length);
+        for (uint256 i = 0; i < poolIds.length; i++) {
+            poolAddresses[i] = address(stakingPools[poolIds[i]]);
+        }
+        return poolAddresses;
     }
 }
