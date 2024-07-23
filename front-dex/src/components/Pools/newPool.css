@@ -18,6 +18,7 @@
 
 .newPool-btn{
     border: 6px dashed var(--borderColor);
+    border-bottom: 6px !important;
     border-radius: 10px;
     display: flex;
     justify-content: center;

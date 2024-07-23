@@ -1,40 +1,20 @@
 import React, { useState } from 'react';
 import PageLayout from './PageLayout';
+import { PoolsList } from '../components/staking/poolsList';
 
 function Staking() {
-    const [amount, setAmount] = useState('');
-    const [stakeMessage, setStakeMessage] = useState('');
-
-    const handleStake = () => {
-        console.log(`Staking ${amount} tokens`);
-        setStakeMessage(`You have staked ${amount} tokens.`);
-        setAmount('');
-    };
 
     return (
+        <>
         <div className="page-content">
-                    <PageLayout pageTitle="Stacking" desc={''} />
-
-            <div className="container">
-                <h1>Staking</h1>
-                <p>Stake your tokens to earn rewards.</p>
-
-            <h2>Stake Your Tokens</h2>
-            <div>
-                <label htmlFor="stakeAmount">Amount to Stake:</label>
-                <input
-                    type="number"
-                    id="stakeAmount"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    placeholder="Enter amount"
-                    required
-                />
-            </div>
-            <button onClick={handleStake}>Stake Tokens</button>
-            {stakeMessage && <p>{stakeMessage}</p>}
+            <PageLayout pageTitle="Pool" desc={''} />
+            <section style={{paddingTop:"0px",minHeight:"500px"}} className="content-inner">
+                <div className="container">
+                    <PoolsList address="0x7F145944d374980229C7c136515b80f67626bF81"/>
+                </div>
+            </section>
         </div>
-    </div>
+        </>
     );
 }
 
